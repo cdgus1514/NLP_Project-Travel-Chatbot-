@@ -1,0 +1,24 @@
+from konlpy.tag import Okt
+
+
+def tokenize(sentence):
+    stop_word = []
+    josa = [
+        '이구나', '이네', '이야', '에', '에서', '의', '할', '수', '있는',
+        '은', '는', '이', '가', '을', '를', '로서', '로', '으로', '이야', '야', '냐', '니']
+
+    tokenizer = Okt()
+    word_bag = []
+    pos = tokenizer.pos(sentence)
+    print("\n[DEBUG4-1]tokenize pos >>", pos)
+    for word, tag in pos:
+        if word in stop_word:
+            continue
+        elif (tag == 'Josa' and word in josa) or tag == 'Punctuation':
+            continue
+        else:
+            word_bag.append(word)
+            print("[DEBUG4-2]tokenize word_bag >>", word_bag)
+    result = ' '.join(word_bag)
+
+    return result
