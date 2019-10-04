@@ -4,6 +4,8 @@ from cdh_intent import get_intent
 from cdh_scenario import dust
 from cdh_scenario import weather
 from cdh_scenario import restaurant
+# from cdh_scenario import travel
+# from cdh_scenario import attraction
 
 from tokenizer import tokenize
 from configs import IntentConfigs
