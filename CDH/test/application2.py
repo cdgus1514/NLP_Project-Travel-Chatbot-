@@ -21,7 +21,7 @@ def run():
 
     while True:
         # print('User : ', end='')
-        print('Input Questuon', end='\n')
+        print('\n\nInput Questuon', end='\n')
         speech = preprcoess(input())
         print("\n\nPreprocessed >> " + speech, sep="", end="\n\n")
         

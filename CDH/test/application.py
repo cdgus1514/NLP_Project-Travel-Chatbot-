@@ -1,6 +1,9 @@
 from cdh_intent import get_intent
 # from jbh_entity import get_entity
-import restaurant
+
+from cdh_scenario import dust
+from cdh_scenario import weather
+from cdh_scenario import restaurant
 
 from tokenizer import tokenize
 from configs import IntentConfigs
@@ -14,20 +17,33 @@ config = IntentConfigs()
 print("###### application.py ######")
 
 def run(pdata):
-    print('Input Questuon', end='\n')
+    print('\n\nInput Questuon', end='\n')
     speech = preprcoess(pdata)
     print("\n\nPreprocessed >> " + speech, sep="", end="\n\n")
     
     intent = get_intent(speech)
     print("Intent >> " + intent, sep="", end="\n\n")
 
+    ## 크롤링 테스트 ##
+    if intent == "맛집":
+        a = ['강남역', '근처', '분위기', '좋은', '카페', '추천해줘'], ['LOCATION', 'O', 'LOCATION', 'O', 'LOCATION', 'O']
+        entity = tuple(a)
+    
+    elif intent == "날씨":
+        b = ['오늘', '서초구', '날씨', '어떠니'], ['DATE', 'LOCATION', 'O', 'O']
+        entity = tuple(b)
+
+    elif intent == "먼지":
+        c = ['오늘', '인천', '미세먼지', '알려줘'], ['DATE', 'LOCATION', 'O', 'O']
+        entity = tuple(c)
+
     # entity = get_entity(intent, speech)
     # print("Entity >> " + str(entity), sep="", end="\n\n")
 
-    # answer = scenario(intent, entity)
+    answer = scenario(intent, entity)
     # print("A.I >> " + answer, sep="", end="\n\n")
     
-    return intent
+    return answer
 
 
 
@@ -57,12 +73,10 @@ def preprcoess(speech):
 
 def scenario(intent, entity):
     if intent == "먼지":
-        # return dust(entity)
-        pass
+        return dust(entity)
     
     elif intent == "날씨":
-        # return weather(entity)
-        pass
+        return weather(entity)
 
     elif intent == "맛집":
         return restaurant(entity)

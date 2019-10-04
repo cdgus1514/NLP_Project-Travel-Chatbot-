@@ -29,18 +29,24 @@ def recommend_restaurant(location):
     print("\n\n[DEBUG1-7]recommand_restaurant (list_info) >>\n", list_info)
     print("\n[DEBUG1-7]recommand_restaurant (list_info) >>", len(list_info), end="\n")
     
-
     ######## DEBUG ########
     cnt_name = len(list_name)
+
     for i in range(cnt_name):
         print("[DEBUG1-6-1]rand",i, ">>", list_name[i], end="\n")
-
+    #######################
     
+    ######## DEBUG ########
     cnt_info = len(list_info)
+
     for i in range(cnt_info):
         print("[DEBUG1-7-1]rand",i, ">>", list_info[i], end="\n")
-    
+    #######################
 
+
+
+    # rand_name = random.randint(0, cnt_name-1)
+    # rand_info = random.randint(0, cnt_info-1)
     frand = random.randint(0, cnt_name-1)
     print("\n",frand,"번째 식당", end="\n")
     name = list_name[frand].text.split()
@@ -49,27 +55,17 @@ def recommend_restaurant(location):
     
     new_name=[]
     for c in name:
-        # print("\n[DEBUG1-8]recommand_restuarnt (tag check) >>", c, end=" ")
-        # print("\n[DEBUG1-8]recommand_restuarnt (tag length) >>", len(c))
-        
-        if len(c) == 1:
-            name = re.sub('[a-zA-Z]', "", c)
-            print("\n[DEBUG1-8]recommand_restaurant (parse) >>", name)
-            if name == "":
-                pass
-            else:
-                new_name.append(name)
+        name = re.sub('[a-zA-Z]', "", c)
+        if name == "":
+            pass
         else:
-            new_name.append(c)
-
+            new_name.append(name)
 
     print("\n[DEBUG1-8]recommand_restaurant (parsing name) >>", new_name, end="\n")
     name = ' '.join(new_name)
     print("\n[DEBUG1-8]recommand_restaurant (name) >>", name, end="\n")
     # info = list_info[rand_info].text
-    
-    #######################
-
+    print(frand)
     if frand > cnt_info-1:
         info = location
     else:
@@ -155,7 +151,7 @@ def recommend_restaurant(location):
 
     print("\n[DEBUG1-9]recommand_restaurant (description) >>\n", description)
 
-    msg = info + '!  ' + name + '에 가보는 건 어떨까요?\n\n'
+    msg = info + '!  ' + name + '에 가보는 건 어떨까요?\n'
 
     if description != ' ':
         msg += description
@@ -169,8 +165,8 @@ def recommend_restaurant(location):
     if tel != '':
         msg += '\n전화번호 : ' + tel
 
-    print("\n\n\n[DEBUG2-1]recommand_restaurant (msg) >>\n", msg)
+    print("\n[DEBUG2-1]recommand_restaurant (msg) >>\n", msg)
     return msg
 
 
-recommend_restaurant("강남 마카롱")
+# recommend_restaurant("신논현역 고깃집")
