@@ -19,7 +19,7 @@
 2. preprocess (tokenize >> 형태소분석, 불용어 제거)
 3. get_intent (의도파악)
 4. get_entity (개체명 인식)
-5. scenario   (의도, 개체명, 크롤링 >> 결과출력)
+5. scenario   (의도, 개체명 >> 크롤링 >> 결과출력)
 
 <br>
 <br>
