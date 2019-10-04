@@ -121,7 +121,7 @@ def main():
 
 
     ## 4. 모델 저장
-    path = config.model_path
+    path = config.intent_model_path
     file_list = os.listdir(path)
 
     new_num = 0

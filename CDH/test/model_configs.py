@@ -13,4 +13,4 @@ class ModelConfigs:
 
     def __init__(self):
         self.word2vec_model = Word2Vec.load(self.fasttext_path+"model")
-        self.model = load_model(self.intent_model_path+'intent_model-'+str(4600)+'.h5')
+        self.model = load_model(self.intent_model_path+'intent_model-'+str(4700)+'.h5')

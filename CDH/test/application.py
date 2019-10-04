@@ -1,5 +1,6 @@
 from cdh_intent import get_intent
 # from jbh_entity import get_entity
+import restaurant
 
 from tokenizer import tokenize
 from configs import IntentConfigs
@@ -56,19 +57,23 @@ def preprcoess(speech):
 
 def scenario(intent, entity):
     if intent == "먼지":
-        return dust(entity)
+        # return dust(entity)
+        pass
     
     elif intent == "날씨":
-        return weather(entity)
+        # return weather(entity)
+        pass
 
     elif intent == "맛집":
         return restaurant(entity)
     
     elif intent == "여행지":
-        return travel(entity)
+        # return travel(entity)
+        pass
     
     elif intent == "관광지":
-        return attraction(entity)
+        # return attraction(entity)
+        pass
     
     else:
         return "그 기능은 아직 준비 중이에요.  :("
