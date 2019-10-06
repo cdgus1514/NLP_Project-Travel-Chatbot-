@@ -6,11 +6,12 @@ from urllib.request import urlopen, Request
 import bs4
 
 
+
 def recommend_restaurant(location):
     print("\n[DEBUG1-0]recommand_restaurant (location) >>", location)
     
     enc_location = urllib.parse.quote(location + '맛집')
-    # print("\n[DEBUG1]recommand_restaurant (enc_location) >>", enc_location)
+    print("\n[DEBUG1]recommand_restaurant (enc_location) >>", enc_location)
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
     print("\n[DEBUG1-1]recommand_restaurant (url) >>", url, end="\n")
 
@@ -46,7 +47,7 @@ def recommend_restaurant(location):
     name = list_name[frand].text.split()
     print("\n[DEBUG1-8]recommand_restaurant (name) >>", name, end="\n")
     
-    
+    ## remove name tag
     new_name=[]
     for c in name:
         # print("\n[DEBUG1-8]recommand_restuarnt (tag check) >>", c, end=" ")
