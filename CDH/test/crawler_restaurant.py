@@ -174,4 +174,4 @@ def recommend_restaurant(location):
     return msg
 
 
-recommend_restaurant("강남 마카롱")
+# recommend_restaurant("강남 마카롱")

@@ -7,6 +7,7 @@ import bs4
 
 from crawler_configs import Crawlerconfigs
 import crawler.seoul_cralwer as se
+import crawler.busan_cralwer as bs
 import crawler.parsing_test
 
 
@@ -172,8 +173,10 @@ def check_purpose(entity):
 
 def recommand_travelCity(entity):
 
-    # purpose = check_purpose(entity) # 추천도시 선택 [('도시','index'), 'info_index']
-    purpose = [('서울', '35'), '1000056139101']
+    # purpose = check_purpose(entity) # 추천도시 선택 >> [('도시','index'), 'info_index']
+    # purpose = [('서울', '35'), '1000056139101']
+    purpose = [('부산', '36'), '1000060452101']
+
 
     # 도시정보 크롤링
     if purpose[0][1] == 99:
@@ -181,13 +184,9 @@ def recommand_travelCity(entity):
     else:
         city = purpose[0][1]   # 도시 인덱스
         info = purpose[1]   # 도시 정보 인덱스
-        
-
-    # url = 'http://info.hanatour.com/dest/content/know/' + city +'?ctype=1000010089&contentID=' + info
     
-    msg = entity +"(으)로 유명한 " + purpose[0][0] +"에 가보는 건 어떨까요?  " + "제가" + purpose[0][0]+ "에 대해 알려드릴게요!!  :)\n\n\n"
+    msg = entity +"(으)로 유명한~ " + purpose[0][0] +"에 가보는 건 어떠세요?  " + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  :)\n\n\n"
     
-    # msg += se.seoul_cr('35', '1000056139101')
     if purpose[0][0] == "서울":
         msg += se.seoul_cr(str(city), info)
     
@@ -204,7 +203,7 @@ def recommand_travelCity(entity):
         pass
 
     elif purpose[0][0] == "부산":
-        pass
+        msg += bs.busan_cr(str(city), info)
 
     elif purpose[0][0] == "수원":
         pass
@@ -222,9 +221,9 @@ def recommand_travelCity(entity):
         return "그 기능은 아직 준비 중이에요.  :("
     
 
-    print(msg)
+    print("\n\n[DEBUG1-1]recommand_travelCity (msg) >>\n", msg)
     return msg
 
 
 
-recommand_travelCity('관광')
+# recommand_travelCity('관광')

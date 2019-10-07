@@ -20,7 +20,7 @@ def parsing_data(text):
 
     for c in text:
         # print(c)
-        name = re.sub('[a-zA-Z/<>"-=^0-9]', "", c)
+        name = re.sub('[a-zA-Z/\<>"-=^0-9]', "", c)
         if name == "":
             pass
         else:
