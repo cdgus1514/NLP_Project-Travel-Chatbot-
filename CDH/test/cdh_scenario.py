@@ -6,6 +6,7 @@ from crawler_weather import specific_weather
 from crawler_dust import today_dust
 from crawler_dust import tomorrow_dust
 from crawler_dust import after_tomorrow_dust
+from crawler_travel import recommand_travelCity
 
 
 
@@ -114,3 +115,29 @@ def dust(named_entity):
         return after_tomorrow_dust(' '.join(location))
     else:
         return '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
+
+
+
+def travel(named_entity):
+    print("[DEBUG4-1]scenario travel (named_entity) >>", named_entity)
+    keyword_group = named_entity[0]
+    print("[DEBUG4-2]scenario travel (keyword) >>", keyword_group)
+    entity_group = named_entity[1]
+    print("[DEBUG4-2]scenario travel (entity) >>", entity_group)
+    purpose = []
+
+    for k in zip(keyword_group, entity_group):
+        if 'PURPOSE' in k[1]:
+            purpose.append(k[0])
+
+    print("[DEBUG4-3]scenario travel (location) >>", purpose)
+
+    if len(purpose) == 0:
+        while len(purpose) == 0:
+            print('A.I : ' + '어떤 여행지를 알려드릴까요?')
+            print('Input Question >>\n', end='', sep='')
+            loc = input()
+            if loc is not None and loc.replace(' ', '') != '':
+                purpose.append(loc)
+
+    return recommand_travelCity(' '.join(purpose))

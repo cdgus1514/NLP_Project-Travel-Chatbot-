@@ -22,12 +22,13 @@ from crawler_configs import Crawlerconfigs
 config = Crawlerconfigs()
 
 city = config.spa
-select_city = random.choice(list(city.items()))[1]
+select_city = random.choice(list(city.items()))
 
 info = config.info
-info_index = info[str(select_city)]
+info_index = info[str(select_city[1])]
 
+result = [select_city, info_index]
+print(result)
 
-print(select_city)
-
-print(info_index)
+print(result[0][0]) # 이름
+print(result[0][1]) # 인덱스
