@@ -13,22 +13,24 @@ class RegistUser(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         # parser.add_argument("name", type=str)
-        parser.add_argument("message", type=str)
+        parser.add_argument("msg", type=str)
         args = parser.parse_args()
 
         # name = args["name"]
-        massage = args["message"]
+        massage = args["msg"]
         
 
         # # 받아온 json 데이터 파싱
-        req_data = request.get_json(force=True)
-        pdata = req_data["message"]
+        data = request.get_json(force=True)
+        print("\n[DEBUG1-1]Flaskrestful (req_data) >>", data)
+        pdata = data["msg"]
         # print("pdata >>", pdata)
     
-        intent = application.run(pdata)
+        message = application.run(pdata)
 
-        result = [['message', intent], ['nickname', 'Chatbot']]
+        result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']]]
         result = dict(result)
+        # print("\n[DEBUG1-2]Flaskrestful (result) >>", result)
 
         return result
 
