@@ -105,6 +105,7 @@
 - crawler_weather
 - crawler_dust
 <br>
+<br>
 
 ##### application 수정
 ##### crawler 파일 추가
@@ -117,3 +118,31 @@
 3. model_configs 파일 root_path 수정 (경로 다를 경우)
 4. flaskrestful.py 실행
 5. 클라이언트에서 질문입력, 결과출력
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/07
+- application [get_intent(○), get_entity(×), scenario(△)]
+- tokenizer
+- preprocess
+- cdh_intent
+- configs
+- model_configs
+- flaskrestful (main)
+- cdh_scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler(seoul_cralwer, busan_cralwer, parsing_test)
+<br>
+<br>
+
+##### crawler_travel 파일 추가
+##### seoul, busan crawler 파일 추가
+##### scenario 파일 수정
+##### travel_config 파일 추가
+#### flaskrestful 파일 수정
+<br>
