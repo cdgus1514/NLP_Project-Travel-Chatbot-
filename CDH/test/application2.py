@@ -1,5 +1,5 @@
 from cdh_intent import get_intent
-# from jbh_entity import get_entity
+from jbh_entity import get_entity
 
 from cdh_scenario import dust
 from cdh_scenario import weather
@@ -12,7 +12,7 @@ from model_configs import ModelConfigs
 from gensim.models.word2vec import Word2Vec
 
 
-#CONFIG
+# CONFIG
 config = IntentConfigs()
 print("###### application.py ######")
 
@@ -27,6 +27,8 @@ def run():
         
         intent = get_intent(speech)
         print("Intent >> " + intent, sep="", end="\n\n")
+
+        check_intent(intent, speech)
 
 
         if intent == "맛집":
@@ -45,7 +47,7 @@ def run():
         # entity = get_entity(intent, speech)
         # print("Entity >> " + str(entity), sep="", end="\n\n")
 
-        answer = get_scenario(intent, entity)
+        # answer = get_scenario(intent, entity)
         # print("A.I >> " + answer, sep="", end="\n\n")
 
 
@@ -56,21 +58,28 @@ def preprcoess(speech):
     return speech
 
 
-# def get_entity(intent, speech):
-#     if intent == "날씨" or intent == "먼지":
-#         return get_weather_entity(speech, False)
-    
-#     elif intent == "맛집":
-#         return get_restaurant_entity(speech, False)
 
-#     elif intent == "여행지":
-#         return get_travel_entity(speech, False)
-
-#     elif intent == "관광지":
-#         return get_attraction_entity(speech, False)
+def check_intent(intent, speech):
+    if intent == "날씨" or intent == "먼지":
+        pass
+        # return get_entity(speech, False)
     
-#     else:
-#         return None
+    elif intent == "맛집":
+        pass
+        # return get_entity(speech, False)
+
+    elif intent == "여행지":
+        pass
+        # return get_entity(speech, False)
+
+    elif intent == "관광지":
+        pass
+        # return get_entity(speech, False)
+    
+    else:
+        print("죄송해요, 그 기능은 아직 준비 중이에요.  :(")
+        pass
+        # return "죄송해요, 그 기능은 아직 준비 중이에요.  :("
 
 
 
@@ -95,7 +104,10 @@ def get_scenario(intent, entity):
 
     elif intent == "맛집":
         return restaurant(entity)
-        pass
 
     else:
-        return "그 기능은 아직 준비 중이에요.  :("
+        return "죄송해요, 그 기능은 아직 준비 중이에요.  :("
+    
+
+
+run()

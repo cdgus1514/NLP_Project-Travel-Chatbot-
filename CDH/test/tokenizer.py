@@ -17,6 +17,8 @@ def tokenize(sentence):
         elif (tag == 'Josa' and word in josa) or tag == 'Punctuation':
             continue
         else:
+            if word == "바다로":
+                word = "바다"
             word_bag.append(word)
             print("[DEBUG4-2]tokenize word_bag >>", word_bag)
     result = ' '.join(word_bag)

@@ -6,13 +6,23 @@ from urllib.request import urlopen, Request
 import bs4
 
 from crawler_configs import Crawlerconfigs
-import crawler.seoul_cralwer as se
-import crawler.busan_cralwer as bs
+import crawler.seoul_crawler as se
+import crawler.busan_crawler as bs
+import crawler.jeonju_crawler as jj
+import crawler.jeju_crawler as jji
+import crawler.incheon_crawler as inc
+import crawler.gangwon_crawler as gw
+import crawler.gyeongju_crawler as gj
+import crawler.hwaseong_crawler as hs
+import crawler.suwon_crawler as sw
+import crawler.ganghwa_crawler as gh
+
 import crawler.parsing_test
 
 
 
 def check_purpose(entity):
+    print("\n\n[DEBUG1-1]check_purpose (entity) >>", entity)
     # 제주[1]:7, 전주[2]:28, 경주[3]:29, 수원[4]:30, 화성[5]:31, 부산[6]:35, 서울[7]:36, 강원[8]:37, 인천[9]:45, 강화[10]:51
     config = Crawlerconfigs()
 
@@ -173,49 +183,54 @@ def check_purpose(entity):
 
 def recommand_travelCity(entity):
 
-    # purpose = check_purpose(entity) # 추천도시 선택 >> [('도시','index'), 'info_index']
+    purpose = check_purpose(entity) # 추천도시 선택 >> [('도시','index'), 'info_index']
     # purpose = [('서울', '35'), '1000056139101']
-    purpose = [('부산', '36'), '1000060452101']
+    # purpose = [('부산', '36'), '1000060452101']
+    # purpose = [('전주', '28'), '1000043129101']
+    # purpose = [('제주', '7'), '1000043115101']
+    # purpose = [('인천', '45'), '1000072355101']
+    # purpose = [('강원', '37'), '1000060540101']
 
 
     # 도시정보 크롤링
     if purpose[0][1] == 99:
+        # 하나투어 리스트에 없는 도시들
         pass
     else:
-        city = purpose[0][1]   # 도시 인덱스
-        info = purpose[1]   # 도시 정보 인덱스
+        city = purpose[0][1]    # 도시 인덱스
+        info = purpose[1]       # 도시 정보 인덱스
     
-    msg = entity +"(으)로 유명한~ " + purpose[0][0] +"에 가보는 건 어떠세요?  " + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  :)\n\n\n"
+    msg = entity +"(으)로 유명한~!  " + purpose[0][0] +"에 가보는 건 어떠세요?  " + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  :)\n\n\n"
     
     if purpose[0][0] == "서울":
         msg += se.seoul_cr(str(city), info)
     
     elif purpose[0][0] == "제주":
-        pass
+        msg += jji.jeju_cr(str(city), info)
 
     elif purpose[0][0] == "전주":
-        pass
+        msg += jj.jeonju_cr(str(city), info)
 
     elif purpose[0][0] == "경주":
-        pass
+        msg += gj.gyeongju_cr(str(city), info)
 
     elif purpose[0][0] == "화성":
-        pass
+        msg += hs.hwaseong_cr(str(city), info)
 
     elif purpose[0][0] == "부산":
         msg += bs.busan_cr(str(city), info)
 
     elif purpose[0][0] == "수원":
-        pass
+        msg += sw.suwon_cr(str(city), info)
 
     elif purpose[0][0] == "강원":
-        pass
+        msg += gw.gangwon_cr(str(city), info)
 
     elif purpose[0][0] == "인천":
-        pass
+        msg += inc.incheon_cr(str(city), info)
 
     elif purpose[0][0] == "강화":
-        pass
+        msg += gh.ganghwa_cr(str(city), info)
 
     else:
         return "그 기능은 아직 준비 중이에요.  :("

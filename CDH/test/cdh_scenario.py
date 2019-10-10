@@ -8,7 +8,7 @@ from crawler_dust import tomorrow_dust
 from crawler_dust import after_tomorrow_dust
 from crawler_travel import recommand_travelCity
 
-
+state = None
 
 def restaurant(named_entity):
     print("[DEBUG1-1]scenario restaurant (named_entity) >>\n", named_entity)
@@ -26,8 +26,8 @@ def restaurant(named_entity):
 
     if len(location) == 0:
         while len(location) == 0:
-            print('A.I : ' + '어떤 맛집을 알려드릴까요?')
-            print('User : ', end='', sep='')
+            print('어떤 맛집을 알려드릴까요?')
+            print('Input Question >>\n', end='', sep='')
             loc = input()
             if loc is not None and loc.replace(' ', '') != '':
                 location.append(loc)
@@ -59,8 +59,10 @@ def weather(named_entity):
 
     if len(location) == 0:
         while len(location) == 0:
-            print('A.I : ' + '어떤 지역을 알려드릴까요?')
-            print('User : ', end='', sep='')
+            print('어떤 지역을 알려드릴까요?')
+            print('Input Question >>\n', end='', sep='')
+            global state
+            state = "dust"
             loc = input()
             if loc is not None and loc.replace(' ', '') != '':
                 location.append(loc)
@@ -101,8 +103,8 @@ def dust(named_entity):
 
     if len(location) == 0:
         while len(location) == 0:
-            print('A.I : ' + '어떤 지역을 알려드릴까요?')
-            print('User : ', end='', sep='')
+            print('어떤 지역을 알려드릴까요?')
+            print('Input Question >>\n', end='', sep='')
             loc = input()
             if loc is not None and loc.replace(' ', '') != '':
                 location.append(loc)
@@ -129,15 +131,22 @@ def travel(named_entity):
     for k in zip(keyword_group, entity_group):
         if 'PURPOSE' in k[1]:
             purpose.append(k[0])
+        elif 'TRAVEL' in k[1]:
+            purpose.append(k[0])
 
-    print("[DEBUG4-3]scenario travel (location) >>", purpose)
+    print("[DEBUG4-3]scenario travel (PURPOSE) >>", purpose)
 
     if len(purpose) == 0:
         while len(purpose) == 0:
-            print('A.I : ' + '어떤 여행지를 알려드릴까요?')
+            print('어떤 여행지를 알려드릴까요?')
             print('Input Question >>\n', end='', sep='')
             loc = input()
             if loc is not None and loc.replace(' ', '') != '':
                 purpose.append(loc)
 
     return recommand_travelCity(' '.join(purpose))
+
+
+
+def attraction(named_entity):
+    pass

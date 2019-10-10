@@ -19,6 +19,7 @@ from model_configs import ModelConfigs
 # CONFIG
 config = IntentConfigs()
 mconfig = ModelConfigs()
+cnt = 0
 
 
 
@@ -42,26 +43,53 @@ def interface_embed(text):
 
 # 의도파악
 def get_intent(speech):
+    
+    # fallback 상태 변수
+    global cnt
 
     # 입력 문자열 Embedding & Predict
     speech = interface_embed(speech)
 
-    model = mconfig.model
+    model = mconfig.intent_model
     # print("\n[DEBUG6-1]get_intent(speech) >>\n", speech, end="\n")
     # print("\n[DEBUG6-2]get_intent(speech shape) >> ", speech.shape, end="\n") # (1, 15, 300, 1)
     
-    # intent = model._make_predict_function(speech)
+    
     with keras.backend.get_session().graph.as_default():
 
         intent = model.predict(speech)
-        print("\n[DEBUG6-1]y_intent(predict) >>\n", intent, end="\n")  # 각 카테고리 백터값
+        print("\n[DEBUG6-1]get_intent (predict) >>\n", intent, end="\n\n")  # 각 카테고리 백터값 (numpy.ndarray)
+        intent_chk = len(intent[0]) # 5
+        # print("\n[DEBUG6-2]get_intent (intent_chk) >>", intent_chk, end="\n\n")
+
         index = np.argmax(intent)
-        print("\n")
+        print("\n[DEBUG6-3]get_intent (index) >>", index, end="\n\n")
+        print("\n[DEBUG6-3]get_intent (predict check) >>", intent[0][index], end="\n\n")
+        print("\n[DEBUG6-4]get_intent (before cnt) >>", cnt, end="\n")
 
-        for result, num in config.intent_mapping.items():
-            if index == num:
-                print(str(config.intent_mapping))
-                print("\nIntent : %s, index :%d"% (result, index), end="\n")
-                print("____________________________________________________________________________________________________________________________", end="\n")
+        
+        # fallback check
+        for i in intent[0]:
+            if i == 0:
+                cnt += 1
+        print("\n[DEBUG6-4]get_intent (after cnt) >>", cnt, end="\n\n\n")
+        
+        if cnt != 4:
+            result = "fallback"
+            print(str(config.intent_mapping))
+            print("\nIntent : ", result)
+            cnt = 0
+            print("____________________________________________________________________________________________________________________________", end="\n")
 
-                return result
+            return result
+            
+            
+        elif cnt == 4:
+            for result, num in config.intent_mapping.items():
+                if index == num:
+                    print(str(config.intent_mapping))
+                    print("\nIntent : %s, index :%d"% (result, index), end="\n")
+                    cnt = 0
+                    print("____________________________________________________________________________________________________________________________", end="\n")
+
+                    return result

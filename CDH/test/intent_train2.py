@@ -105,7 +105,7 @@ def main():
     # model.add(Dropout(0.1))
     model.add(Dense(5, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    stop = EarlyStopping(monitor="loss", patience=15, mode="auto")
+    # stop = EarlyStopping(monitor="loss", patience=15, mode="auto")
 
 
     model.summary()
