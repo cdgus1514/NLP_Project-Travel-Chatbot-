@@ -152,7 +152,7 @@
 - crawler_weather
 - crawler_dust
 - crawler_travel
-- crawler(seoul, busan, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju)
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju)
 <br>
 <br>
 
@@ -180,7 +180,7 @@
 - crawler_weather
 - crawler_dust
 - crawler_travel
-- crawler(seoul, busan, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju)
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju)
 <br>
 <br>
 
