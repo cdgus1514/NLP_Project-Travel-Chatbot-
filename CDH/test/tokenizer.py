@@ -10,6 +10,7 @@ def tokenize(sentence):
     tokenizer = Okt()
     word_bag = []
     pos = tokenizer.pos(sentence)
+
     print("\n[DEBUG4-1]tokenize pos >>", pos)
     for word, tag in pos:
         if word in stop_word:

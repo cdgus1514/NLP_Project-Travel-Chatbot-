@@ -96,7 +96,7 @@ def dust(named_entity):
             location.append(k[0])
 
     print("[DEBUG3-3]scenario dust (data) >> ", date, end="\n")
-    print("[DEBUG3-3]scenario dust (location) >> ", location, end="\n")
+    print("[DEBUG3-3]scenario dust (location) >> ", location, end="\n\n")   #['미추홀', '구'] >> 이런형식 안됨
 
     if len(date) == 0:
         date.append('오늘')

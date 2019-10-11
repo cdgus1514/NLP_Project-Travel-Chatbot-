@@ -21,10 +21,14 @@ def recommend_restaurant(location):
     page = urlopen(req)
     html = page.read()
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    # print("\n[DEBUG1-5]recommand_restaurant (soup) >>\n", soup)
     list_name = soup.find_all('a', class_='name')
     print("\n[DEBUG1-6]recommand_restaurant (list_name) >>\n", list_name)
     print("\n[DEBUG1-6]recommand_restaurant (list_name) >>", len(list_name), end="\n")
+    
+    ## 검색 결과가 없을경우
+    if len(list_name) == 0:
+        # seq2seq or 사과멘트
+        return '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
 
     list_info = soup.find_all('div', class_='txt ellp')
     print("\n\n[DEBUG1-7]recommand_restaurant (list_info) >>\n", list_info)

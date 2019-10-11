@@ -26,30 +26,13 @@ def run(pdata):
     
     intent = get_intent(speech)
     print("Intent >> " + intent, sep="", end="\n\n")
-
-    ## 크롤링 테스트 ##
-    # if intent == "맛집":
-    #     a = ['강남역', '근처', '분위기', '좋은', '카페', '추천해줘'], ['LOCATION', 'O', 'LOCATION', 'O', 'LOCATION', 'O']
-    #     entity = tuple(a)
-    
-    # elif intent == "날씨":
-    #     b = ['오늘', '서초구', '날씨', '어떠니'], ['DATE', 'LOCATION', 'O', 'O']
-    #     entity = tuple(b)
-
-    # elif intent == "먼지":
-    #     c = ['오늘', '인천', '미세먼지', '알려줘'], ['DATE', 'LOCATION', 'O', 'O']
-    #     entity = tuple(c)
-
-    # elif intent == "여행지":
-    #     d = ['바다', '유명한', '여행지', '알려주라'], ['PURPOSE', 'O', 'O', 'O']
-    #     entity = tuple(d)
     
     entity = get_entity.predict(speech.split(' '))
     print("Entity >> " + str(entity), sep="", end="\n\n")
 
     answer = scenario(intent, entity)
     
-    return intent
+    return answer
 
 
 
@@ -79,7 +62,8 @@ def scenario(intent, entity):
         pass
     
     else:
-        return "죄송해요, 그 기능은 아직 준비 중이에요.  :("
+        # seq2seq
+        return config.fallback_msg
 
 
 

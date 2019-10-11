@@ -3,21 +3,27 @@ from urllib.request import urlopen, Request
 
 import bs4
 
-metropolitans = [
-    '서울', '서울시', '서울특별시',
-    '대구', '대구시', '대구광역시',
-    '대전', '대전시', '대전광역시',
-    '부산', '부산시', '부산광역시',
-    '인천', '인천시', '인천광역시',
-    '광주', '광주시', '광주광역시',
-    '울산', '울산시', '울산광역시',
-    '제주', '제주도',
-]
+from crawler_configs import Crawlerconfigs
+
+# CONFIGS
+config = Crawlerconfigs()
+metropolitans = config.metropolitans    # 도시정보
+governments = config.Governments        # 행정구역 정보
+
+# today_dust 정상
+
+# tomorrow/after_tomorrow 비정상
+# metropolitans, governments에 들어있는 도시/행정구역만 metropolitans 메소드로 크롤링 가능
+# xx동 크롤링 가능
+# 외 크롤링 안됨 (네이버 검색결과가 다른 폼으로 출력)
+
 
 
 def today_dust(location):
     enc_location = urllib.parse.quote(location + ' 오늘 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
+    print("[DEBUG1-1]today_dust (url) >>\n", url, end="\n\n")
+    
     locations = location.split(' ')
     req = Request(url)
     page = urlopen(req)
@@ -42,18 +48,28 @@ def today_dust(location):
     return dust
 
 
+
 def metropolitan(day, location):
     dust = day + ' ' + location + '의 미세먼지 정보를 알려드릴게요!'
-    enc_location = urllib.parse.quote(location + '+ ' + day + ' 미세먼지')
+    enc_location = urllib.parse.quote(location + ' ' + day + ' 미세먼지')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
+    print("[DEBUG1-1]metropolitan (url) >>\n", url, end="\n\n")
+
     req = Request(url)
     page = urlopen(req)
     html = page.read()
     soup = bs4.BeautifulSoup(html, 'html.parser')
+    # print("[DEBUG1-2]metropolitan (soup) >>\n", soup, end="\n\n")
+
     dust_soup = soup.find_all('dl')
     dust_morn = dust_soup[6].text.split()[1]
+    print("[DEBUG1-2]metropolitan (parsing_dust_morn) >>", dust_morn, end="\n")
     dust_noon = dust_soup[7].text.split()[1]
+    print("[DEBUG1-2]metropolitan (parsing_dust_noon) >>", dust_noon, end="\n")
+
     dust += '\n\n' + day + ' 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon
+    
+    
     enc_location = urllib.parse.quote(location + '+ ' + day + ' 초미세먼지')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
     req = Request(url)
@@ -64,6 +80,7 @@ def metropolitan(day, location):
     dust_morn = dust_soup[6].text.split()[1]
     dust_noon = dust_soup[7].text.split()[1]
     dust += '\n\n' + day + ' 오전 초미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon
+
 
     enc_location = urllib.parse.quote(location + '+ ' + day + ' 오존')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
@@ -84,17 +101,24 @@ def metropolitan(day, location):
     return dust
 
 
+
 def tomorrow_dust(location):
+    print("\n[DEBUG1-1]tomorrow_dust (location) >>", location, end="\n\n")
     if len(location.split()) == 1 and location in metropolitans:
-        dust = metropolitan('내일', location)
+        tdust = metropolitan('내일', location)
+    elif len(location.split()) == 1 and location in governments:
+        tdust = metropolitan('내일', location)
     else:
-        enc_location = urllib.parse.quote(location + '+ 내일 미세먼지')
+        enc_location = urllib.parse.quote(location + ' 내일 미세먼지')
         url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
+        print("[DEBUG1-1]tomorrow_dust (url) >>\n", url, end="\n\n")
 
         req = Request(url)
         page = urlopen(req)
         html = page.read()
         soup = bs4.BeautifulSoup(html, 'html.parser')
+        # print("[DEBUG1-2]tomorrow_dust (soup) >>\n", soup, end="\n\n")
+
         dust_figure = soup.find_all('tbody')[2].text.split()
         dust_figure.remove('미세먼지')
         dust_figure.remove('초미세먼지')
@@ -102,31 +126,38 @@ def tomorrow_dust(location):
         dust_figure.remove('자외선')
         dust_figure.remove('황사')
 
-        dust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!\n\n'
+        tdust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!\n\n'
         dust_morn = dust_figure[0]
+        print("[DEBUG1-2]tomorrow_dust (dust_morn) >>", dust_morn, end="\n")
         dust_noon = dust_figure[1]
-        dust += '내일 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon + '\n\n'
+        print("[DEBUG1-2]tomorrow_dust (dust_norn) >>", dust_noon, end="\n")
+
+        tdust += '내일 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon + '\n\n'
         supdust_morn = dust_figure[4]
         supdust_noon = dust_figure[5]
-        dust += '내일 오전 초미세먼지 상태는 ' + supdust_morn + ', 오후 상태는 ' + supdust_noon +'\n\n'
+        tdust += '내일 오전 초미세먼지 상태는 ' + supdust_morn + ', 오후 상태는 ' + supdust_noon +'\n\n'
         ozone_morn = dust_figure[8]
         ozone_noon = dust_figure[9]
-        dust += '내일 오전 오존 상태는 ' + ozone_morn + ', 오후 상태는 ' + ozone_noon + '입니다\n\n'
+        tdust += '내일 오전 오존 상태는 ' + ozone_morn + ', 오후 상태는 ' + ozone_noon + '입니다\n\n'
 
-        if '나쁨' in dust:
-            dust += '공기 상태가 나쁘니 마스크를 꼭 착용하세요!  :<'
+        if '나쁨' in tdust:
+            tdust += '공기 상태가 나쁘니 마스크를 꼭 착용하세요!  :<'
 
-    print("\n\n[DEBUG3-3]tomorrow_dust (msg) >>\n", dust)
+    print("\n\n[DEBUG3-3]tomorrow_dust (msg) >>\n", tdust)
 
-    return dust
+    return tdust
+
 
 
 def after_tomorrow_dust(location):
     if len(location.split()) == 1 and location in metropolitans:
         dust = metropolitan('내일', location)
+    elif len(location.split()) == 1 and location in governments:
+        dust = metropolitan('내일', location)
     else:
-        enc_location = urllib.parse.quote(location + '+ 내일 미세먼지')
+        enc_location = urllib.parse.quote(location + ' 내일 미세먼지')
         url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
+        print("[DEBUG1-1]after_tomorrow_dust (url) >>\n", url, end="\n\n")
 
         req = Request(url)
         page = urlopen(req)
