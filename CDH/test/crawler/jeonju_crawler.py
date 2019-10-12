@@ -24,7 +24,6 @@ def jeonju_cr(city, info):
     # print("_____________________________________________________________________________________________________________")
     ## 전주의 문화
     data = soup.find('div', class_="new_des_content")
-    # print(data, end="\n\n")
 
     title = list(data.select('h2'))
     title1 = ps.parsing_data(str(title[1]))
@@ -38,11 +37,8 @@ def jeonju_cr(city, info):
     title2 = ps.parsing_data(str(title[2]))
     msg += "["+title2+"]" + "\n"
 
-    # print(info[26], end="\n\n")
-    # print(info[30], end="\n\n")
-    # print(info[34], end="\n\n")
-    # print(info[38])
     msg += info[26] + "\n\n" + info[30] + "\n" + info[34] + "\n" + info[38] + "\n"
+
 
     return msg
 

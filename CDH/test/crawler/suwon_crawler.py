@@ -6,12 +6,12 @@ import requests
 
 import bs4
 
-from . import parsing_test as ps
-# import parsing_test as ps   # 테스트 경로
+# from . import parsing_test as ps
+import parsing_test as ps   # 테스트 경로
 
 
 def suwon_cr(city, info):
-    url = 'http://info.hanatour.com/dest/content/know/29?ctype=1000010089&contentID=1000043135101'
+    url = 'http://info.hanatour.com/dest/content/know/30?ctype=1000010089&contentID=1000043614101'
     # url = 'http://info.hanatour.com/dest/content/know/' + city +'?ctype=1000010089&contentID=' + info
 
     req = Request(url)
@@ -24,7 +24,6 @@ def suwon_cr(city, info):
     # print("_____________________________________________________________________________________________________________")
     ## 경주의 역사
     data = soup.find('div', class_="new_des_content")
-    # print(data, end="\n\n")
 
     title = list(data.select('h2'))
     title1 = ps.parsing_data(str(title[0]))
@@ -32,59 +31,59 @@ def suwon_cr(city, info):
 
     info = list(data)
     
-    msg += info[4] + info[6] + "\n\n"
+    # msg += info[4] + info[6] + "\n\n"
 
-    text = ps.parsing_data(str(info[11]))
-    sub_title1 = text[1:3]
-    data1 = text[4:21]
-    sub_title2 = text[22:27]
-    data2 = text[28:48] + "\n"
-    sub_title3 = text[49:53]
-    data3 = text[54:82]
-    sub_title4 = text[82:87]
-    data4 = text[88:116]
-    sub_title5 = text[116:120]
-    data5 = text[121:] + "\n"
+    # text = ps.parsing_data(str(info[11]))
+    # sub_title1 = text[1:3]
+    # data1 = text[4:21]
+    # sub_title2 = text[22:27]
+    # data2 = text[28:48] + "\n"
+    # sub_title3 = text[49:53]
+    # data3 = text[54:82]
+    # sub_title4 = text[82:87]
+    # data4 = text[88:116]
+    # sub_title5 = text[116:120]
+    # data5 = text[121:] + "\n"
 
-    msg += sub_title1 + " :" + data1 + sub_title2 + " :" + data2 + sub_title3 + " :" + data3 + sub_title4 + " :" + data4 + sub_title5 + " :" + data5
-
-
-    table = soup.find('div', class_="nd-table-wrap").find_all('td')
-
-    for i in range(3,55):
-        if i % 3 == 0:
-            msg += ps.parsing_data(str(table[i])) + " : " + ps.parsing_data(str(table[i+1])) + "\n"
+    # msg += sub_title1 + " :" + data1 + sub_title2 + " :" + data2 + sub_title3 + " :" + data3 + sub_title4 + " :" + data4 + sub_title5 + " :" + data5
 
 
-    # print("\n\n_____________________________________________________________________________________________________________")
-    ## 지역 안내
-    title = list(data.select('h3'))
-    title2 = ps.parsing_data(str(title[1]))
-    msg += "\n\n\n["+title2+"]" + "\n"
+    # table = soup.find('div', class_="nd-table-wrap").find_all('td')
 
-    msg += info[36] + info[38] + "\n\n\n"
+    # for i in range(3,55):
+    #     if i % 3 == 0:
+    #         msg += ps.parsing_data(str(table[i])) + " : " + ps.parsing_data(str(table[i+1])) + "\n"
 
 
-    # print("\n\n_____________________________________________________________________________________________________________")
-    ## 경주의 사계
-    title = list(data.select('h3'))
-    title3 = ps.parsing_data(str(title[2]))
-    msg += "["+title3+"]" + "\n\n"
+    # # print("\n\n_____________________________________________________________________________________________________________")
+    # ## 지역 안내
+    # title = list(data.select('h3'))
+    # title2 = ps.parsing_data(str(title[1]))
+    # msg += "\n\n\n["+title2+"]" + "\n"
 
-    table2 = soup.find('div', class_="new_des_content").find_all('td')
-    table2 = table2[89:145]
+    # msg += info[36] + info[38] + "\n\n\n"
+
+
+    # # print("\n\n_____________________________________________________________________________________________________________")
+    # ## 경주의 사계
+    # title = list(data.select('h3'))
+    # title3 = ps.parsing_data(str(title[2]))
+    # msg += "["+title3+"]" + "\n\n"
+
+    # table2 = soup.find('div', class_="new_des_content").find_all('td')
+    # table2 = table2[89:145]
     
 
-    for i in range(0, 56):
-        if i == 0:
-            msg += ps.parsing_data(str(table2[i])) + "(" + ps.parsing_data(str(table2[i+1])) + ") : " + ps.parsing_data(str(table2[i+3])) + "\n"
-        elif i % 4 == 0:
-            msg += ps.parsing_data(str(table2[i])) + "(" + ps.parsing_data(str(table2[i+1])) + ") : " + ps.parsing_data(str(table2[i+3])) + "\n"
+    # for i in range(0, 56):
+    #     if i == 0:
+    #         msg += ps.parsing_data(str(table2[i])) + "(" + ps.parsing_data(str(table2[i+1])) + ") : " + ps.parsing_data(str(table2[i+3])) + "\n"
+    #     elif i % 4 == 0:
+    #         msg += ps.parsing_data(str(table2[i])) + "(" + ps.parsing_data(str(table2[i+1])) + ") : " + ps.parsing_data(str(table2[i+3])) + "\n"
 
 
     return msg
 
 
 
-# suwon_cr('29', '1000043135101')
-# print(suwon_cr('29', '1000043135101'))
+# suwon_cr('30', '1000043614101')
+print(suwon_cr('30', '1000043614101'))

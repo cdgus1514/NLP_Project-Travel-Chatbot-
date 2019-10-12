@@ -24,7 +24,6 @@ def incheon_cr(city, info):
     # print("_____________________________________________________________________________________________________________")
     ## 인천
     data = soup.find('div', class_="new_des_content")
-    # print(data, end="\n\n")
 
     title = list(data.select('h4'))
     title1 = ps.parsing_data(str(title[1]))
@@ -39,12 +38,6 @@ def incheon_cr(city, info):
     ## 과거로의 시간 여행, 인천 중구
     title2 = ps.parsing_data(str(title[2]))    
     msg += "["+title2+"]" + "\n"
-
-    # print(info[22], end="\n")
-    # print(info[24], end="\n")
-    # print(info[26], end="\n")
-    # print(info[28], end="\n")
-    # print(info[30], end="\n")
 
     msg += info[22] + info[24] + info[26] + "\n" + info[28] +"\n" + info[30] + "\n\n\n"
 

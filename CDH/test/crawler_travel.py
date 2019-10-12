@@ -255,12 +255,10 @@ def recommand_travelCity(entity):
         msg += jj.jeonju_cr(str(city), info)
 
     elif purpose[0][0] == "경주":
-        # msg += gj.gyeongju_cr(str(city), info)
-        return '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
+        msg += gj.gyeongju_cr(str(city), info)
 
     elif purpose[0][0] == "화성":
-        # msg += hs.hwaseong_cr(str(city), info)
-        return '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
+        msg += hs.hwaseong_cr(str(city), info)
 
     elif purpose[0][0] == "부산":
         msg += bs.busan_cr(str(city), info)

@@ -11,8 +11,8 @@ from . import parsing_test as ps
 
 
 def gyeongju_cr(city, info):
-    url = 'http://info.hanatour.com/dest/content/know/29?ctype=1000010089&contentID=1000043135101'
-    # url = 'http://info.hanatour.com/dest/content/know/' + city +'?ctype=1000010089&contentID=' + info
+    # url = 'http://info.hanatour.com/dest/content/know/29?ctype=1000010089&contentID=1000043135101'
+    url = 'http://info.hanatour.com/dest/content/know/' + city +'?ctype=1000010089&contentID=' + info
 
     req = Request(url)
     page = urlopen(req)
@@ -24,62 +24,45 @@ def gyeongju_cr(city, info):
     # print("_____________________________________________________________________________________________________________")
     ## 경주의 역사
     data = soup.find('div', class_="new_des_content")
-    # print(data, end="\n\n")
 
     title = list(data.select('h2'))
     title1 = ps.parsing_data(str(title[0]))
     msg = "["+title1+"]" + "\n"
 
     info = list(data)
-    
-    msg += info[4] + info[6] + "\n\n"
-
-    text = ps.parsing_data(str(info[11]))
-    sub_title1 = text[1:3]
-    data1 = text[4:21]
-    sub_title2 = text[22:27]
-    data2 = text[28:48] + "\n"
-    sub_title3 = text[49:53]
-    data3 = text[54:82]
-    sub_title4 = text[82:87]
-    data4 = text[88:116]
-    sub_title5 = text[116:120]
-    data5 = text[121:] + "\n"
-
-    msg += sub_title1 + " :" + data1 + sub_title2 + " :" + data2 + sub_title3 + " :" + data3 + sub_title4 + " :" + data4 + sub_title5 + " :" + data5
-
-
-    table = soup.find('div', class_="nd-table-wrap").find_all('td')
-
-    for i in range(3,55):
-        if i % 3 == 0:
-            msg += ps.parsing_data(str(table[i])) + " : " + ps.parsing_data(str(table[i+1])) + "\n"
+    msg += info[18] + "\n"
 
 
     # print("\n\n_____________________________________________________________________________________________________________")
     ## 지역 안내
-    title = list(data.select('h3'))
     title2 = ps.parsing_data(str(title[1]))
     msg += "\n\n\n["+title2+"]" + "\n"
 
-    msg += info[36] + info[38] + "\n\n\n"
+    for i in range(26,37):
+        if i % 2 == 0:
+            msg += info[i]
+    
+    msg += info[38] + "\n\n\n\n"
 
 
     # print("\n\n_____________________________________________________________________________________________________________")
     ## 경주의 사계
-    title = list(data.select('h3'))
     title3 = ps.parsing_data(str(title[2]))
     msg += "["+title3+"]" + "\n\n"
 
-    table2 = soup.find('div', class_="new_des_content").find_all('td')
-    table2 = table2[89:145]
-    
+    sub_title1 = "# 4월 '경주 벚꽃 축제', '신라 도자기  축제'\n"
+    info1 = info[48] + ps.parsing_data(str(info[51])) + "\n"
+    sub_title2 = "# 6~7월 '경주 연꽃 축제'\n"
+    info2 = info[56] + ps.parsing_data(str(info[59])) + "\n"
+    sub_title3 = "# 10월 '신라 문화제'\n"
+    info3 = info[64] + ps.parsing_data(str(info[67])) + "\n"
+    sub_title4 = "# 12~2월 '천년의 빛 축제'\n"
+    info4 = info[74] + ps.parsing_data(str(info[77])) + "\n\n\n"
 
-    for i in range(0, 56):
-        if i == 0:
-            msg += ps.parsing_data(str(table2[i])) + "(" + ps.parsing_data(str(table2[i+1])) + ") : " + ps.parsing_data(str(table2[i+3])) + "\n"
-        elif i % 4 == 0:
-            msg += ps.parsing_data(str(table2[i])) + "(" + ps.parsing_data(str(table2[i+1])) + ") : " + ps.parsing_data(str(table2[i+3])) + "\n"
+    sub_title5 = "TIP! 언제 방문해도 볼 수 있는 공연은?!\n"
+    info5 = info[83]
+
+    msg += sub_title1 + info1 + sub_title2 + info2 + sub_title3 + info3 + sub_title4 + info4 + sub_title5 + info5
 
 
     return msg
