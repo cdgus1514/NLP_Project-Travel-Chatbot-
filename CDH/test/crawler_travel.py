@@ -264,8 +264,7 @@ def recommand_travelCity(entity):
         msg += bs.busan_cr(str(city), info)
 
     elif purpose[0][0] == "수원":
-        # msg += sw.suwon_cr(str(city), info)
-        return '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
+        msg += sw.suwon_cr(str(city), info)
 
     elif purpose[0][0] == "강원":
         msg += gw.gangwon_cr(str(city), info)
