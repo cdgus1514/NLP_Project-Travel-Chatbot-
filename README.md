@@ -118,6 +118,7 @@
 - cdh_intent
 - configs
 - model_configs
+- crawler_configs
 - flaskrestful (main)
 - cdh_scenario
 - crawler_restaurant
@@ -131,7 +132,7 @@
 ##### crawler_travel 파일 추가
 ##### seoul, busan crawler 파일 추가
 ##### scenario 파일 수정
-##### travel_config 파일 추가
+##### crawler_configs 파일 추가
 ##### flaskrestful 파일 수정 (post 포맷 변경)
 <br>
 
@@ -144,8 +145,10 @@
 - tokenizer
 - preprocess
 - cdh_intent
+- jbh_entity
 - configs
 - model_configs
+- crawler_configs
 - flaskrestful (main)
 - cdh_scenario
 - crawler_restaurant
@@ -172,8 +175,10 @@
 - tokenizer
 - preprocess
 - cdh_intent
+- jbh_entity
 - configs
 - model_configs
+- crawler_configs
 - flaskrestful (main)
 - cdh_scenario
 - crawler_restaurant
@@ -189,4 +194,31 @@
 ##### crawler_restaurant 파일 수정 (예외처리)
 ##### crawler_dust 파일 수정 (크롤링 수정)
 ##### application 파일 수정 (fallback 처리)
+<br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/14
+- application [get_intent(○), get_entity(○), scenario(△)]
+- tokenizer
+- preprocess
+- cdh_intent
+- jbh_entity
+- configs
+- model_configs
+- crawler_configs
+- flaskrestful (main)
+- cdh_scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju)
+<br>
+<br>
+
+##### crawler_travel 파일 수정 (check_purpose 함수 수정)
+##### crawler_configs 파일 수정 (도시목록 추가)
 <br>
