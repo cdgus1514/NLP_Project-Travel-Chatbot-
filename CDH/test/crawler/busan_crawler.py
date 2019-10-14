@@ -69,7 +69,7 @@ def busan_cr(city, info):
     msg += sub_title + "\n"
     msg += info[104] + info[106] + "\n"
     location = ps.parsing_data(str(info[109]))
-    msg += location + "\n\n\n"
+    msg += location
 
     return msg
 

@@ -109,7 +109,7 @@ def check_purpose(entity):
         result = [select_city, info_index]
         return result
 
-    elif entity == "시장":
+    elif entity == "시장" or entity == "시장 구경":
         print("\n[DEBUG1-1]check_purpose (8)", end="\n")
         # 하나투어
         city = config.market
@@ -204,9 +204,21 @@ def check_purpose(entity):
 
         result = [select_city, info_index]
         return result
+
+    elif entity in config.p_sports:
+        print("\n[DEBUG1-1]check_purpose (16)", end="\n")        
+        # 네이버
+        city = config.stadium
+        select_city = random.choice(list(city.items()))
+
+        info = config.info
+        info_index = info[str(select_city[1])]
+
+        result = [select_city, info_index]
+        return result
     
     elif entity in config.p_mountain_leisure:
-        print("\n[DEBUG1-1]check_purpose (16)", end="\n")
+        print("\n[DEBUG1-1]check_purpose (17)", end="\n")
         # 아직 찾는중
         result = [("",99), ""]
         return result
@@ -225,12 +237,6 @@ def recommand_travelCity(entity):
     
     # 추천도시 선택 >> [('도시','index'), 'info_index']
     purpose = check_purpose(entity) 
-    # purpose = [('서울', '35'), '1000056139101']
-    # purpose = [('부산', '36'), '1000060452101']
-    # purpose = [('전주', '28'), '1000043129101']
-    # purpose = [('제주', '7'), '1000043115101']
-    # purpose = [('인천', '45'), '1000072355101']
-    # purpose = [('강원', '37'), '1000060540101']
     print("\n[DEBUG1-1]recommand_travelCity (purpose) >>", purpose, end="\n\n")
 
 
@@ -273,8 +279,7 @@ def recommand_travelCity(entity):
         msg += inc.incheon_cr(str(city), info)
 
     elif purpose[0][0] == "강화":
-        # msg += gh.ganghwa_cr(str(city), info)
-        return '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
+        msg += gh.ganghwa_cr(str(city), info)
 
     else:
         return '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
@@ -285,4 +290,4 @@ def recommand_travelCity(entity):
 
 
 
-recommand_travelCity('경기장')
+# recommand_travelCity('경기장')

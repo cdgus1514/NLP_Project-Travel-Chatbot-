@@ -60,7 +60,7 @@ def gangwon_cr(city, info):
     ## 강원도의 기후
     title = list(data.select('h3'))
     title2 = ps.parsing_data(str(title[1]))
-    msg += "\n\n\n["+title2+"]" + "\n"
+    msg += "\n\n["+title2+"]" + "\n"
 
     msg += info[36] + info[38] + "\n\n\n"
 
