@@ -4,7 +4,8 @@ from urllib.request import urlopen, Request
 
 import bs4
 
-
+state = None
+slot_data = None
 
 def __tone_maker(weather_morning, weather_noon):
     if weather_morning[0] == "흐림":
@@ -49,6 +50,7 @@ def __tone_maker(weather_morning, weather_noon):
 
 
 def today_weather(location):
+    global state, slot_data
     print("[DEBUG1-1]today_weather (location) >>", location)
     enc_location = urllib.parse.quote(location + '오늘 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
@@ -101,15 +103,19 @@ def today_weather(location):
         template_msg = '오늘 ' + location + ' 날씨를 알려드릴게요. ' + weather
 
     except:
-        template_msg = '죄송해요. 아직 배우고 있는 중이라 ' + location + "의 날씨는 알 수 없어요. 지역의 이름을 말하시면 알려드릴게요."
+        print("############################")
+        print("#  WEATHER CRAWLER ERROR   #")
+        print("############################")
 
-    print("\n\n[DEBUG2-1]today_weather (msg) >>\n", template_msg, end="\n\n")
+        template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    return template_msg
+    # print("\n\n[DEBUG2-1]today_weather (msg) >>\n", template_msg, end="\n\n")
+    return template_msg, state, slot_data
 
 
 
 def tomorrow_weather(location):
+    global state, slot_data
     enc_location = urllib.parse.quote(location + ' 내일 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -159,15 +165,19 @@ def tomorrow_weather(location):
             template_msg += ' 내일은 우박을 꼭 조심하세요!'
 
     except:
-        template_msg = '죄송해요. 아직 배우고 있는 중이라 ' + location + "의 날씨는 알 수 없어요. 지역의 이름을 말하시면 알려드릴게요."
+        print("############################")
+        print("#  WEATHER CRAWLER ERROR   #")
+        print("############################")
 
-    print("\n\n[DEBUG2-2]tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
+        template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    return template_msg
+    # print("\n\n[DEBUG2-2]tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
+    return template_msg, state, slot_data
 
 
 
 def after_tomorrow_weather(location):
+    global state, slot_data
     enc_location = urllib.parse.quote(location + ' 모레 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -219,15 +229,20 @@ def after_tomorrow_weather(location):
             template_msg += ' 모레는 우박을 꼭 조심하세요!'
 
     except:
-        template_msg = '죄송해요. 아직 배우고 있는 중이라 ' + location + "의 날씨는 알 수 없어요. 지역의 이름을 말하시면 알려드릴게요."
+        print("############################")
+        print("#  WEATHER CRAWLER ERROR   #")
+        print("############################")
 
-    print("\n\n[DEBUG2-2]after_tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
+        # dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요." + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
+        template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    return template_msg
+    # print("\n\n[DEBUG2-2]after_tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
+    return template_msg, state, slot_data
 
 
 
 def specific_weather(location, date):
+    global state, slot_data
     try:
         enc_location = urllib.parse.quote(location + date + ' 날씨')
         url = 'https://www.google.com/search?q=' + enc_location
@@ -244,15 +259,15 @@ def specific_weather(location, date):
         if weather == '비': weather = '비가 오고'
         response = date + ' 날씨를 알려드릴게요. ' + location + '의 ' + date + ' 날씨는 ' + weather + ' 온도는 ' + temp + '도입니다.'
     except:
-        response = '죄송해요. 아직 배우고 있는 중이라 ' + date + "의 날씨는 알 수 없어요."
+        response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    print("\n\n[DEBUG2-3]specific_weather (msg) >>\n", response, end="\n\n")
-    
-    return response
+    # print("\n\n[DEBUG2-3]specific_weather (msg) >>\n", response, end="\n\n")
+    return response, state, slot_data
 
 
 
 def this_week_weather(location):
+    global state, slot_data
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
@@ -276,8 +291,11 @@ def this_week_weather(location):
             weather = i + '요일의 날씨는 ' + weather + ' 온도는 ' + temp + '도 입니다. '
             response.append(weather)
     except:
-        response = '죄송해요. 아직 배우고 있는 중이라 ' + location + "의 날씨는 알 수 없어요. 지역의 이름을 말하시면 알려드릴게요."
+        print("############################")
+        print("#  WEATHER CRAWLER ERROR   #")
+        print("############################")
 
-    print("\n\n[DEBUG2-3]this_week_weather (msg) >>\n", response, end="\n\n")
+        response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    return ' '.join(response)
+    # print("\n\n[DEBUG2-3]this_week_weather (msg) >>\n", response, end="\n\n")
+    return ' '.join(response), state, slot_data

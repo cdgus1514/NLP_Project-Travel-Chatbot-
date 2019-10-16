@@ -1,25 +1,31 @@
 from cdh_intent import get_intent
 from jbh_entity import get_entity
+from ljs_seq2seq import get_seq2seq
 
 from cdh_scenario import dust
 from cdh_scenario import weather
 from cdh_scenario import restaurant
 from cdh_scenario import travel
-# from cdh_scenario import attraction
+from cdh_scenario import attraction
 
 from tokenizer import tokenize
-from configs import IntentConfigs
-from model_configs import ModelConfigs
+from util.spell_checker import fix
 
 from gensim.models.word2vec import Word2Vec
 
+# Load Models
+from model_configs import ModelConfigs
+
+
 
 #CONFIG
-config = IntentConfigs()
 get_entity = get_entity()
+get_seq2seq = get_seq2seq()
+
+
 print("###### application.py ######")
 
-def run(pdata):
+def run(pdata, state):
     print('\n\nInput Questuon', end='\n')
     speech = preprcoess(pdata)
     print("\n\nPreprocessed >> " + speech, sep="", end="\n\n")
@@ -30,42 +36,45 @@ def run(pdata):
     entity = get_entity.predict(speech.split(' '))
     print("Entity >> " + str(entity), sep="", end="\n\n")
 
-    answer = scenario(intent, entity)
+    answer = scenario(intent, entity, state, speech)
     
     return answer
 
 
 
 def preprcoess(speech):
+    speech = fix(speech)
     speech = tokenize(speech)
+    speech = fix(speech)
 
     return speech
 
 
 
-def scenario(intent, entity):
+def scenario(intent, entity, state, speech):
     if intent == "먼지":
-        return dust(entity)
+        return dust(entity, state, None)
     
     elif intent == "날씨":
-        return weather(entity)
+        return weather(entity, state, None)
 
     elif intent == "맛집":
-        return restaurant(entity)
+        return restaurant(entity, state, None)
     
     elif intent == "여행지":
-        return travel(entity)
+        return travel(entity, state, None)
     
     elif intent == "관광지":
-        # return attraction(entity)
-        return intent
-        pass
+        return attraction(entity, state, None)
     
     else:
-        # seq2seq
-        return config.fallback_msg
+        return get_seq2seq.seq2seq_run(speech)
 
 
 
 # 테스트
 # run('바다가 유명한 여행지 알려주라')
+# a = ['분위기', '좋은', '카페'], ['O', 'O', 'LOCATION']
+# entity = tuple(a)
+# test = scenario("맛집", entity)
+# print(test)

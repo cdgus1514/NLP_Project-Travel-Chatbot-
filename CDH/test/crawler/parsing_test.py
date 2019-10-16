@@ -25,7 +25,7 @@ def parsing_data2(text):
     new_name=[]
 
     for c in text:
-        name = re.sub('[a-zA-Z/\{\}[\]\t|<>"=^]', "", c)
+        name = re.sub('[a-zA-Z/\{\}[\]\t_|<>"=^]', "", c)
         if name == "":
             pass
         else:

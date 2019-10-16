@@ -113,7 +113,7 @@ class get_entity():
         for i in range(self.trainSize - len(raw)):
             result.append(self.config.word_index['#'])
 
-        print("\n[DEBUG 1-1] (input_pred) >>", result)
+        print("\n[DEBUG1-1]input_pred (pred) >>", result)
 
         return result
 
@@ -180,7 +180,11 @@ class get_entity():
                     if d == idx:
                         result.append(tag)
                         break
-
+            
+            print("[DEBUG1-2]predict (result) >>", result)  # ['tag', 'tag', ...]
+            print("[DEBUG1-3]predict (result) >>", len(result)) # 20
+            # result = result[:len(tokenize)-1]
+            result = result[:len(tokenize)]
             results = (tokenize, result)
             
             return results

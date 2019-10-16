@@ -65,7 +65,7 @@ def get_intent(speech):
         index = np.argmax(intent)
         print("\n[DEBUG6-3]get_intent (index) >>", index, end="\n\n")
         print("\n[DEBUG6-3]get_intent (predict check) >>", intent[0][index], end="\n\n")
-        print("\n[DEBUG6-4]get_intent (before cnt) >>", cnt, end="\n")
+        # print("\n[DEBUG6-4]get_intent (before cnt) >>", cnt, end="\n")
 
         
         # fallback check
@@ -88,7 +88,7 @@ def get_intent(speech):
             for result, num in config.intent_mapping.items():
                 if index == num:
                     print(str(config.intent_mapping))
-                    print("\nIntent : %s, index :%d"% (result, index), end="\n")
+                    print("\nIntent : %s, index : %d"% (result, index), end="\n")
                     cnt = 0
                     print("____________________________________________________________________________________________________________________________", end="\n")
 

@@ -18,6 +18,8 @@ from keras.callbacks import EarlyStopping
 
 from configs import IntentConfigs
 
+
+
 def main():
     ## 1. intent 데이터셋 불러오기
     config = IntentConfigs()

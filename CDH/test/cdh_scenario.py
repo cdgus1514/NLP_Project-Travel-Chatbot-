@@ -3,45 +3,116 @@ from crawler_weather import today_weather
 from crawler_weather import tomorrow_weather
 from crawler_weather import this_week_weather
 from crawler_weather import specific_weather
+from crawler_weather import after_tomorrow_weather
 from crawler_dust import today_dust
 from crawler_dust import tomorrow_dust
 from crawler_dust import after_tomorrow_dust
 from crawler_travel import recommand_travelCity
+from crawler_attraction import recommand_attraction
 
-state = None
 
-def restaurant(named_entity):
-    print("[DEBUG1-1]scenario restaurant (named_entity) >>\n", named_entity)
+
+def restaurant(named_entity, state, slot):    # keyword_group, entity_group
+    print("[DEBUG1-1]scenario restaurant (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
-    print("[DEBUG1-2]scenario restaurant (keyword) >>\n", keyword_group)
+    print("[DEBUG1-2]scenario restaurant (keyword) >> ", keyword_group, end="\n")
     entity_group = named_entity[1]
-    print("[DEBUG1-2]scenario restaurant (entity) >>\n", entity_group)
+    print("[DEBUG1-2]scenario restaurant (entity) >> ", entity_group, end="\n\n")
     location = []
+    restaurants = []
 
     for k in zip(keyword_group, entity_group):
         if 'LOCATION' in k[1]:
             location.append(k[0])
+        elif 'RESTAURANT' in k[1]:
+            restaurants.append(k[0])
 
-    print("[DEBUG1-3]scenario restaurant (location) >>", location)
+    print("[DEBUG1-3]scenario restaurant (location) >>", location, end="\n")
+    print("[DEBUG1-3]scenario restaurant (restaurants) >>", restaurants, end="\n\n")
 
+    # request slot
     if len(location) == 0:
-        while len(location) == 0:
-            print('어떤 맛집을 알려드릴까요?')
-            print('Input Question >>\n', end='', sep='')
-            loc = input()
-            if loc is not None and loc.replace(' ', '') != '':
-                location.append(loc)
+        # if you receive a slot
+        if slot is not None:
+            location.append(slot)
+            slot = None
 
-    return recommend_restaurant(' '.join(location))
+            if len(restaurants) == 0:
+                if slot is not None:
+                    restaurants.append(slot)
+                    result = location + restaurants
+                    print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n\n")
+
+                    return recommend_restaurant(' '.join(result))
+                
+                else:
+                    state = "restaurant"
+            
+                    msg = '어떤 음식으로 알려드릴까요?'
+                    print("[DEBUG1-3]scenario restaurant (state1) >>", state, end="\n\n")
+                    print("[DEBUG1-3]scenario restaurant (location1) >>", location, end="\n")
+                    print("[DEBUG1-3]scenario restaurant (restaurants1) >>", restaurants, end="\n\n\n")
+                    print(msg, end="\n\n")
+
+                    print('Input Question \n', end='', sep='')
+                    keyword_group.insert(0, location[0])
+                    print("[DEBUG1-4]scenario restaurant (keyword_group) >>", keyword_group, end="\n")
+                    entity_group.insert(0, "LOCATION")
+                    print("[DEBUG1-4]scenario restaurant (entity_group) >>", entity_group, end="\n")
+
+                    return msg, state, named_entity
+
+            else:
+                result = location + restaurants
+                print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
+
+                return recommend_restaurant(' '.join(result))
+        
+        else:
+            state = "restaurant"
+            
+            msg = '어떤 지역으로 알려드릴까요?'
+            print("[DEBUG1-3]scenario restaurant (state) >>", state, end="\n\n\n")
+            print(msg, end="\n\n")
+
+            print('Input Question \n', end='', sep='')
+            return msg, state, named_entity
+    
+
+    if len(location) != 0 and len(restaurants) == 0:
+        if slot is not None:
+            restaurants.append(slot)
+            result = location + restaurants
+            print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
+
+            return recommend_restaurant(' '.join(result))
+        
+        else:
+            state = "restaurant"
+            
+            msg = '어떤 음식으로 알려드릴까요?'
+            print("[DEBUG1-3]scenario restaurant (state2) >>", state, end="\n")
+            print("[DEBUG1-3]scenario restaurant (location2) >>", location, end="\n")
+            print("[DEBUG1-3]scenario restaurant (restaurants2) >>", restaurants, end="\n\n\n")
+            print(msg, end="\n\n")
+
+            print('Input Question \n', end='', sep='')
+            return msg, state, named_entity
+
+    else:
+        result = location + restaurants
+        print("\n[DEBUG1-5]restaurant (result) >>", result)
+        
+        return recommend_restaurant(' '.join(result))
 
 
 
-def weather(named_entity):
-    print("[DEBUG2-1]scenario weather (named_entity) >>", named_entity, end="\n")
+def weather(named_entity, state, slot):
+    print("[DEBUG1-1]scenario weather (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
-    print("[DEBUG2-2]scenario weather (keyword) >>", keyword_group, end="\n")
+    print("[DEBUG1-2]scenario weather (keyword) >>", keyword_group, end="\n")
     entity_group = named_entity[1]
-    print("[DEBUG2-2]scenario weather (entity) >>", entity_group, end="\n\n")
+    print("[DEBUG1-2]scenario weather (entity) >>", entity_group, end="\n\n")
     date = []
     location = []
 
@@ -51,21 +122,43 @@ def weather(named_entity):
         elif 'LOCATION' in k[1]:
             location.append(k[0])
     
-    print("[DEBUG2-3]scenario weather (data) >> ", date, end="\n")
-    print("[DEBUG2-3]scenario weather (location) >> ", location, end="\n")
+    print("[DEBUG1-3]scenario weather (date) >> ", date, end="\n")
+    print("[DEBUG1-3]scenario weather (location) >> ", location, end="\n\n")
 
     if len(date) == 0:
         date.append('오늘')
 
+    # request slot
     if len(location) == 0:
-        while len(location) == 0:
-            print('어떤 지역을 알려드릴까요?')
-            print('Input Question >>\n', end='', sep='')
-            global state
-            state = "dust"
-            loc = input()
-            if loc is not None and loc.replace(' ', '') != '':
-                location.append(loc)
+        # if you receive a slot
+        if slot is not None:
+            location.append(slot)
+            print("[DEBUG1-4]scenario weather (slot added location) >> ", location, end="\n\n\n")
+
+            if '오늘' in date:
+                return today_weather(' '.join(location))
+            elif date[0] == '내일':
+                return tomorrow_weather(' '.join(location))
+            elif '모레' in date or '내일모레' in date:
+                return after_tomorrow_weather(' '.join(location))
+            elif '이번' in date and '주' in date:
+                return this_week_weather(' '.join(location))
+            else:
+                return specific_weather(' '.join(location), ' '.join(date))
+        
+        else:
+            state = "weather"
+            
+            msg = "어떤 지역의 날씨를 알려드릴까요?"
+            print("[DEBUG1-4]scenario weather (state) >>", state, end="\n\n")
+            print("[DEBUG1-3]scenario weather (date) >> ", date, end="\n")
+            print("[DEBUG1-3]scenario weather (location) >> ", location, end="\n\n\n")
+            print(msg, end="\n\n")
+
+            print('Input Question \n', end='', sep='')
+            
+            return msg, state, named_entity
+
 
     if '오늘' in date:
         return today_weather(' '.join(location))
@@ -80,12 +173,12 @@ def weather(named_entity):
 
 
 
-def dust(named_entity):
-    print("[DEBUG3-1]scenario dust (named_entity) >>", named_entity, end="\n")
+def dust(named_entity, state, slot):
+    print("[DEBUG1-1]scenario dust (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
-    print("[DEBUG3-2]scenario dust (keyword) >>\n", keyword_group)
+    print("[DEBUG1-2]scenario dust (keyword) >>", keyword_group, end="\n")
     entity_group = named_entity[1]
-    print("[DEBUG3-2]scenario dust (entity) >>", entity_group, end="\n\n")
+    print("[DEBUG1-2]scenario dust (entity) >>", entity_group, end="\n\n")
     date = []
     location = []
 
@@ -95,37 +188,63 @@ def dust(named_entity):
         elif 'LOCATION' in k[1]:
             location.append(k[0])
 
-    print("[DEBUG3-3]scenario dust (data) >> ", date, end="\n")
-    print("[DEBUG3-3]scenario dust (location) >> ", location, end="\n\n")   #['미추홀', '구'] >> 이런형식 안됨
+    print("[DEBUG1-3]scenario dust (data) >> ", date, end="\n")
+    print("[DEBUG1-3]scenario dust (location) >> ", location, end="\n\n")
 
     if len(date) == 0:
         date.append('오늘')
 
+    # request slot
     if len(location) == 0:
-        while len(location) == 0:
-            print('어떤 지역을 알려드릴까요?')
-            print('Input Question >>\n', end='', sep='')
-            loc = input()
-            if loc is not None and loc.replace(' ', '') != '':
-                location.append(loc)
+        # if you receive a slot
+        if slot is not None:
+            location.append(slot)
+            print("[DEBUG1-4]scenario dust (slot added location) >> ", location, end="\n\n\n")
+            
+            if '오늘' in date:
+                return today_dust(' '.join(location))
+            elif date[0] == '내일':
+                return tomorrow_dust(' '.join(location))
+            elif '모레' in date or '내일모레' in date:
+                return after_tomorrow_dust(' '.join(location))
+            else:
+                msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
+                
+                return msg, None, None
+            
+        else:
+            state = "dust"
 
-    if '오늘' in date:
-        return today_dust(' '.join(location))
-    elif date[0] == '내일':
-        return tomorrow_dust(' '.join(location))
-    elif '모레' in date or '내일모레' in date:
-        return after_tomorrow_dust(' '.join(location))
-    else:
-        return '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
+            msg = "어떤 지역의 미세먼지를 알려드릴까요?"
+            print("[DEBUG1-3]scenario dust (state) >>", state, end="\n\n")
+            print("[DEBUG1-3]scenario dust (data) >> ", date, end="\n")
+            print("[DEBUG1-3]scenario dust (location) >> ", location, end="\n\n\n")
+            print(msg, end="\n\n")
+
+            print('Input Question \n', end='', sep='')
+
+            return msg, state, named_entity
+
+    if len(date) != 0:
+        if '오늘' in date:
+            return today_dust(' '.join(location))
+        elif date[0] == '내일':
+            return tomorrow_dust(' '.join(location))
+        elif '모레' in date or '내일모레' in date:
+            return after_tomorrow_dust(' '.join(location))
+        else:
+            msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
+            
+            return msg, None, None
 
 
 
-def travel(named_entity):
-    print("[DEBUG4-1]scenario travel (named_entity) >>", named_entity)
+def travel(named_entity, state, slot):
+    print("[DEBUG1-1]scenario travel (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
-    print("[DEBUG4-2]scenario travel (keyword) >>", keyword_group)
+    print("[DEBUG1-2]scenario travel (keyword) >>", keyword_group, end="\n")
     entity_group = named_entity[1]
-    print("[DEBUG4-2]scenario travel (entity) >>", entity_group)
+    print("[DEBUG1-2]scenario travel (entity) >>", entity_group, end="\n")
     purpose = []
 
     for k in zip(keyword_group, entity_group):
@@ -134,19 +253,76 @@ def travel(named_entity):
         elif 'TRAVEL' in k[1]:
             purpose.append(k[0])
 
-    print("[DEBUG4-3]scenario travel (PURPOSE) >>", purpose)
+    print("[DEBUG1-3]scenario travel (purpose) >>", purpose, end="\n\n")
 
+    # request slot
     if len(purpose) == 0:
-        while len(purpose) == 0:
-            print('어떤 여행지를 알려드릴까요?')
-            print('Input Question >>\n', end='', sep='')
-            loc = input()
-            if loc is not None and loc.replace(' ', '') != '':
-                purpose.append(loc)
+        # if you receive a slot
+        if slot is not None:
+            purpose.append(slot)
+            print("[DEBUG1-3]scenario travel (slot added purpose) >>", purpose, end="\n\n\n")
 
+            return recommand_travelCity(' '.join(purpose))
+
+
+        else:
+            state = "travel"
+
+            msg = "어디로 여행하러 가고싶으세요?" +"\n\n" + "(바다, 계곡, 관광, 레져)"
+            print("[DEBUG1-3]scenario travel (state) >>", state, end="\n\n")
+            print("[DEBUG1-3]scenario travel (purpose) >>", purpose, end="\n\n\n")
+            print(msg, end="\n\n")
+
+            print('Input Question \n', end='', sep='')
+            
+            return msg, state, named_entity
+
+
+    print("[DEBUG1-3]scenario travel (purpose) >>", purpose)
     return recommand_travelCity(' '.join(purpose))
 
 
 
-def attraction(named_entity):
-    pass
+def attraction(named_entity, state, slot):
+    print("[DEBUG1-1]scenario attraction (named_entity) >>", named_entity, end="\n\n")
+    keyword_group = named_entity[0]
+    print("[DEBUG1-2]scenario attraction (keyword) >>", keyword_group, end="\n")
+    entity_group = named_entity[1]
+    print("[DEBUG1-2]scenario attraction (entity) >>", entity_group, end="\n\n")
+    location = []
+    attraction = []
+
+    for k in zip(keyword_group, entity_group):
+        if 'LOCATION' in k[1]:
+            location.append(k[0])
+        elif 'TRAVEL' in k[1]:
+            attraction.append(k[0])
+    
+    print("[DEBUG1-3]scenario attraction (location) >>", location, end="\n")
+    print("[DEBUG1-3]scenario attraction (attraction) >>", attraction, end="\n\n")
+
+
+    if len(attraction) == 0:
+        if slot is not None:
+            attraction.append(slot)
+            print("[DEBUG1-3]scenario attraction (slot added attraction) >>", attraction, end="\n")
+
+            return recommand_attraction(' '.join(location), ' '.join(attraction))
+
+
+        else:
+            state = "attraction"
+
+            msg = "어떤 여행지를 알려드릴까요?"
+            print("[DEBUG1-3]scenario attraction (state) >>", state, end="\n\n")
+            print("[DEBUG1-3]scenario attraction (location) >>", location, end="\n")
+            print("[DEBUG1-3]scenario attraction (attraction) >>", attraction, end="\n\n")
+            print(msg, end="\n\n")
+
+            print('Input Question \n', end='', sep='')
+            
+            return msg, state, named_entity
+
+
+    print("[DEBUG1-3]scenario attraction (attraction) >>", attraction, end="\n")
+    return recommand_attraction(' '.join(location), ' '.join(attraction))

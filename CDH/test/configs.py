@@ -13,7 +13,8 @@ class IntentConfigs:
     root_path = "CDH/"
     intent_model_path = root_path+"model/intent/"
     entity_model_path = root_path+"model/entity/"
-    fasttext_path = root_path+"fasttext/"
+    fasttext_path = root_path+"model/fasttext/"
+    seq2seq_path = root_path+"model/seq2seq/"
     
 
 
