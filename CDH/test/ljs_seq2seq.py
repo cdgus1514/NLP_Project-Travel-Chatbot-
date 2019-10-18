@@ -15,7 +15,8 @@ from konlpy.tag import Okt
 
 import keras
 
-from model_configs import ModelConfigs
+# from model_configs import ModelConfigs
+from models.Seq2SeqModel import Load_Seq2Seq
 
 
 ''' 데이터 로드 '''
@@ -51,8 +52,9 @@ epochs = 5
 RE_FILTER = re.compile("[.,!?\"':;~()]")
 
 
-# CONFIG
-mconfig = ModelConfigs()
+# Load Model
+# mconfig = ModelConfigs()
+mconfig = Load_Seq2Seq()
 
 
 
@@ -274,4 +276,4 @@ class get_seq2seq:
             sentence = self.space_join(sentence, mark='^')
             print("predicted sentence :", sentence)
 
-            return sentence, None, None
+            return sentence, None, None, None

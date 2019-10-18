@@ -10,7 +10,8 @@ from keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidir
 from keras.utils.np_utils import to_categorical
 from sklearn.model_selection import train_test_split
 
-from model_configs import ModelConfigs
+# from model_configs import ModelConfigs
+from models.EntityModel import Load_Entity
 
 
 
@@ -21,7 +22,8 @@ class get_entity():
     # 인덱스 번호
     word_index = {}
     entity_index = {}
-    config = ModelConfigs()
+    # config = ModelConfigs()
+    config = Load_Entity()
 
     # 훈련 데이터
     trainSize = 20

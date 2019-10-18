@@ -11,10 +11,22 @@ class IntentConfigs:
     intent_mapping = {'날씨': 0, '맛집': 1, '먼지': 2, '여행지': 3, '관광지': 4}
 
     root_path = "CDH/"
+    img_path = root_path+"img_upload/input/"
+    img_path_category = root_path+"img_upload/"
     intent_model_path = root_path+"model/intent/"
     entity_model_path = root_path+"model/entity/"
     fasttext_path = root_path+"model/fasttext/"
     seq2seq_path = root_path+"model/seq2seq/"
+
+    welcome_msg = "안녕하세요!  저는 여행관련 정보를 알려주는 병주봇 입니다  :)" + "\n\n" + "여행관련(여행지, 관광지, 맛집, 날씨/미세먼지)에 대한 정보를 제공하고 있어요!" + "\n\n" + "무엇이든 물어보세요!!"
+
+
+    # Image config
+    TARGET_SIZE = (256, 256)
+    TEST_BATCH_SIZE = 5
+    INPUT_SIZE = 27   # 클래스 개수
+    
+
     
 
 

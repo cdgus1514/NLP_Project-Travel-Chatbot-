@@ -110,7 +110,7 @@ def today_weather(location):
         template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG2-1]today_weather (msg) >>\n", template_msg, end="\n\n")
-    return template_msg, state, slot_data
+    return template_msg, state, slot_data, None
 
 
 
@@ -172,7 +172,7 @@ def tomorrow_weather(location):
         template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG2-2]tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
-    return template_msg, state, slot_data
+    return template_msg, state, slot_data, None
 
 
 
@@ -237,7 +237,7 @@ def after_tomorrow_weather(location):
         template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG2-2]after_tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
-    return template_msg, state, slot_data
+    return template_msg, state, slot_data, None
 
 
 
@@ -262,7 +262,7 @@ def specific_weather(location, date):
         response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG2-3]specific_weather (msg) >>\n", response, end="\n\n")
-    return response, state, slot_data
+    return response, state, slot_data, None
 
 
 
@@ -298,4 +298,4 @@ def this_week_weather(location):
         response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG2-3]this_week_weather (msg) >>\n", response, end="\n\n")
-    return ' '.join(response), state, slot_data
+    return ' '.join(response), state, slot_data, None

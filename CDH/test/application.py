@@ -1,6 +1,7 @@
 from cdh_intent import get_intent
 from jbh_entity import get_entity
 from ljs_seq2seq import get_seq2seq
+from gbj_image import get_image
 
 from cdh_scenario import dust
 from cdh_scenario import weather
@@ -14,7 +15,7 @@ from util.spell_checker import fix
 from gensim.models.word2vec import Word2Vec
 
 # Load Models
-from model_configs import ModelConfigs
+# from model_configs import ModelConfigs
 
 
 
@@ -25,19 +26,27 @@ get_seq2seq = get_seq2seq()
 
 print("###### application.py ######")
 
-def run(pdata, state):
-    print('\n\nInput Questuon', end='\n')
-    speech = preprcoess(pdata)
-    print("\n\nPreprocessed >> " + speech, sep="", end="\n\n")
-    
-    intent = get_intent(speech)
-    print("Intent >> " + intent, sep="", end="\n\n")
-    
-    entity = get_entity.predict(speech.split(' '))
-    print("Entity >> " + str(entity), sep="", end="\n\n")
 
-    answer = scenario(intent, entity, state, speech)
+
+def run(pdata, state, type):
     
+    if type == "nlp":
+        print('\n\nInput Questuon', end='\n')
+        speech = preprcoess(pdata)
+        print("\n\nPreprocessed >> " + speech, sep="", end="\n\n")
+        
+        intent = get_intent(speech)
+        print("Intent >> " + intent, sep="", end="\n\n")
+        
+        entity = get_entity.predict(speech.split(' '))
+        print("Entity >> " + str(entity), sep="", end="\n\n")
+
+        answer = scenario(intent, entity, state, speech)
+            
+    else:
+        answer = get_image(pdata)
+
+
     return answer
 
 

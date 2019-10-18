@@ -29,8 +29,9 @@ def place_cr(url):
         if item_class in ['_38kvCjMhn9', '_3XI4vbbwyp']: # 키워드, 안내
             continue
 
-        # 주소
-        elif item_class == '_1aj6--puXw':
+        # 주소 **** (태그 변경됨 >> item_class 변경됨)
+        # elif item_class == '_1aj6--puXw':
+        elif item_class == '_1h3B_0FxjX':
             content += '\n주소 : '+ item.find('p', class_ = '_2yqUQrcZuk').text + "\n"
         
         # 영업시간
@@ -76,7 +77,8 @@ def place_cr(url):
         img = soup.find('meta', property = 'og:image')
         if not soup.find('meta', property = 'og:image') == None:
             content += '\n\n\n이미지 : '+ img['content']
-    except: pass
+    except:
+        print("[DEBUG1-1]attraction_crawler place_cr (ERROR)")
 
     return content
 

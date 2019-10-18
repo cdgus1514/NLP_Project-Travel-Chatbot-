@@ -9,6 +9,7 @@ crawler = [place_link, place_list, festival_cr, festival_list]
 
 state = None
 slot_data = None
+imgurl = None
 
 
 
@@ -27,6 +28,7 @@ def search_cr(str_):
 
 
 def recommand_attraction(local, travel):
+    global state, slot_data, imgurl
     
     try:
         city_idx = city_search(local)
@@ -41,7 +43,7 @@ def recommand_attraction(local, travel):
             if not msg == None:
                 
                 print("\n[DEBUG1-1] recommand_attraction (msg(naver-naver)) >>\n", msg)
-                return msg, state, slot_data
+                return msg, state, slot_data, imgurl
 
             
             # 하나 투어
@@ -49,7 +51,7 @@ def recommand_attraction(local, travel):
             msg = travel_search(travel, city_idx)
             
             print("\n[DEBUG1-2] recommand_attraction (msg(hana)) >>\n", msg)
-            return msg, state, slot_data
+            return msg, state, slot_data, imgurl
 
         else:
             # 하나 투어
@@ -58,7 +60,7 @@ def recommand_attraction(local, travel):
             if not msg == None:
 
                 print("\n[DEBUG1-1] recommand_attraction (msg(hana)) >>\n", msg)            
-                return msg, state, slot_data
+                return msg, state, slot_data, imgurl
 
             # 네이버
             print('@네이버 (in 하나투어)', end="\n")
@@ -68,7 +70,7 @@ def recommand_attraction(local, travel):
             
             if not msg == None:
                 print("\n[DEBUG1-2] recommand_attraction (msg(hana-naver)) >>\n", msg)
-                return msg, state, slot_data
+                return msg, state, slot_data, imgurl
             
         
         # return result, state, slot_data
@@ -78,10 +80,10 @@ def recommand_attraction(local, travel):
         print("# ATTRACTION CRAWLER ERROR #")
         print("############################")
 
-        msg = "죄송해요, " + local + travel +"관광지에 대한 정보는 아직 준비중이에요  :(" + "\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
+        msg = "죄송해요, " + local + travel +" 관광지에 대한 정보는 아직 준비중이에요  :(" + "\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
 
-    return msg, state, slot_data
+    return msg, state, slot_data, imgurl
 
 
 # TEST
@@ -89,3 +91,6 @@ def recommand_attraction(local, travel):
 # recommand_attraction('', '남산타워')
 # recommand_attraction('', '박물관')
 # recommand_attraction('', '남산')
+
+
+# print(recommand_attraction('', '에버랜드'))

@@ -11,6 +11,14 @@ from crawler_travel import recommand_travelCity
 from crawler_attraction import recommand_attraction
 
 
+from crawler_configs import Crawlerconfigs
+from recommand.season_travel import season_recommand
+
+
+
+config = Crawlerconfigs()
+
+
 
 def restaurant(named_entity, state, slot):    # keyword_group, entity_group
     print("[DEBUG1-1]scenario restaurant (named_entity) >>", named_entity, end="\n\n")
@@ -30,13 +38,14 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
     print("[DEBUG1-3]scenario restaurant (location) >>", location, end="\n")
     print("[DEBUG1-3]scenario restaurant (restaurants) >>", restaurants, end="\n\n")
 
-    # request slot
+    # request slot(without location info)
     if len(location) == 0:
         # if you receive a slot
         if slot is not None:
             location.append(slot)
             slot = None
 
+            # without restaurant info
             if len(restaurants) == 0:
                 if slot is not None:
                     restaurants.append(slot)
@@ -60,7 +69,7 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
                     entity_group.insert(0, "LOCATION")
                     print("[DEBUG1-4]scenario restaurant (entity_group) >>", entity_group, end="\n")
 
-                    return msg, state, named_entity
+                    return msg, state, named_entity, None
 
             else:
                 result = location + restaurants
@@ -68,6 +77,7 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
 
                 return recommend_restaurant(' '.join(result))
         
+        # without slot
         else:
             state = "restaurant"
             
@@ -76,9 +86,10 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
             print(msg, end="\n\n")
 
             print('Input Question \n', end='', sep='')
-            return msg, state, named_entity
+            return msg, state, named_entity, None
     
 
+    # if you have location info but no restaurant info
     if len(location) != 0 and len(restaurants) == 0:
         if slot is not None:
             restaurants.append(slot)
@@ -97,7 +108,7 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
             print(msg, end="\n\n")
 
             print('Input Question \n', end='', sep='')
-            return msg, state, named_entity
+            return msg, state, named_entity, None
 
     else:
         result = location + restaurants
@@ -157,7 +168,7 @@ def weather(named_entity, state, slot):
 
             print('Input Question \n', end='', sep='')
             
-            return msg, state, named_entity
+            return msg, state, named_entity, None
 
 
     if '오늘' in date:
@@ -210,7 +221,7 @@ def dust(named_entity, state, slot):
             else:
                 msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
                 
-                return msg, None, None
+                return msg, None, None, None
             
         else:
             state = "dust"
@@ -223,7 +234,7 @@ def dust(named_entity, state, slot):
 
             print('Input Question \n', end='', sep='')
 
-            return msg, state, named_entity
+            return msg, state, named_entity, None
 
     if len(date) != 0:
         if '오늘' in date:
@@ -235,7 +246,7 @@ def dust(named_entity, state, slot):
         else:
             msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
             
-            return msg, None, None
+            return msg, None, None, None
 
 
 
@@ -257,6 +268,9 @@ def travel(named_entity, state, slot):
 
     # request slot
     if len(purpose) == 0:
+        
+        msg = season_recommand()
+
         # if you receive a slot
         if slot is not None:
             purpose.append(slot)
@@ -268,14 +282,14 @@ def travel(named_entity, state, slot):
         else:
             state = "travel"
 
-            msg = "어디로 여행하러 가고싶으세요?" +"\n\n" + "(바다, 계곡, 관광, 레져)"
+            msg += "아니면 어떤 여행을 하고싶으세요?" +"\n\n" + "키워드 >> [해수욕, 계곡, 관광, 온천, 레져, 계절]"
             print("[DEBUG1-3]scenario travel (state) >>", state, end="\n\n")
             print("[DEBUG1-3]scenario travel (purpose) >>", purpose, end="\n\n\n")
             print(msg, end="\n\n")
 
             print('Input Question \n', end='', sep='')
             
-            return msg, state, named_entity
+            return msg, state, named_entity, None
 
 
     print("[DEBUG1-3]scenario travel (purpose) >>", purpose)
@@ -321,7 +335,7 @@ def attraction(named_entity, state, slot):
 
             print('Input Question \n', end='', sep='')
             
-            return msg, state, named_entity
+            return msg, state, named_entity, None
 
 
     print("[DEBUG1-3]scenario attraction (attraction) >>", attraction, end="\n")

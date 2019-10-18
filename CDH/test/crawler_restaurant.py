@@ -33,7 +33,7 @@ def recommend_restaurant(location):
         if len(list_name) == 0:
             # seq2seq or 사과멘트
             msg = '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
-            return msg, state, slot_data
+            return msg, state, slot_data, None
 
         list_info = soup.find_all('div', class_='txt ellp')
         # print("\n\n[DEBUG1-7]recommand_restaurant (list_info) >>\n", list_info)
@@ -81,9 +81,9 @@ def recommend_restaurant(location):
             info = location
         else:
             info = list_info[frand].text
-        print("\n[DEBUG1-8]recommand_restaurant (info) >>", info, end="\n")
+        print("\n[DEBUG1-8]recommand_restaurant (info) >>", info, end="\n\n")
         specific_url = list_name[frand].get('href')
-        print("\n[DEBUG1-8]recommand_restaurant (specific_url) >>", specific_url, end="\n")
+        print("\n[DEBUG1-9]recommand_restaurant (specific_url) >>", specific_url, end="\n\n\n")
 
         
         # 검색 결과 중 랜덤으로 뽑은 맛집 정보 파싱
@@ -91,7 +91,48 @@ def recommend_restaurant(location):
         page = urlopen(req)
         html = page.read()
         soup = bs4.BeautifulSoup(html, 'html.parser')
+        # print("\n\n[DEBUG2-0]recommand_restaurant (specific_url soup) >>\n\n", soup)
         document = soup.find_all('div', {'class': 'txt'})
+        
+        ########################################### 이미지 ###########################################
+        try:
+            # image1
+            img = soup.find("img")
+            print("\n\n[DEBUG2-0]recommand_restaurant (img1) >>\n", img, end="\n")
+
+            test = img.get('alt')
+            print("\n\n[DEBUG2-0]recommand_restaurant (test) >>\n", test, end="\n")
+            
+            imgurl = img.get('src')
+            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl1) >>\n", imgurl, end="\n\n")
+
+            # image2
+            img2 = []
+            for meta in soup.find_all('meta'):
+                # print(meta)
+                img2.append(meta)
+            
+            img2 = img2[-1]
+            # print("\n\n[DEBUG2-0]recommand_restaurant (img2) >>\n", img, end="\n")
+            imgurl2 = img2
+            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl2) >>\n", imgurl, end="\n\n")
+
+
+        except:
+            if img is None or len(img) == 0:
+                img = []
+                for meta in soup.find_all('meta'):
+                    print(meta)
+                    img.append(meta)
+                
+                img = img[-1]
+                # print("\n\n[DEBUG2-0]recommand_restaurant (img3) >>\n", img, end="\n")
+                imgurl = img
+                print("\n\n[DEBUG2-0]recommand_restaurant (imgurl3) >>\n", imgurl, end="\n\n")
+            
+            else:
+                imgurl = "Failed search img"
+        #############################################################################################
 
         tel = ''
         if document[0] is not None:
@@ -121,7 +162,7 @@ def recommend_restaurant(location):
                     menu_dict[menu[i + 1]] = menu[i]
 
         link_path = soup.find('ul', {'class': 'list_relation_link'})
-        print("\n[DEBUG2-1]recommand_restaurant (link_path) >>\n", link_path, end="\n\n")
+        print("\n[DEBUG2-1]recommand_restaurant (link_path) >>", link_path, end="\n\n")
         if link_path is not None:
 
             link = link_path.find_all('li', {'class': 'list_item'})
@@ -164,7 +205,7 @@ def recommend_restaurant(location):
         else:
             description = ''
 
-        print("\n[DEBUG1-9]recommand_restaurant (description) >>\n", description)
+        # print("\n[DEBUG1-2-2]recommand_restaurant (description) >>\n", description)
 
         msg = info + '!  ' + name + '에 가보는 건 어떨까요?\n\n'
 
@@ -180,8 +221,9 @@ def recommend_restaurant(location):
         if tel != '':
             msg += '\n전화번호 : ' + tel
 
-        # print("\n\n\n[DEBUG3-1]recommand_restaurant (msg) >>\n", msg)
-        # return msg, state, slot_data
+        # print("\n\n\n[DEBUG2-3]recommand_restaurant (msg) >>\n", msg, end="\n\n\n")
+        print("[DEBUG2-3]recommand_restaurant (result imgUrl1) >>\n", imgurl, end="\n\n")
+        print("[DEBUG2-3]recommand_restaurant (imgUr2) >>\n", imgurl2, end="\n\n")
     
     except:
         print("############################")
@@ -189,10 +231,14 @@ def recommend_restaurant(location):
         print("############################")
 
         msg = "죄송해요, " + location + "에 대한 맛집 정보는 아직 준비중이에요 :(" + "\n" + "더 많은 정보들을 제공할 수 있도록 노력할게요."
-        # return msg, state, slot_data
     
-    return msg, state, slot_data
+    return msg, state, slot_data, imgurl
 
 
 
-# recommend_restaurant("강남 마카롱")
+# while True:
+#     print("키워드 입력 >> ", end=" ")
+    
+#     recommend_restaurant(input())
+
+# recommend_restaurant("막국수")
