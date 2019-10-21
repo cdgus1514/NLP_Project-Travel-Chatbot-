@@ -16,6 +16,8 @@ from .constants import CheckResult
 from .constants import base_url
 from .response import Checked
 
+
+
 _agent = requests.Session()
 PY3 = sys.version_info[0] == 3
 my_dict = pd.read_csv('CDH/test/util/spell_dict.csv')
@@ -23,6 +25,7 @@ spell_dict = {}
 
 for k, v in my_dict.values:
     spell_dict[k] = v
+
 
 
 def _remove_tags(text):
@@ -35,28 +38,31 @@ def _remove_tags(text):
     return result
 
 
+
 def check(text):
     """
     매개변수로 입력받은 한글 문장의 맞춤법을 체크합니다.
     """
+
+    print("\n\n\n[DEBUG1-0]spell check (text) >>", text, end="\n\n")
+
     if isinstance(text, list):
         result = []
         for item in text:
             checked = check(item)
+            print("\n\n[DEBUG1-1]spell check (checked) >>", checked)
             result.append(checked)
+        
         return result
 
     # 최대 500자까지 가능.
     if len(text) > 500:
+        
         return Checked(result=False)
 
-    payload = {
-        '_callback': 'window.__jindo2_callback._spellingCheck_0',
-        'q': text
-    }
 
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+    payload = {'_callback': 'window.__jindo2_callback._spellingCheck_0', 'q': text}
+    headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
         'referer': 'https://search.naver.com/'
     }
 
@@ -87,6 +93,9 @@ def check(text):
     items = html.split(' ')
     words = []
     tmp = ''
+    print("\n[DEBUG1-1]spell check (items) >>", items, end="\n\n\n")
+
+    
     for word in items:
         if tmp == '' and word[:1] == '<':
             pos = word.find('>') + 1
@@ -97,11 +106,17 @@ def check(text):
         if word[-5:] == '<end>':
             word = word.replace('<end>', '')
             tmp = ''
-
+        
+        print("\n[DEBUG1-2]spell check (word) >>", word)
         words.append(word)
+    
+    print("\n\n\n[DEBUG1-2]spell check (words) >>", words, end="\n\n")
+    
 
     for word in words:
+        print("\n[DEBUG1-3]spell check (word) >>", word)
         check_result = CheckResult.PASSED
+        
         if word[:5] == '<red>':
             check_result = CheckResult.WRONG_SPELLING
             word = word.replace('<red>', '')
@@ -115,15 +130,20 @@ def check(text):
         result['words'][word] = check_result
 
     result = Checked(**result)
+    print("\n[DEBUG1-4]spell check (result) >>", result, end="\n\n\n")
 
     return result
+
 
 
 def exception(text):
     for key, val in spell_dict.items():
         if key in text:
+            
             return text.replace(key, val)
+    
     return text
+
 
 
 def fix(text):
@@ -131,5 +151,7 @@ def fix(text):
         result = check(text)
         result.as_dict()  # dict로 출력
         answer = exception(result[2])
+        
         return answer
+   
     return text

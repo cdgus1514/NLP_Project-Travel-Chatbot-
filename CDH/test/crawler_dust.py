@@ -46,12 +46,12 @@ def today_dust(location):
         print("\n[DEBUG1-2]today_dust (dust_figure[5]) >>", dust_figure[5])
         print("\n[DEBUG1-2]today_dust (dust_figure[5]) >>", dust_figure[4], end="\n\n")
 
-        dust = '오늘 ' + location + '지역 미세먼지 정보를 알려드릴게요!\n\n' + '오늘 ' + location + '지역의 미세먼지 상태는 ' + dust_figure[
+        dust = '오늘 ' + location + '지역 미세먼지 정보를 알려드릴게요!  😊\n\n' + '오늘 ' + location + '지역의 미세먼지 상태는 ' + dust_figure[
             1] + ' 이고, 농도는 ' + dust_figure[0] + '\n\n초미세먼지 상태는 ' + dust_figure[3] + ' 이고, 농도는' + dust_figure[
                 2] + '\n\n오존 상태는 ' + dust_figure[5] + ' 이고, 농도는 ' + dust_figure[4] + '입니다!'
 
         if '나쁨' in dust:
-            dust += '공기 상태가 안좋으니 마스크를 꼭 착용하세요!  :<'
+            dust += '공기 상태가 안좋으니 마스크를 꼭 착용하세요!  😷'
 
     
     except:
@@ -59,7 +59,7 @@ def today_dust(location):
         print("#   DUST CRAWLER ERROR     #")
         print("############################")
 
-        dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요." + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
+        dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요. 😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG3-1]today_dust (msg) >>\n", dust)
     return dust, state, slot_data, None
@@ -68,7 +68,7 @@ def today_dust(location):
 
 def metropolitan(day, location):
     try:
-        dust = day + ' ' + location + '의 미세먼지 정보를 알려드릴게요!'
+        dust = day + ' ' + location + '의 미세먼지 정보를 알려드릴게요!  😊'
         enc_location = urllib.parse.quote(location + ' ' + day + ' 미세먼지')
         url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
         print("[DEBUG1-1]metropolitan (url) >>\n", url, end="\n\n\n")
@@ -112,14 +112,14 @@ def metropolitan(day, location):
         dust += '\n\n' + day + ' 오전 오존 상태는 ' + ozone_morn + ', 오후 상태는 ' + ozone_noon + '입니다'
 
         if '나쁨' in dust:
-            dust += '\n\n공기 상태가 나쁘니 마스크를 꼭 착용하세요!  :<'
+            dust += '\n\n공기 상태가 나쁘니 마스크를 꼭 착용하세요!  😷'
     
     except:
         print("############################")
         print("#   DUST CRAWLER ERROR     #")
         print("############################")
 
-        dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요." + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
+        dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요. 😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG3-2]metropolitan (msg) >>\n", dust)
     return dust
@@ -152,7 +152,7 @@ def tomorrow_dust(location):
             dust_figure.remove('자외선')
             dust_figure.remove('황사')
 
-            tdust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!\n\n'
+            tdust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!  😊\n\n'
             dust_morn = dust_figure[0]
             print("[DEBUG1-2]tomorrow_dust (dust_morn) >>", dust_morn, end="\n")
             dust_noon = dust_figure[1]
@@ -167,13 +167,13 @@ def tomorrow_dust(location):
             tdust += '내일 오전 오존 상태는 ' + ozone_morn + ', 오후 상태는 ' + ozone_noon + '입니다'
 
             if '나쁨' in tdust:
-                tdust += '\n\n공기 상태가 나쁘니 마스크를 꼭 착용하세요!  :<'
+                tdust += '\n\n공기 상태가 나쁘니 마스크를 꼭 착용하세요!  😷'
     except:
         print("############################")
         print("#   DUST CRAWLER ERROR     #")
         print("############################")
 
-        tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요." + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
+        tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요. 😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG3-3]tomorrow_dust (msg) >>\n", tdust)
     return tdust, state, slot_data, None
@@ -202,7 +202,7 @@ def after_tomorrow_dust(location):
             dust_figure.remove('자외선')
             dust_figure.remove('황사')
 
-            dust = '모레 ' + location + '의 미세먼지 정보를 알려드릴게요!\n\n'
+            dust = '모레 ' + location + '의 미세먼지 정보를 알려드릴게요!  😊\n\n'
             dust_morn = dust_figure[2]
             dust_noon = dust_figure[3]
             dust += '모레 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon + '\n\n'
@@ -214,13 +214,13 @@ def after_tomorrow_dust(location):
             dust += '모레 오전 오존 상태는 ' + ozone_morn + ', 오후 상태는 ' + ozone_noon + '입니다'
 
             if '나쁨' in dust:
-                dust += '\n\n공기 상태가 나쁘니 마스크를 꼭 착용하세요!  :<'
+                dust += '\n\n공기 상태가 나쁘니 마스크를 꼭 착용하세요!  😷'
     except:
         print("############################")
         print("#   DUST CRAWLER ERROR     #")
         print("############################")
 
-        tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요." + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
+        tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요.  😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
 
     # print("\n\n[DEBUG3-4]after_tomorrow_dust (msg) >>\n", dust)

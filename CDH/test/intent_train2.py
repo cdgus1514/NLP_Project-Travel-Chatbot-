@@ -10,19 +10,18 @@ from konlpy.tag import Okt
 from tokenizer import tokenize
 from preprocess import preprocess_data
 
-
 from keras.utils.np_utils import to_categorical
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, BatchNormalization, Dropout, Conv2D, MaxPooling2D, Flatten
 from keras.callbacks import EarlyStopping
 
-from configs import IntentConfigs
+from configs import Configs
 
 
 
 def main():
     ## 1. intent 데이터셋 불러오기
-    config = IntentConfigs()
+    config = Configs()
     okt = Okt()
 
     question = preprocess_data(True)
@@ -76,7 +75,7 @@ def main():
 
 
     ## 3. 모델 생성 및 훈련
-    print("shape >>", x_data.shape, y_data.shape)   # (None, 15 ,300, 1) / (None, 5) >> (1167, 15, 300, 1) (2120, 5)
+    print("shape >>", x_data.shape, y_data.shape)   # (None, 15 ,300, 1) / (None, 5)
 
     model = Sequential()
     model.add(Conv2D(12, kernel_size=(2,2), input_shape=(15, 300, 1), strides=(1,1), padding="valid", activation="relu"))

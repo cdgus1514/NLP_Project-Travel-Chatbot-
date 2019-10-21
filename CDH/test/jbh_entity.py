@@ -5,12 +5,10 @@ import pickle # Dictinary를 저장하는 라이브러리
 import keras
 from keras.models import Sequential
 from keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional, BatchNormalization
-# from keras.utils import CustomObjectScope
 
 from keras.utils.np_utils import to_categorical
 from sklearn.model_selection import train_test_split
 
-# from model_configs import ModelConfigs
 from models.EntityModel import Load_Entity
 
 

@@ -32,7 +32,7 @@ def recommend_restaurant(location):
         ## 검색 결과가 없을경우
         if len(list_name) == 0:
             # seq2seq or 사과멘트
-            msg = '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  :('
+            msg = '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  😥'
             return msg, state, slot_data, None
 
         list_info = soup.find_all('div', class_='txt ellp')
@@ -115,7 +115,7 @@ def recommend_restaurant(location):
             img2 = img2[-1]
             # print("\n\n[DEBUG2-0]recommand_restaurant (img2) >>\n", img, end="\n")
             imgurl2 = img2
-            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl2) >>\n", imgurl, end="\n\n")
+            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl2) >>\n", imgurl2, end="\n\n")
 
 
         except:
@@ -207,7 +207,7 @@ def recommend_restaurant(location):
 
         # print("\n[DEBUG1-2-2]recommand_restaurant (description) >>\n", description)
 
-        msg = info + '!  ' + name + '에 가보는 건 어떨까요?\n\n'
+        msg = info + '!  ' + name + '에 가보는 건 어떨까요?  😊\n\n'
 
         if description != ' ':
             msg += description
@@ -223,14 +223,14 @@ def recommend_restaurant(location):
 
         # print("\n\n\n[DEBUG2-3]recommand_restaurant (msg) >>\n", msg, end="\n\n\n")
         print("[DEBUG2-3]recommand_restaurant (result imgUrl1) >>\n", imgurl, end="\n\n")
-        print("[DEBUG2-3]recommand_restaurant (imgUr2) >>\n", imgurl2, end="\n\n")
+        print("[DEBUG2-3]recommand_restaurant (result imgUrl2) >>\n", imgurl2, end="\n\n")
     
     except:
         print("############################")
         print("# RESTAURANT CRAWLER ERROR #")
         print("############################")
 
-        msg = "죄송해요, " + location + "에 대한 맛집 정보는 아직 준비중이에요 :(" + "\n" + "더 많은 정보들을 제공할 수 있도록 노력할게요."
+        msg = "죄송해요, " + location + "에 대한 맛집 정보는 아직 준비중이에요 😥" + "\n" + "더 많은 정보들을 제공할 수 있도록 노력할게요."
     
     return msg, state, slot_data, imgurl
 

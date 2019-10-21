@@ -14,15 +14,11 @@ from util.spell_checker import fix
 
 from gensim.models.word2vec import Word2Vec
 
-# Load Models
-# from model_configs import ModelConfigs
-
 
 
 #CONFIG
 get_entity = get_entity()
 get_seq2seq = get_seq2seq()
-
 
 print("###### application.py ######")
 

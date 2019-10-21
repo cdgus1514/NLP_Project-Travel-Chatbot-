@@ -282,7 +282,7 @@ def travel(named_entity, state, slot):
         else:
             state = "travel"
 
-            msg += "아니면 어떤 여행을 하고싶으세요?" +"\n\n" + "키워드 >> [해수욕, 계곡, 관광, 온천, 레져, 계절]"
+            msg += "아니면 어떤 여행을 하고싶으세요?  🧐 " +"\n\n" + "키워드 >> [해수욕, 계곡, 관광, 온천, 레져, 계절]"
             print("[DEBUG1-3]scenario travel (state) >>", state, end="\n\n")
             print("[DEBUG1-3]scenario travel (purpose) >>", purpose, end="\n\n\n")
             print(msg, end="\n\n")

@@ -15,7 +15,6 @@ from konlpy.tag import Okt
 
 import keras
 
-# from model_configs import ModelConfigs
 from models.Seq2SeqModel import Load_Seq2Seq
 
 

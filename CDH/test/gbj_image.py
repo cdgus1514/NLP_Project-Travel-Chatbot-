@@ -5,14 +5,16 @@ import numpy as np
 import pandas as pd
 import os
 
+import pymysql as py
+
 from keras.preprocessing.image import ImageDataGenerator
 
-# from model_configs import ModelConfigs
 from models.ImageModel import Load_Image
-from configs import IntentConfigs
+from configs import Configs
 
-config = IntentConfigs()
-# mconfig = ModelConfigs()
+
+
+config = Configs()
 mconfig = Load_Image()
 
 
@@ -53,8 +55,12 @@ def get_image(filename):
 
 
 def idx_filter(output):
-
-    out_max = np.argmax(output, axis=1) # (1, input_size)의 output에서 최고값의 인덱스 추출
+    conn = py.connect(host="cdgus1514.cafe24.com", user="cdgus1514", password="Chlehd131312", database="cdgus1514")
+    cursor = conn.cursor()
+    cursor.execute("set names utf8")
+    cursor.execute("SELECT * FROM Image_guide;")
+    
+    out_max = np.argmax(output) # (1, input_size)의 output에서 최고값의 인덱스 추출
     print('인덱스는: ', out_max)
 
     output_reshape = output.reshape(config.INPUT_SIZE, )
@@ -62,24 +68,26 @@ def idx_filter(output):
     if output_reshape[out_max] < 0.9:
         print('\n불확실할 수 있는 이미지입니다.')
 
-
-    df = pd.read_csv(config.root_path+'test/data/image_guide.csv', sep=',', encoding='utf-8')
-    df = np.array(df)
-
     a = np.array(range(0, config.INPUT_SIZE))
-    
-    msg = ""
+
+    rows = cursor.fetchall()
+    rows = np.array(rows)
+
     for i in a:
-        if out_max == [i]:
-            # print(df[i,0])
-            # print(df[i,1])
-            # print(df[i,2])
-            # print(df[i,3])
-            # print(df[i,4])
-            msg += str(df[i, 0]) + '입니다.' + str(df[i, 1]) + '\n'
-            msg += '문의 번호는' + str(df[i, 2]) + '이고 홈페이지는' + str(df[i, 3]) + '입니다.' + "\n"
-            msg += '주소는' + str(df[i, 4]) + '이고 입장료는' + str(df[i, -1]) + '입니다.'
-    
-    print("\n\n[DEBUG1-2]idx_filter (msg) >>\n", msg, end="\n")
-    print("\n\n[DEBUG1-2]idx_filter (msg type) >>\n", type(msg), end="\n\n\n")
-    return msg
+        if out_max == i:
+            attraction = rows[i, 1]
+            content = rows[i, 2]
+            inquiry = rows[i, 3]
+            website = rows[i, 4]
+            address = rows[i, 5]
+            fee = rows[i, 6]
+
+            msg = "["+attraction+"]" + "\n\n"
+            msg += "안내 정보 : " + content +"\n"
+            msg += "전화번호 : " + inquiry + "\n"
+            msg += "홈페이지 : " + website + "\n"
+            msg += "주소 : " + address + "\n"
+            msg += "이용료 : " + fee + "\n"
+            print("\n\n[DEBUG1-2]idx_filter (msg) >>\n", msg, end="\n")    
+            
+            return msg

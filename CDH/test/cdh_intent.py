@@ -11,13 +11,13 @@ import keras
 from keras.utils.np_utils import to_categorical
 
 from tokenizer import tokenize
-from configs import IntentConfigs
+from configs import Configs
 from models.IntentModel import Load_Intent
 
 
 
 # CONFIG
-config = IntentConfigs()
+config = Configs()
 mconfig = Load_Intent()
 
 cnt = 0

@@ -33,7 +33,7 @@ def season_recommand():
 
         # print(recommand_at, end="\n\n\n") # ['산', '드라이브']
     
-    msg = season + "에는 "+ recommand_at[0] +" 또는 " + recommand_at[1] + " 여행은 어떠세요?" + "\n\n\n"
+    msg = season + "에는 "+ recommand_at[0] +" 또는 " + recommand_at[1] + " 여행은 어떠세요?  😃" + "\n\n\n"
 
 
     re_travel1 = []

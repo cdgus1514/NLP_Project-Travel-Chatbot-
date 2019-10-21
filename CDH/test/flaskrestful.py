@@ -10,7 +10,8 @@ from cdh_scenario import weather
 from cdh_scenario import travel
 from cdh_scenario import attraction
 
-from configs import IntentConfigs
+# from configs import IntentConfigs
+from configs import Configs
 
 import json, werkzeug, time
 
@@ -27,7 +28,8 @@ filename = None
 imgurl = None
 nlp = "nlp"
 img = "img"
-config = IntentConfigs()
+# config = IntentConfigs()
+config = Configs()
 
 
 
@@ -189,7 +191,7 @@ class ImageAnalysis(Resource):
             print("\n[DEBUG1-3]flask result (state) >>", state, end="\n")
             print("\n[DEBUG1-3]flask result (slot_data) >>", slot_data, end="\n\n\n")
             print("\n[DEBUG1-3]flask result (imgurl) >>", imgurl, end="\n\n\n")
-            
+
 
             result = [['message', message], ['sender', 'chatbot'], ['receiver', 'User']]
             result = dict(result)

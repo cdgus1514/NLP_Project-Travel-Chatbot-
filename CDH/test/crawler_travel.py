@@ -174,6 +174,13 @@ def check_purpose(entity):
         info_index = info[str(select_city[1])]
         result = [select_city, info_index]
 
+    elif entity == "리조트":
+        city = config.resort
+        select_city = random.choice(list(city.items()))
+
+        info_index = info[str(select_city[1])]
+        result = [select_city, info_index]
+
     elif entity in config.p_season:
         if entity == "봄":
             city = config.spring
@@ -212,13 +219,13 @@ def recommand_travelCity(entity):
         # 도시정보 크롤링
         if purpose[0][1] == 99:
             # 하나투어 리스트에 없는 도시들
-            msg = "죄송해요, " + entity + "에 대한 " +purpose[0][0] + " 여행지 정보는 아직 준비중이에요.  :( " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
+            msg = "죄송해요, " + entity + "에 대한 " +purpose[0][0] + " 여행지 정보는 아직 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
         else:
             city = purpose[0][1]    # 도시 인덱스
             info = purpose[1]       # 도시 정보 인덱스
 
-            msg = entity +"(으)로 유명한~!  " + purpose[0][0] +"에 가보는 건 어떠세요?  " +"\n" + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  :)\n\n\n"
+            msg = entity +"(으)로 유명한~!  " + purpose[0][0] +"에 가보는 건 어떠세요?  " +"\n" + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  😊\n\n\n"
 
             
             if purpose[0][0] == "서울":
@@ -252,7 +259,7 @@ def recommand_travelCity(entity):
                 msg += gh.ganghwa_cr(str(city), info)
 
             else:
-                msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  :( " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
+                msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
             
     
     except:
@@ -260,7 +267,7 @@ def recommand_travelCity(entity):
         print("#  TRAVEL CRAWLER ERROR    #")
         print("############################")
 
-        msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  :( " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
+        msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
     # print("\n\n[DEBUG1-2]recommand_travelCity (msg) >>\n", msg)
     return msg, state, slot_data, imgurl
