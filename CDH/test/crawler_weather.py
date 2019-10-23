@@ -73,34 +73,34 @@ def today_weather(location):
                    .find('p', class_='cast_txt').text).split(',')
 
         if weather[0] == '비':
-            weather = '오늘은 우산을 챙겨야 할지도 몰라요. ☂ 오늘 ' + location + '에는 ' + '비가 와요. 🌧' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘은 우산을 챙겨야 할지도 몰라요. ☂ 오늘 ' + location + '에는 ' + '비가 와요. 🌧\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '맑음':
-            weather = '오늘 ' + location + '에는 ' + '해가 떴어요. 아주 맑아요. 🌤' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘 ' + location + '에는 ' + '해가 떴어요. 아주 맑아요. 🌤\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '흐림':
-            weather = '오늘 ' + location + '에는 ' + '구름이 끼어있을 거에요. 날씨가 꽤나 흐려요. ⛅' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘 ' + location + '에는 ' + '구름이 끼어있을 거에요. 날씨가 꽤나 흐려요. ⛅\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '구름많고 한때 비':
-            weather = '오늘 ' + location + '에는 ' + '구름이 끼어있고 한때 비가 올 수도 있어요. 날씨가 꽤나 흐려요. 🌦' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘 ' + location + '에는 ' + '구름이 끼어있고 한때 비가 올 수도 있어요. 날씨가 꽤나 흐려요. 🌦\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '구름많음':
-            weather = '오늘 ' + location + '에는 ' + '구름이 많이 많이 끼어있어요. ☁' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘 ' + location + '에는 ' + '구름이 많이 많이 끼어있어요. ☁\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '구름조금':
-            weather = '오늘 ' + location + '에는 ' + '구름이 조금 끼어있어요. ⛅' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘 ' + location + '에는 ' + '구름이 조금 끼어있어요. ⛅\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '눈':
-            weather = '오늘 ' + location + '에는 ' + '눈이 와요. 🌨 추울테니까 옷을 따뜻하게 입고 가요. 🧤🧣' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘 ' + location + '에는 ' + '눈이 와요. 🌨 추울테니까 옷을 따뜻하게 입고 가요. 🧤🧣\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '우박':
-            weather = '조심하세요! 😲 오늘 ' + location + '에는 ' + '우박이 내려요. ☄' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '조심하세요! 😲 오늘 ' + location + '에는 ' + '우박이 내려요. ☄\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
         elif weather[0] == '흐리고 가끔 비':
-            weather = '오늘은 우산을 챙겨야 할지도 몰라요. ☂ 오늘 ' + location + '에는 ' + '비가 올 수 있고 흐린 날씨에요. 🌧' + \
-                      ' 현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
+            weather = '오늘은 우산을 챙겨야 할지도 몰라요. ☂ 오늘 ' + location + '에는 ' + '비가 올 수 있고 흐린 날씨에요. 🌧\n\n' + \
+                      '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
 
-        template_msg = '오늘 ' + location + ' 날씨를 알려드릴게요. 😊' + weather
+        template_msg = '오늘 ' + location + ' 날씨를 알려드릴게요. 🧐\n\n' + weather
 
     except:
         print("############################")
@@ -151,8 +151,8 @@ def tomorrow_weather(location):
             glue = '에도'
 
         weather_morning, weather_noon = __tone_maker(weather_morning, weather_noon)
-        template_msg = '내일 ' + location + ' 날씨를 알려드릴게요. 😊' + ' 내일 오전엔 ' + weather_morning[
-            0] + ' , 기온은 ' + temperature_morning + '에요. 오후' + glue + ' ' + weather_noon[
+        template_msg = '내일 ' + location + ' 날씨를 알려드릴게요. 🧐\n\n' + '내일 오전엔 ' + weather_morning[
+            0] + ' , 기온은 ' + temperature_morning + '에요.\n\n' + '오후' + glue + ' ' + weather_noon[
                            0] + ' , 기온은 ' + temperature_noon + '입니다.'
 
         if '비가 내' in template_msg:
@@ -169,7 +169,7 @@ def tomorrow_weather(location):
         print("#  WEATHER CRAWLER ERROR   #")
         print("############################")
 
-        template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  :(" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
+        template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     # print("\n\n[DEBUG2-2]tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
     return template_msg, state, slot_data, None
@@ -217,8 +217,8 @@ def after_tomorrow_weather(location):
             glue = '에도'
 
         weather_morning, weather_noon = __tone_maker(weather_morning, weather_noon)
-        template_msg = '모레 ' + location + ' 날씨를 알려드릴게요. 😊' + ' 모레 오전엔 ' + weather_morning[
-            0] + ' , 기온은 ' + temperature_morning + '에요. 오후' + glue + ' ' + weather_noon[
+        template_msg = '모레 ' + location + ' 날씨를 알려드릴게요. 🧐\n\n' + '모레 오전엔 ' + weather_morning[
+            0] + ' , 기온은 ' + temperature_morning + '\n\n' + '오후' + glue + ' ' + weather_noon[
                            0] + ' , 기온은 ' + temperature_noon + '입니다.'
 
         if '비가 내' in template_msg:
@@ -257,7 +257,7 @@ def specific_weather(location, date):
         weather = soup.find('span', {'id': 'wob_dc'}).text
         temp = soup.find('span', class_='wob_t').text
         if weather == '비': weather = '비가 오고'
-        response = date + ' 날씨를 알려드릴게요. 😊' + location + '의 ' + date + ' 날씨는 ' + weather + ' 온도는 ' + temp + '도입니다.'
+        response = date + ' 날씨를 알려드릴게요. 🧐\n\n' + location + '의 ' + date + ' 날씨는 ' + weather + ' 온도는 ' + temp + '도입니다.'
     except:
         response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😭" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
@@ -274,7 +274,7 @@ def this_week_weather(location):
             'referer': 'http://google.com'}
 
         days = ['월', '화', '수', '목', '금', '토', '일']
-        templete_msg = location + '의 이번주 날씨를 알려드릴게요. 😊'
+        templete_msg = location + '의 이번주 날씨를 알려드릴게요. 🧐\n\n'
         response = []
         response.append(templete_msg)
 

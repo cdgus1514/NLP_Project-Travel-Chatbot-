@@ -46,7 +46,7 @@ def today_dust(location):
         print("\n[DEBUG1-2]today_dust (dust_figure[5]) >>", dust_figure[5])
         print("\n[DEBUG1-2]today_dust (dust_figure[5]) >>", dust_figure[4], end="\n\n")
 
-        dust = '오늘 ' + location + '지역 미세먼지 정보를 알려드릴게요!  😊\n\n' + '오늘 ' + location + '지역의 미세먼지 상태는 ' + dust_figure[
+        dust = '오늘 ' + location + '지역 미세먼지 정보를 알려드릴게요!  🧐\n\n' + '오늘 ' + location + '지역의 미세먼지 상태는 ' + dust_figure[
             1] + ' 이고, 농도는 ' + dust_figure[0] + '\n\n초미세먼지 상태는 ' + dust_figure[3] + ' 이고, 농도는' + dust_figure[
                 2] + '\n\n오존 상태는 ' + dust_figure[5] + ' 이고, 농도는 ' + dust_figure[4] + '입니다!'
 
@@ -68,7 +68,7 @@ def today_dust(location):
 
 def metropolitan(day, location):
     try:
-        dust = day + ' ' + location + '의 미세먼지 정보를 알려드릴게요!  😊'
+        dust = day + ' ' + location + '의 미세먼지 정보를 알려드릴게요!  🧐'
         enc_location = urllib.parse.quote(location + ' ' + day + ' 미세먼지')
         url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
         print("[DEBUG1-1]metropolitan (url) >>\n", url, end="\n\n\n")
@@ -152,7 +152,7 @@ def tomorrow_dust(location):
             dust_figure.remove('자외선')
             dust_figure.remove('황사')
 
-            tdust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!  😊\n\n'
+            tdust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!  🧐\n\n'
             dust_morn = dust_figure[0]
             print("[DEBUG1-2]tomorrow_dust (dust_morn) >>", dust_morn, end="\n")
             dust_noon = dust_figure[1]

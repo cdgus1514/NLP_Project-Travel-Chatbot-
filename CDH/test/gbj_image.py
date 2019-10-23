@@ -30,26 +30,31 @@ def get_image(filename):
     im = ImageOps.fit(im, size, Image.ANTIALIAS, 0, (0.5, 0.5))
     im.save(filename)
 
-    with keras.backend.get_session().graph.as_default():
-        test_datagen = ImageDataGenerator(rescale=1./255)
+    try:
+        with keras.backend.get_session().graph.as_default():
+            test_datagen = ImageDataGenerator(rescale=1./255)
 
-        test_generator = test_datagen.flow_from_directory(config.img_path_category, # D:/Chatbot_KerasImage/data_testset_0924/
-                                                        shuffle=False,
-                                                        target_size=config.TARGET_SIZE,
-                                                        batch_size=config.TEST_BATCH_SIZE,
-                                                        class_mode='categorical')
+            test_generator = test_datagen.flow_from_directory(config.img_path_category, # D:/Chatbot_KerasImage/data_testset_0924/
+                                                            shuffle=False,
+                                                            target_size=config.TARGET_SIZE,
+                                                            batch_size=config.TEST_BATCH_SIZE,
+                                                            class_mode='categorical')
 
-        output = mconfig.image_model.predict_generator(test_generator, steps=1)
-        np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
-        print('Predict output:\n', output)
+            output = mconfig.image_model.predict_generator(test_generator, steps=1)
+            np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+            print('Predict output:\n', output)
 
-        msg = idx_filter(output)
+            msg, url = idx_filter(output)
 
-        # 가져온 파일을 삭제합니다.
-        if os.path.isfile(filename):
-            os.remove(filename)
+            # 가져온 파일을 삭제합니다.
+            if os.path.isfile(filename):
+                os.remove(filename)
 
-        return msg, None, None, None
+            # return msg, None, None, None
+    except:
+        msg = "죄송해요, 아직 해당 이미지에 대해 배우지 못했어요  😥"
+
+    return msg, None, None, url
 
 
 
@@ -81,13 +86,18 @@ def idx_filter(output):
             website = rows[i, 4]
             address = rows[i, 5]
             fee = rows[i, 6]
+            url = rows[i, 7]
 
-            msg = "["+attraction+"]" + "\n\n"
-            msg += "안내 정보 : " + content +"\n"
-            msg += "전화번호 : " + inquiry + "\n"
-            msg += "홈페이지 : " + website + "\n"
-            msg += "주소 : " + address + "\n"
-            msg += "이용료 : " + fee + "\n"
-            print("\n\n[DEBUG1-2]idx_filter (msg) >>\n", msg, end="\n")    
+
+            msg = "["+attraction+"]" + "에 대해 알려드릴께요!  🧐" + "\n\n\n"
+            msg += "🔎안내 정보 " + "\n" + content + "\n"
+            msg += "📞전화번호 : " + inquiry + "\n"
+            msg += "🏠홈페이지 : " + website + "\n"
+            msg += "📬주소 : " + address + "\n"
+            msg += "💲이용료 : " + fee + "\n"
+
+
+            print("\n\n[DEBUG1-2]idx_filter (msg) >>\n", msg, end="\n")
+            print("\n\n[DEBUG1-2]idx_filter (url) >>\n", url, end="\n")
             
-            return msg
+            return msg, url

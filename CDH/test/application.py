@@ -12,7 +12,7 @@ from cdh_scenario import attraction
 from tokenizer import tokenize
 from util.spell_checker import fix
 
-from gensim.models.word2vec import Word2Vec
+# from gensim.models.word2vec import Word2Vec
 
 
 
@@ -28,7 +28,7 @@ def run(pdata, state, type):
     
     if type == "nlp":
         print('\n\nInput Questuon', end='\n')
-        speech = preprcoess(pdata)
+        speech = preprocess(pdata)
         print("\n\nPreprocessed >> " + speech, sep="", end="\n\n")
         
         intent = get_intent(speech)
@@ -47,7 +47,7 @@ def run(pdata, state, type):
 
 
 
-def preprcoess(speech):
+def preprocess(speech):
     speech = fix(speech)
     speech = tokenize(speech)
     speech = fix(speech)

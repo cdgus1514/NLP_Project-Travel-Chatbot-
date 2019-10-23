@@ -20,7 +20,6 @@ class get_entity():
     # 인덱스 번호
     word_index = {}
     entity_index = {}
-    # config = ModelConfigs()
     config = Load_Entity()
 
     # 훈련 데이터
@@ -33,8 +32,8 @@ class get_entity():
 
     def save_Dataset(self, sentence_list, entity_list, folderName = 'ft'):
 
-        if not os.path.exists(self._path + folderName): os.makedirs(self._path + folderName)
-        # 풀더가 없을 경우 생성.
+        if not os.path.exists(self._path + folderName):
+            os.makedirs(self._path + folderName)
 
         # 단어 인덱스
         sentence_flatten = sum(sentence_list, []) # 배열 차원 펼치기
@@ -58,6 +57,7 @@ class get_entity():
         for word, _ in word_count:
             word_index[word] = idx
             idx += 1
+
         self.word_index = word_index
         with open(self._path + folderName + '\\wordIndex.pickle', 'wb') as f:
             pickle.dump(self.word_index, f, pickle.HIGHEST_PROTOCOL)
@@ -68,16 +68,21 @@ class get_entity():
 
         # entity 인덱스 번호 부여
         entity_index = {'#': 0}
-        for idx in range(len(entity_set)): entity_index[entity_set[idx]] = idx + 1
+        for idx in range(len(entity_set)):
+            entity_index[entity_set[idx]] = idx + 1
+
         self.entity_index = entity_index
         with open(self._path + folderName + '\\entityIndex.pickle', 'wb') as f:
             pickle.dump(self.entity_index, f, pickle.HIGHEST_PROTOCOL)
         
+
         # entity 훈련 데이터 생성
         entity_data = []
         for y in entity_list:
             y = self.entity_pred(y)
             entity_data.append(y)
+
+
         entity_data = to_categorical(entity_data)
         self.entity_data = entity_data
         np.save(self._path + folderName+ '\\entity_data.npy', self.entity_data)
@@ -87,19 +92,11 @@ class get_entity():
         for x in sentence_list:
             x = self.input_pred(x)
             sentence_data.append(x)
+
+
         self.sentence_data = np.array(sentence_data)
         np.save(self._path + folderName+ '\\sentence_data.npy', self.sentence_data)
         print(len(sentence_data), len(entity_data))
-
-
-
-    # def load_Dataset(self, folderName = 'ft'):
-    #     self.entity_data = np.load(self._path+ folderName+ '\\entity_data.npy')
-    #     self.sentence_data = np.load(self._path+ folderName+ '\\sentence_data.npy')
-    #     with open(self._path+folderName+'\\wordIndex.pickle', 'rb') as f:
-    #         self.word_index = pickle.load(f)
-    #     with open(self._path+folderName+'\\entityIndex.pickle', 'rb') as f:
-    #         self.entity_index = pickle.load(f)
 
 
 
@@ -142,7 +139,7 @@ class get_entity():
         if save:
             # 훈련
             model = Sequential()
-            model.add(Embedding(len(self.word_index), 100, input_length = self.trainSize))
+            model.add(Embedding(len(self.word_index), 100, input_length=self.trainSize))
             model.add(Bidirectional(LSTM(units=32, return_sequences=True))) # recurrent_dropout=0.2
             model.add(BatchNormalization())
             model.add(Bidirectional(LSTM(units=64, return_sequences=True)))
@@ -158,7 +155,7 @@ class get_entity():
             if not os.path.exists(self._path + folderName): os.makedirs(self._path + folderName)
             model.save(self._path + folderName + '\\model.h5')
             model.save_weights(self._path + folderName + '\\weight.h5')
-        else: 
+        else:
             model = self.config.entity_model
 
         self.trainModel = model
@@ -183,7 +180,6 @@ class get_entity():
             
             print("[DEBUG1-2]predict (result) >>", result)  # ['tag', 'tag', ...]
             print("[DEBUG1-3]predict (result) >>", len(result)) # 20
-            # result = result[:len(tokenize)-1]
             result = result[:len(tokenize)]
             results = (tokenize, result)
             

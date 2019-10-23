@@ -207,19 +207,19 @@ def recommend_restaurant(location):
 
         # print("\n[DEBUG1-2-2]recommand_restaurant (description) >>\n", description)
 
-        msg = info + '!  ' + name + '에 가보는 건 어떨까요?  😊\n\n'
+        msg = info + '!  ' + name + '에 가보는 건 어떨까요?  🤗\n\n'
 
         if description != ' ':
             msg += description
 
         if time != '':
-            msg += '\n\n운영시간은 ' + time
+            msg += '\n\n⏰운영시간은 ' + time
 
         if addr != '':
-            msg += '\n주소 : ' + addr
+            msg += '\n📬주소 : ' + addr
 
         if tel != '':
-            msg += '\n전화번호 : ' + tel
+            msg += '\n📞전화번호 : ' + tel
 
         # print("\n\n\n[DEBUG2-3]recommand_restaurant (msg) >>\n", msg, end="\n\n\n")
         print("[DEBUG2-3]recommand_restaurant (result imgUrl1) >>\n", imgurl, end="\n\n")

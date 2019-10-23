@@ -22,14 +22,19 @@ mconfig = Load_Intent()
 
 cnt = 0
 
+word2vec_model = mconfig.word2vec_model
+w2c_index = word2vec_model.wv.index2word # fasttext가 적용된 단어 목록들
+
 
 
 # 입력받은 문자열(테스트 데이터) 임베딩&차원변경
 def interface_embed(text):  
     okt = Okt()
     ## 1. 워드 임베딩 모델 불러오기
-    word2vec_model = mconfig.word2vec_model
-    w2c_index = word2vec_model.wv.index2word # fasttext가 적용된 단어 목록들
+    # word2vec_model = mconfig.word2vec_model
+    # w2c_index = word2vec_model.wv.index2word # fasttext가 적용된 단어 목록들
+    global word2vec_model
+    global w2c_index
 
     q_raw = okt.morphs(text)
     print("\n[DEBUG5-1]q_raw (형태소 분석) >>", q_raw)
