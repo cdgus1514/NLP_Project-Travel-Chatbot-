@@ -1,5 +1,3 @@
-# Author : Choi Donghyeon
-
 import os
 
 import numpy as np

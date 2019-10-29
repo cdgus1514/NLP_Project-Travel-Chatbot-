@@ -1,15 +1,15 @@
 import os, sys
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, 'path/to/Travel_Chatbot/src')
-print(sys.path)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pandas as pd
 import numpy as np
 from gensim.models import FastText
 from konlpy.tag import Okt
 
-from util.tokenizer import tokenize
-from util.preprocess_data import parsing_question
+# from util.tokenizer import tokenize
+# from util.preprocess import parsing_question
+from tokenizer import tokenize
+from preprocess import preprocess_data
 
 
 from keras.utils.np_utils import to_categorical
