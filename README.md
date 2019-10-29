@@ -1,6 +1,13 @@
 ﻿# __Choi DongHyeon__
 <br>
 
+## 개발환경
+- Windows 10
+- VSC
+- python 3.7.3
+<br>
+<br>
+
 ### cdh_intent.py
 - 워드 임베딩, 의도파악 학습 후 모델에 적용 >> 의도출력
 
@@ -47,7 +54,7 @@
 <br>
 <br>
 
-<!-- # 실행방법 (구현중) -- 10/11
+# 실행방법 (구현중) -- 10/11
 <br>
 
 1. configs 파일 root_path 수정 (경로 다를 경우)
@@ -57,7 +64,7 @@
 
 <br>
 <br>
-<br> -->
+<br>
 
 # 수정 -- 10/02
 - ~~main~~
@@ -132,7 +139,7 @@
 ##### crawler_travel 파일 추가
 ##### seoul, busan crawler 파일 추가
 ##### scenario 파일 수정
-##### crawler_configs 파일 추가
+##### crawler_config 파일 추가
 ##### flaskrestful 파일 수정 (post 포맷 변경)
 <br>
 
@@ -145,7 +152,6 @@
 - tokenizer
 - preprocess
 - cdh_intent
-- jbh_entity
 - configs
 - model_configs
 - crawler_configs
@@ -175,7 +181,6 @@
 - tokenizer
 - preprocess
 - cdh_intent
-- jbh_entity
 - configs
 - model_configs
 - crawler_configs
@@ -221,4 +226,74 @@
 
 ##### crawler_travel 파일 수정 (check_purpose 함수 수정)
 ##### crawler_configs 파일 수정 (도시목록 추가)
+<br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/15
+- application [get_intent(○), get_entity(○), scenario(○), seq2seq(○)]
+- tokenizer
+- preprocess
+- cdh_intent
+- jbh_entity
+- configs
+- model_configs
+- crawler_configs
+- flaskrestful (main)
+- cdh_scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler_attraction
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
+- ljs_sqe2sqe
+- util(constants, response, spell_checker, speel_dict.csv)
+<br>
+<br>
+
+##### flaskrestful 파일 수정 (slot 처리)
+##### application 파일 수정 (slot 처리, fallback-seq2seq 처리)
+##### cdh_scenario 파일 수정 (slot 처리, attraction 추가)
+##### crawler_* 파일 수정 (에러처리 [try-except])
+##### crawler 파일 추가 (attraction, hanatour, festival)
+##### crawler_configs 파일 수정 (하나투어 관광지 추가)
+##### model_configs 파일 수정 (seq2seq 모델불러오기 추가)
+##### ljs_seq2seq 파일 추가 (seq2seq[잡담-fallback 처리])
+##### util폴더 추가 (토큰화 후 스펠링 체크&수정)
+<br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/17
+- application [get_intent(○), get_entity(○), scenario(○), seq2seq(○)]
+- tokenizer
+- preprocess
+- cdh_intent
+- jbh_entity
+- configs
+- model_configs
+- crawler_configs
+- flaskrestful (main)
+- cdh_scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler_attraction
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
+- ljs_sqe2sqe
+- util(constants, response, spell_checker, speel_dict.csv)
+<br>
+<br>
+
+##### flaskrestful 파일 수정 (slot 처리, welcom class 추가)
+##### cdh_scenario 파일 수정 (slot 처리)
+##### crawler_configs 파일 수정 (여행지 리스트 추가)
+##### configs 파일 수정 (welcom 메세지 추가)
+##### spell_dict 파일 수정 (오타사전 데이터 추가)
 <br>

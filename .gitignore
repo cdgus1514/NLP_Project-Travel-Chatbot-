@@ -1,2 +1,4 @@
-CDH/model/
-CDH/model_bk/
+Travel_Chatbot/model_bk/
+Travel_Chatbot/test_bk/
+Travel_Chatbot/model/fasttext/*.npy
+Travel_Chatbot/model/original/
