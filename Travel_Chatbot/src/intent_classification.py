@@ -10,7 +10,7 @@ from konlpy.tag import Okt
 import keras
 from keras.utils.np_utils import to_categorical
 
-from preprocess.tokenizer import tokenize
+from util.tokenizer import tokenize
 from configs import Configs
 from models.IntentModel import Load_Intent
 

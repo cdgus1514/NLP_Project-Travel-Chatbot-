@@ -1,6 +1,6 @@
 import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-# sys.path.insert(0, 'path/to/Travel_Chatbot/src/util/')
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, 'path/to/Travel_Chatbot/src')
 print(sys.path)
 
 import pandas as pd

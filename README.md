@@ -8,36 +8,54 @@
 <br>
 <br>
 
-### cdh_intent.py
-- 워드 임베딩, 의도파악 학습 후 모델에 적용 >> 의도출력
+### intent_classification.py
+- 워드 임베딩, 의도파악 학습 후 모델에 적용 >> 의도 분류
 
-1. word2vec_model >> fasttext 학습 모델
+<!-- 1. word2vec_model >> fasttext 학습 모델
 2. model >> 의도파악 데이터셋 학습 된 모델
 3. interface_embed >> 입력받은 데이터 토큰화 후 워드임베딩 모델에 적용
-4. model.predict >> 워드임베딩 된 데이터를 학습된 모델에 predic 후 결과 출력
+4. model.predict >> 워드임베딩 된 데이터를 학습된 모델에 predic 후 결과 출력 -->
 
 <br>
 <br>
 
-### jbh_entity.py
-- 워드임베딩, 개체명인식 학습 후 모델에 적용 >> 개체출력
+### entity_classification.py
+- 워드임베딩, 개체명인식 학습 후 모델에 적용 >> 개체명 분류
+
+<br>
+<br>
+
+### seq2seq_translation.py
+- 워드임베딩, seq2seq 학습 후 모델에 적용 >> seq2seq 대화
+
+1. fallback 처리 된 문자열을 seq2seq 모델에 넣어 예측 후 결과 리턴
+
+<br>
+<br>
+
+
+### image_analysis.py
+- 이미지 학습 후 모델에 적용 >> 이미지 분류
+
 <br>
 <br>
 
 ### application.py
-- 챗봇 실행소스
+- 챗봇 로직(의도파악, 개체명인식, fallback, seq2seq, 이미지분석, 시나리오(웹 크롤링))
 
 1. input
 2. preprocess (tokenize >> 형태소분석, 불용어 제거)
 3. get_intent (의도파악)
 4. get_entity (개체명 인식)
-5. scenario   (의도, 개체명 >> 크롤링 >> 결과출력)
+5. get_seq2seq (seq2seq 대화)
+6. get_image  (이미지분석)
+7. scenario   (의도, 개체명 >> 크롤링 >> 결과출력)
 
 <br>
 <br>
 
-### cdh_scenario.py
-- 크롤링 실행 소스
+### scenario.py
+- 각 의도 웹 크롤링 실행
 
 1. intent 확인 후 맞는 카테고리 메소드 실행
 2. 테그 분리 후 크롤링 실행
@@ -45,21 +63,21 @@
 <br>
 <br>
 
-### flaskrestful.py
+### Flask_restfulAPI.py
 - flask_restful api 사용
-- POST방식으로 온 json 데이터를 파싱 후 훈련된 모델에 넣어 결과값 예측, POST 방식으로 클라이언트에게 결과값 전달
+- POST방식으로 온 json 데이터를 파싱 후 훈련된 모델에 넣어 결과값 예측 후 클라이언트에게 결과값 리턴
 
 <br>
 <br>
 <br>
 <br>
 
-# 실행방법 (구현중) -- 10/11
+# 실행방법 -- 10/11
 <br>
 
 1. configs 파일 root_path 수정 (경로 다를 경우)
 2. model_configs 파일 root_path 수정 (경로 다를 경우)
-3. flaskrestful.py 실행 (ip수정필요)
+3. flaskrestful.py 실행 (ip수정)
 4. 클라이언트에서 질문입력, 결과출력
 
 <br>

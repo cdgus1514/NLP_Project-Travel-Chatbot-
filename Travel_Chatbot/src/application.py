@@ -9,7 +9,7 @@ from scenario import restaurant
 from scenario import travel
 from scenario import attraction
 
-from preprocess.tokenizer import tokenize
+from util.tokenizer import tokenize
 from util.spell_checker import fix
 
 

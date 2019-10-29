@@ -218,7 +218,7 @@ def recommand_travelCity(entity):
 
 
         # 도시정보 크롤링
-        if purpose[0][1] == 99:
+        if purpose[0][1] == 99 and purpose[0][1] == None:
             # 하나투어 리스트에 없는 도시들
             msg = "죄송해요, " + entity + "에 대한 " +purpose[0][0] + " 여행지 정보는 아직 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
