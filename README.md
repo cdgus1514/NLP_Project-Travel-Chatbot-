@@ -77,7 +77,7 @@
 
 1. configs 파일 root_path 수정 (경로 다를 경우)
 2. model_configs 파일 root_path 수정 (경로 다를 경우)
-3. flaskrestful.py 실행 (ip수정)
+3. Flask_restfulAPI.py 실행 (ip수정)
 4. 클라이언트에서 질문입력, 결과출력
 
 <br>
@@ -89,10 +89,10 @@
 - application [get_intent(o), get_entity(x), scenario(x)]
 - tokenizer
 - preprocess
-- cdh_intent
+- intent_classification
 - configs
 - model_configs
-- flaskrestful (main)
+- Flask_restfulAPI (main)
 
 <br>
 
@@ -104,7 +104,7 @@
 1. 구글드라이브에서 최신 모델 다운로드 후 model/intent/ 경로에 저장
 2. configs 파일 root_path 수정 (경로 다를 경우)
 3. model_configs 파일 root_path 수정 (경로 다를 경우)
-4. flaskrestful.py 실행
+4. Flask_restfulAPI.py 실행
 5. 클라이언트에서 질문입력, 결과출력
 
 <br>
@@ -115,11 +115,11 @@
 - application [get_intent(○), get_entity(×), scenario(△)]
 - tokenizer
 - preprocess
-- cdh_intent
+- intent_classification
 - configs
 - model_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
@@ -140,12 +140,12 @@
 - application [get_intent(○), get_entity(×), scenario(△)]
 - tokenizer
 - preprocess
-- cdh_intent
+- intent_classification
 - configs
 - model_configs
 - crawler_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
@@ -158,7 +158,7 @@
 ##### seoul, busan crawler 파일 추가
 ##### scenario 파일 수정
 ##### crawler_config 파일 추가
-##### flaskrestful 파일 수정 (post 포맷 변경)
+##### Flask_restfulAPI 파일 수정 (post 포맷 변경)
 <br>
 
 <br>
@@ -169,12 +169,12 @@
 - application [get_intent(○), get_entity(○), scenario(△)]
 - tokenizer
 - preprocess
-- cdh_intent
+- intent_classification
 - configs
 - model_configs
 - crawler_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
@@ -186,7 +186,7 @@
 ##### crawler_travel 파일 수정
 ##### hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju crawler 파일 추가
 ##### scenario 파일 수정
-##### cdh_intent 파일 수정 (fallback 처리)
+##### intent_classification 파일 수정 (fallback 처리)
 ##### application 파일 수정 (fallback 처리)
 <br>
 
@@ -198,12 +198,12 @@
 - application [get_intent(○), get_entity(○), scenario(△)]
 - tokenizer
 - preprocess
-- cdh_intent
+- intent_classification
 - configs
 - model_configs
 - crawler_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
@@ -227,13 +227,13 @@
 - application [get_intent(○), get_entity(○), scenario(△)]
 - tokenizer
 - preprocess
-- cdh_intent
-- jbh_entity
+- intent_classification
+- entity_classification
 - configs
 - model_configs
 - crawler_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
@@ -251,35 +251,35 @@
 <br>
 
 # 수정 -- 10/15
-- application [get_intent(○), get_entity(○), scenario(○), seq2seq(○)]
+- application [get_intent(○), get_entity(○), scenario(○), get_seq2seq(○)]
 - tokenizer
 - preprocess
-- cdh_intent
-- jbh_entity
+- intent_classification
+- entity_classification
 - configs
 - model_configs
 - crawler_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
 - crawler_travel
 - crawler_attraction
 - crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
-- ljs_sqe2sqe
+- seq2seq_translation
 - util(constants, response, spell_checker, speel_dict.csv)
 <br>
 <br>
 
-##### flaskrestful 파일 수정 (slot 처리)
+##### Flask_restfulAPI 파일 수정 (slot 처리)
 ##### application 파일 수정 (slot 처리, fallback-seq2seq 처리)
-##### cdh_scenario 파일 수정 (slot 처리, attraction 추가)
+##### scenario 파일 수정 (slot 처리, attraction 추가)
 ##### crawler_* 파일 수정 (에러처리 [try-except])
 ##### crawler 파일 추가 (attraction, hanatour, festival)
 ##### crawler_configs 파일 수정 (하나투어 관광지 추가)
 ##### model_configs 파일 수정 (seq2seq 모델불러오기 추가)
-##### ljs_seq2seq 파일 추가 (seq2seq[잡담-fallback 처리])
+##### seq2seq_translation 파일 추가 (seq2seq[잡담-fallback 처리])
 ##### util폴더 추가 (토큰화 후 스펠링 체크&수정)
 <br>
 
@@ -288,30 +288,99 @@
 <br>
 
 # 수정 -- 10/17
-- application [get_intent(○), get_entity(○), scenario(○), seq2seq(○)]
+- application [get_intent(○), get_entity(○), scenario(○), get_seq2seq(○)]
 - tokenizer
 - preprocess
-- cdh_intent
-- jbh_entity
+- intent_classification
+- entity_classification
 - configs
 - model_configs
 - crawler_configs
-- flaskrestful (main)
-- cdh_scenario
+- Flask_restfulAPI (main)
+- scenario
 - crawler_restaurant
 - crawler_weather
 - crawler_dust
 - crawler_travel
 - crawler_attraction
 - crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
-- ljs_sqe2sqe
+- seq2seq_translation
 - util(constants, response, spell_checker, speel_dict.csv)
 <br>
 <br>
 
-##### flaskrestful 파일 수정 (slot 처리, welcom class 추가)
-##### cdh_scenario 파일 수정 (slot 처리)
+##### Flask_restfulAPI 파일 수정 (slot 처리, welcom class 추가)
+##### scenario 파일 수정 (slot 처리)
 ##### crawler_configs 파일 수정 (여행지 리스트 추가)
 ##### configs 파일 수정 (welcom 메세지 추가)
 ##### spell_dict 파일 수정 (오타사전 데이터 추가)
+<br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/23
+- application [get_intent(○), get_entity(○), scenario(○), get_seq2seq(○), get_image(○)]
+- tokenizer
+- preprocess
+- intent_classification
+- entity_classification
+- configs
+- ~~model_configs~~
+- models(EntityModel, IntentModel, ImageModel, Seq2SeqModel)
+- crawler_configs
+- Flask_restfulAPI (main)
+- scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler_attraction
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
+- seq2seq_translation
+- util(constants, response, spell_checker, speel_dict.csv)
+- image_analysis
+- model (entity, fasttext, image, seq2seq)
+<br>
+<br>
+
+##### Flask_restfulAPI 파일 수정 (이미지 분석처리 로직 추가)
+##### application 파일 수정 (이미지분석 로직 추가)
+##### models 폴더 추가 (서버 실행 시 모델 initializing)
+##### image_analysis 추가 (이미지 분석코드 추가)
+##### model 폴더 추가 (저장한 모델파일)
+<br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/25
+- application [get_intent(○), get_entity(○), scenario(○), get_seq2seq(○), get_image(○)]
+- tokenizer
+- preprocess
+- intent_classification
+- entity_classification
+- configs
+- ~~model_configs~~
+- models(EntityModel, IntentModel, ImageModel, Seq2SeqModel)
+- crawler_configs
+- Flask_restfulAPI (main)
+- scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler_attraction
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
+- seq2seq_translation
+- util(constants, response, spell_checker, speel_dict.csv)
+- image_analysis
+- model (entity, fasttext, image, seq2seq)
+<br>
+<br>
+
+##### Flask_restfulAPI 파일 수정 (json 리턴 형식 변경)
+##### crawler_* 파일 수정 (웹 크로링 시 url정보, 경도, 위도 정보 추출, return 형식 변경)
 <br>
