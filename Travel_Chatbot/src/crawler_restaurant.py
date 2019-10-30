@@ -300,4 +300,4 @@ def recommend_restaurant(location):
 #     recommend_restaurant(input())
 
 # recommend_restaurant("서초구 마카롱")
-recommend_restaurant("해운대 카페")
+# recommend_restaurant("해운대 카페")

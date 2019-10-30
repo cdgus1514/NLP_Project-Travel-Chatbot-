@@ -44,13 +44,13 @@ def check(text):
     매개변수로 입력받은 한글 문장의 맞춤법을 체크합니다.
     """
 
-    print("\n\n\n[DEBUG1-0]spell check (text) >>", text, end="\n\n")
+    # print("\n\n\n[DEBUG1-0]spell check (text) >>", text, end="\n\n")
 
     if isinstance(text, list):
         result = []
         for item in text:
             checked = check(item)
-            print("\n\n[DEBUG1-1]spell check (checked) >>", checked)
+            # print("\n\n[DEBUG1-1]spell check (checked) >>", checked)
             result.append(checked)
         
         return result
@@ -93,7 +93,7 @@ def check(text):
     items = html.split(' ')
     words = []
     tmp = ''
-    print("\n[DEBUG1-1]spell check (items) >>", items, end="\n\n\n")
+    # print("\n[DEBUG1-1]spell check (items) >>", items, end="\n\n\n")
 
     
     for word in items:
@@ -107,14 +107,14 @@ def check(text):
             word = word.replace('<end>', '')
             tmp = ''
         
-        print("\n[DEBUG1-2]spell check (word) >>", word)
+        # print("\n[DEBUG1-2]spell check (word) >>", word)
         words.append(word)
     
-    print("\n\n\n[DEBUG1-2]spell check (words) >>", words, end="\n\n")
+    # print("\n\n\n[DEBUG1-2]spell check (words) >>", words, end="\n\n")
     
 
     for word in words:
-        print("\n[DEBUG1-3]spell check (word) >>", word)
+        # print("\n[DEBUG1-3]spell check (word) >>", word)
         check_result = CheckResult.PASSED
         
         if word[:5] == '<red>':
@@ -130,7 +130,7 @@ def check(text):
         result['words'][word] = check_result
 
     result = Checked(**result)
-    print("\n[DEBUG1-4]spell check (result) >>", result, end="\n\n\n")
+    # print("\n[DEBUG1-4]spell check (result) >>", result, end="\n\n\n")
 
     return result
 
