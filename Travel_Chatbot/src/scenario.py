@@ -14,14 +14,16 @@ from crawler_attraction import recommand_attraction
 from crawler_configs import Crawlerconfigs
 from recommand.season_travel import season_recommand
 
+from util.chatdb import addChat
 
 
 config = Crawlerconfigs()
 positions = (None, None, None)
+tmp = None
 
 
 
-def restaurant(named_entity, state, slot):    # keyword_group, entity_group
+def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
     print("[DEBUG1-1]scenario restaurant (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
     print("[DEBUG1-2]scenario restaurant (keyword) >> ", keyword_group, end="\n")
@@ -53,7 +55,9 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
                     result = location + restaurants
                     print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n\n")
 
-                    return recommend_restaurant(' '.join(result))
+                    answer = recommend_restaurant(' '.join(result))
+                    addChat(uid, slot, answer[0])
+                    return answer
                 
                 else:
                     state = "restaurant"
@@ -75,7 +79,7 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
             else:
                 result = location + restaurants
                 print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
-
+                
                 return recommend_restaurant(' '.join(result))
         
         # without slot
@@ -96,8 +100,10 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
             restaurants.append(slot)
             result = location + restaurants
             print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
+            answer = recommend_restaurant(' '.join(result))
+            addChat(uid, slot, answer[0])
 
-            return recommend_restaurant(' '.join(result))
+            return answer
         
         else:
             state = "restaurant"
@@ -119,7 +125,7 @@ def restaurant(named_entity, state, slot):    # keyword_group, entity_group
 
 
 
-def weather(named_entity, state, slot):
+def weather(named_entity, state, slot, uid):
     print("[DEBUG1-1]scenario weather (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
     print("[DEBUG1-2]scenario weather (keyword) >>", keyword_group, end="\n")
@@ -148,15 +154,25 @@ def weather(named_entity, state, slot):
             print("[DEBUG1-4]scenario weather (slot added location) >> ", location, end="\n\n\n")
 
             if '오늘' in date:
-                return today_weather(' '.join(location))
+                answer = today_weather(' '.join(location))
+                addChat(uid, slot, answer[0])
+                return answer
             elif date[0] == '내일':
-                return tomorrow_weather(' '.join(location))
+                answer = tomorrow_weather(' '.join(location))
+                addChat(uid, slot, answer[0])
+                return answer
             elif '모레' in date or '내일모레' in date:
-                return after_tomorrow_weather(' '.join(location))
+                answer = after_tomorrow_weather(' '.join(location))
+                addChat(uid, slot, answer[0])
+                return answer
             elif '이번' in date and '주' in date:
-                return this_week_weather(' '.join(location))
+                answer = this_week_weather(' '.join(location))
+                addChat(uid, slot, answer[0])
+                return answer
             else:
-                return specific_weather(' '.join(location), ' '.join(date))
+                answer = specific_weather(' '.join(location), ' '.join(date))
+                addChat(uid, slot, answer[0])
+                return answer
         
         else:
             state = "weather"
@@ -185,7 +201,7 @@ def weather(named_entity, state, slot):
 
 
 
-def dust(named_entity, state, slot):
+def dust(named_entity, state, slot, uid):
     print("[DEBUG1-1]scenario dust (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
     print("[DEBUG1-2]scenario dust (keyword) >>", keyword_group, end="\n")
@@ -214,13 +230,20 @@ def dust(named_entity, state, slot):
             print("[DEBUG1-4]scenario dust (slot added location) >> ", location, end="\n\n\n")
             
             if '오늘' in date:
-                return today_dust(' '.join(location))
+                answer = today_dust(' '.join(location))
+                addChat(uid, tmp, answer[0])
+                return answer
             elif date[0] == '내일':
-                return tomorrow_dust(' '.join(location))
+                answer = tomorrow_dust(' '.join(location))
+                addChat(uid, tmp, answer[0])
+                return answer
             elif '모레' in date or '내일모레' in date:
-                return after_tomorrow_dust(' '.join(location))
+                answer = after_tomorrow_dust(' '.join(location))
+                addChat(uid, tmp, answer[0])
+                return answer
             else:
                 msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
+                addChat(uid, tmp, msg)
                 
                 return msg, None, None, None, positions
             
@@ -251,7 +274,7 @@ def dust(named_entity, state, slot):
 
 
 
-def travel(named_entity, state, slot):
+def travel(named_entity, state, slot, uid):
     print("[DEBUG1-1]scenario travel (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
     print("[DEBUG1-2]scenario travel (keyword) >>", keyword_group, end="\n")
@@ -276,9 +299,10 @@ def travel(named_entity, state, slot):
         if slot is not None:
             purpose.append(slot)
             print("[DEBUG1-3]scenario travel (slot added purpose) >>", purpose, end="\n\n\n")
-
-            return recommand_travelCity(' '.join(purpose))
-
+            answer = recommand_travelCity(' '.join(purpose))
+            addChat(uid, slot, answer[0])
+            
+            return answer
 
         else:
             state = "travel"
@@ -298,7 +322,7 @@ def travel(named_entity, state, slot):
 
 
 
-def attraction(named_entity, state, slot):
+def attraction(named_entity, state, slot, uid):
     print("[DEBUG1-1]scenario attraction (named_entity) >>", named_entity, end="\n\n")
     keyword_group = named_entity[0]
     print("[DEBUG1-2]scenario attraction (keyword) >>", keyword_group, end="\n")
@@ -321,9 +345,10 @@ def attraction(named_entity, state, slot):
         if slot is not None:
             attraction.append(slot)
             print("[DEBUG1-3]scenario attraction (slot added attraction) >>", attraction, end="\n")
+            answer = recommand_attraction(' '.join(location), ' '.join(attraction))
+            addChat(uid, slot, answer[0])
 
-            return recommand_attraction(' '.join(location), ' '.join(attraction))
-
+            return answer
 
         else:
             state = "attraction"

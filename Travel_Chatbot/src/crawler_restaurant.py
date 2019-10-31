@@ -34,7 +34,7 @@ def recommend_restaurant(location):
         if len(list_name) == 0:
             # seq2seq or 사과멘트
             msg = '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  😥'
-            return msg, state, slot_data, None
+            return msg, state, slot_data, imgurl, locations
 
         list_info = soup.find_all('div', class_='txt ellp')
         # print("\n\n[DEBUG1-7]recommand_restaurant (list_info) >>\n", list_info)
@@ -100,9 +100,6 @@ def recommend_restaurant(location):
             ## image1
             img = soup.find("img")
             print("\n\n[DEBUG2-0]recommand_restaurant (img1) >>\n", img, end="\n")
-
-            # test = img.get('alt')
-            # print("\n\n[DEBUG2-0]recommand_restaurant (test) >>\n", test, end="\n")
             
             imgurl = img.get('src')
             print("\n\n[DEBUG2-0]recommand_restaurant (imgurl1) >>\n", imgurl, end="\n\n")
@@ -151,7 +148,7 @@ def recommend_restaurant(location):
             if 'href' in link.attrs:
                 map_url.append(link.attrs['href'])
 
-        print("[DEBUG2-2]recommand_restaurant (check url)\n", map_url)
+        # print("[DEBUG2-2]recommand_restaurant (check url)\n", map_url)
         
         for i in range(3,7):
             try:

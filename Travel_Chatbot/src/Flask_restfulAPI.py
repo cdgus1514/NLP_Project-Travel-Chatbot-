@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, session, request
-# from flask import Session
-# from flask_restful import Resource, Api, request
 
 import application
 
@@ -11,16 +9,16 @@ from scenario import weather
 from scenario import travel
 from scenario import attraction
 
-# from configs import IntentConfigs
 from configs import Configs
 import json, werkzeug, time
-import pymysql as py
+
+from util.logindb import checkUser
+# from util.signupdb import addUser
 
 
 ###
 from datetime import datetime, timedelta
 import redis
-# import cPickle
 import _pickle as cPickle
 from flask.sessions import SessionInterface, SessionMixin
 from werkzeug.datastructures import CallbackDict
@@ -28,13 +26,8 @@ from uuid import uuid4
 ###
 
 
-# app = Flask(__name__)
-# app.secret_key = 'Handsome boy'
-# app.config['SESSION_TYPE'] = 'redis'
-# app.session_interface = RedisSessionInterface()
-# api = Api(app)
 
-# CONFIG
+## CONFIG
 state = None
 slot_data = None
 pdata = None
@@ -48,7 +41,6 @@ configs = Configs()
 
 
 
-####
 #########################################################################################
 # This is a session object. It is nothing more than a dict with some extra methods
 class RedisSession(CallbackDict, SessionMixin):
@@ -69,7 +61,6 @@ class RedisSessionInterface(SessionInterface):
 	#====================================================================================
 	def open_session(self, app, request):
 		# Get session id from the cookie
-		# sid = request.cookies.get(app.session_cookie_name)
 		sid = request.headers.get('Cookie')
 
 		# If id is given (session was created)
@@ -124,45 +115,36 @@ class RedisSessionInterface(SessionInterface):
 
 
 
-
-
-
-
-
-
-
 app = Flask(__name__)
 app.session_interface = RedisSessionInterface()
 
 
 
-
-
-
-
-
-
-# class RegistUser(Resource):
-# class Chatbot(Resource):
 @app.route('/chatbot', methods=['GET', 'POST'])
-# def post(self):
 def chatbot_request():
     global state, slot_data, pdata, imgurl, img, locations
     print("\n[DEBUG1-0]flaskrestful (state) >>", state, end="\n\n")
 
     if request.method == 'POST':
-        c_cookie = request.headers.get('cookie')
-        print("\n[DEBUG1-0]flask restful (cookie) >> ", c_cookie, end="\n\n")
-
-        print("id check (login) >> ", id(session))
+        ## Check Cookie & session.sid
+        c_cookie = request.headers.get('Cookie')
         print("########## session(chatbot) ##########\n", session, end="\n\n")
-        if c_cookie in session:
+        # print("[DEBUG1-0] flaskrestful (session.sid) >> ", session.sid, end="\n")
+        # print("[DEBUG1-0] flaskrestful (cookie) >> ", c_cookie, end="\n\n\n")
+        uid = session['Userid']
+
+        if c_cookie in session.sid:
+            print("####### Complete Authentication !!! #######\n\n\n")
             pass
         else:
-            print("Invalid Authentication")
+            print("####### Invalid Authentication #######\n\n\n")
+            ## 요청 거절
+            # result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+            # result = dict(result)
+            
+            # return result
 
             
-
         # If you requested a slot
         if state is not None and pdata == None:
             print("\n[DEBUG1-2]flaskrestful (slot_data) >>", slot_data, end="\n\n")
@@ -171,7 +153,7 @@ def chatbot_request():
             pdata = data["msg"]
 
             if state == "restaurant":
-                message, state, slot_data, imgurl, locations = restaurant(slot_data, state, pdata)
+                message, state, slot_data, imgurl, locations = restaurant(slot_data, state, pdata, uid)
                 
                 result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
                 result = dict(result)
@@ -182,7 +164,7 @@ def chatbot_request():
                 return result
             
             elif state == "weather":
-                message, state, slot_data, imgurl, locations = weather(slot_data, state, pdata)
+                message, state, slot_data, imgurl, locations = weather(slot_data, state, pdata, uid)
                 
                 result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
                 result = dict(result)
@@ -193,7 +175,7 @@ def chatbot_request():
                 return result
 
             elif state == "dust":
-                message, state, slot_data, imgurl, locations = dust(slot_data, state, pdata)
+                message, state, slot_data, imgurl, locations = dust(slot_data, state, pdata, uid)
                 
                 result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
                 result = dict(result)
@@ -204,7 +186,7 @@ def chatbot_request():
                 return result
 
             elif state == "travel":
-                message, state, slot_data, imgurl, locations = travel(slot_data, state, pdata)
+                message, state, slot_data, imgurl, locations = travel(slot_data, state, pdata, uid)
                 
                 result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
                 result = dict(result)
@@ -215,7 +197,7 @@ def chatbot_request():
                 return result
 
             elif state == "attraction":
-                message, state, slot_data, imgurl, locations = attraction(slot_data, state, pdata)
+                message, state, slot_data, imgurl, locations = attraction(slot_data, state, pdata, uid)
 
                 result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
                 result = dict(result)
@@ -233,7 +215,7 @@ def chatbot_request():
             pdata = data["msg"]
 
             # Chatbot output
-            message, state, slot_data, imgurl, locations = application.run(pdata, state, nlp)
+            message, state, slot_data, imgurl, locations = application.run(pdata, state, nlp, uid)
             print("\n[DEBUG1-3]flask result (message) >>", message, end="\n")
             print("\n[DEBUG1-3]flask result (state) >>", state, end="\n")
             print("\n[DEBUG1-3]flask result (slot_data) >>", slot_data, end="\n\n\n")
@@ -260,18 +242,15 @@ def chatbot_request():
 
 
 
-# class HelloUser(Resource):
 @app.route('/', methods=['GET', 'POST'])
-# def post(self):
 def welcome_request():
     if request.method == 'POST':
         # received json data parsing
         data = request.get_json(force=True)
         print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data)
         pdata = data["msg"]
-        print("id check (login) >> ", id(session))
-        print("########## session(welcom) ##########\n", session, end="\n\n")
 
+        print("########## session(welcom) ##########\n", session, end="\n\n")
         if pdata == "welcom":
             # Welcom msg after first connection
             message = configs.welcome_msg
@@ -283,9 +262,7 @@ def welcome_request():
 
 
 
-# class ImageAnalysis(Resource):
 @app.route('/img', methods=['GET', 'POST'])
-# def post(self):
 def img_request():
     global img, state, slot_data, imgurl, filename
 
@@ -305,7 +282,7 @@ def img_request():
 
             print("\n[DEBUG1-1]ImageAnalysis (filename) >>", filename, end="\n\n")
 
-            message, state, slot_data, imgurl, locations = application.run(filename, state, img)
+            message, state, slot_data, imgurl, locations = application.run(filename, state, img, None)
             print("\n[DEBUG1-3]flask result (message) >>", message, end="\n")
             print("\n[DEBUG1-3]flask result (state) >>", state, end="\n")
             print("\n[DEBUG1-3]flask result (slot_data) >>", slot_data, end="\n\n\n")
@@ -320,10 +297,8 @@ def img_request():
 
 
 
-# class Login(Resource):
 @app.route('/login', methods=['GET', 'POST'])
-# def post(self):
-def login():
+def login_request():
     if request.method == 'POST':
         data = request.get_json(force=True)
         print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data, end="\n\n\n")
@@ -331,74 +306,21 @@ def login():
         Userid = data["id"]
         Userpw = data["password"]
 
-        print("\n\nInput >> ", Userid, Userpw, end="\n\n")
-        ## 데이터베이스에서 id/pw 체크 >> 맞으면 True, 틀리면 Flase
-        conn = py.connect(host="cdgus1514.cafe24.com", user="cdgus1514", password="Chlehd131312", database="cdgus1514", charset="utf8")
-        cursor = conn.cursor()
-        
-        query = "SELECT user_id, user_pw FROM chatbot_users WHERE user_id = %s"
-        value = (Userid)
-        cursor.execute("set names utf8")
-        cursor.execute(query, value)
-        check_user = cursor.fetchone()
+        result, check =  checkUser(Userid, Userpw)
 
-        cursor.close()
-        conn.close()
-
-        try:
-            print(check_user, end="\n\n")   #튜플
-            # print("ID >> ", check_user[0][0])
-            # print("PW >> ", check_user[0][1], end="\n\n")
-            print("ID >> ", check_user[0])
-            print("PW >> ", check_user[1], end="\n\n\n")
-
-        except:
-            # session.pop('Userid')
-            print("############# session(login) #############\n", session, end="\n\n\n")
-            message = "############## Failed Login ##############\n\n\n\n"
-            print(message)
-
-            result = [['cookie', Userid], ['nick', Userid], ['state', None]]
-
-
-            return dict(result)
-
-
-        # ID/PW 체크
-        if Userid == check_user[0] and Userpw == check_user[1]:
-            
-            # Session
+        # Create Cookie & Session
+        if check == True:
             session['Userid'] = Userid
-            # session['Userid'] = request.args.get('id')
-            print("id check (login) >> ", id(session))
+            result.insert(0, ['cookie', session.sid])
             print("############# session(login) #############\n", session, end="\n\n")
-
-            message = "############## Success Login!!! ##############\n\n\n\n"
-            print(message)
-
-            result = [['cookie', session.sid], ['nick', Userid], ['state', 'OK']]
-            session
-            return dict(result)
-        
         else:
-            print("############# session(login) #############\n", session, end="\n\n\n")
-
-            message = "############## Failed Login ##############\n\n\n\n"
-            print(message)
-
-            result = [['cookie', Userid], ['nick', Userid], ['state', None]]
-
-            return dict(result)
-
-
-
-# api.add_resource(Login, '/login')
-# api.add_resource(HelloUser, '/')
-# api.add_resource(Chatbot, '/chatbot')
-# api.add_resource(ImageAnalysis, '/img')
+            result.insert(0, ['cookie', None])
+        
+        return dict(result)
 
 
 
 if __name__ == "__main__":
     # app.run(host="192.168.0.147", port=30001, threaded=False)
-    app.run(host="192.168.0.147", port=30001)
+    # app.run(host="192.168.0.147", port=30001)
+    app.run(host="192.168.0.147", port=30001, threaded=True)

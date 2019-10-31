@@ -9,24 +9,24 @@
 <br>
 
 ### intent_classification.py
-- 워드 임베딩, 의도파악 학습 후 모델에 적용 >> 의도 분류
+- 워드임베딩, 의도파악 모델에 넣어 결과 예측 >> 의도 분류
 
-<!-- 1. word2vec_model >> fasttext 학습 모델
+1. word2vec_model >> fasttext 학습 모델
 2. model >> 의도파악 데이터셋 학습 된 모델
 3. interface_embed >> 입력받은 데이터 토큰화 후 워드임베딩 모델에 적용
-4. model.predict >> 워드임베딩 된 데이터를 학습된 모델에 predic 후 결과 출력 -->
+4. model.predict >> 워드임베딩 된 데이터를 학습된 모델에 predic 후 결과 출력
 
 <br>
 <br>
 
 ### entity_classification.py
-- 워드임베딩, 개체명인식 학습 후 모델에 적용 >> 개체명 분류
+- 워드임베딩, 개체명인식 모델에 넣어 결과 예측 >> 개체명 분류
 
 <br>
 <br>
 
 ### seq2seq_translation.py
-- 워드임베딩, seq2seq 학습 후 모델에 적용 >> seq2seq 대화
+- 워드임베딩, seq2seq 모델에 넣어 결과 예측 >> seq2seq 대화
 
 1. fallback 처리 된 문자열을 seq2seq 모델에 넣어 예측 후 결과 리턴
 
@@ -35,7 +35,7 @@
 
 
 ### image_analysis.py
-- 이미지 학습 후 모델에 적용 >> 이미지 분류
+- 이미지 모델에 넣어 결과 예측 >> 이미지 분류
 
 <br>
 <br>
@@ -79,6 +79,8 @@
 2. model_configs 파일 root_path 수정 (경로 다를 경우)
 3. Flask_restfulAPI.py 실행 (ip수정)
 4. 클라이언트에서 질문입력, 결과출력
+
+### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 필요
 
 <br>
 <br>
@@ -383,4 +385,39 @@
 
 ##### Flask_restfulAPI 파일 수정 (json 리턴 형식 변경)
 ##### crawler_* 파일 수정 (웹 크로링 시 url정보, 경도, 위도 정보 추출, return 형식 변경)
+<br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 10/31
+- application [get_intent(○), get_entity(○), scenario(○), get_seq2seq(○), get_image(○)]
+- tokenizer
+- preprocess
+- intent_classification
+- entity_classification
+- configs
+- ~~model_configs~~
+- models(EntityModel, IntentModel, ImageModel, Seq2SeqModel)
+- crawler_configs
+- Flask_restfulAPI (main)
+- scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler_attraction
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
+- seq2seq_translation
+- util(constants, response, spell_checker, speel_dict.csv, logindb, chatdb, intentdb)
+- image_analysis
+- model (entity, fasttext, image, seq2seq)
+<br>
+<br>
+
+##### Flask_restfulAPI 파일 수정 (로그인, 세션 추가)
+##### application 파일 수정 (통계데이터 수집 로직 추가)
+##### scenario 파일 수정 (통계 및 사용자 채팅로그 수집 로직 추가)
+##### util/* 파일 추가 (로그인, 통계, 채팅로그 저장)
 <br>

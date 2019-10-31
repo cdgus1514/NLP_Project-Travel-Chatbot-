@@ -11,6 +11,8 @@ from scenario import attraction
 
 from util.tokenizer import tokenize
 from util.spell_checker import fix
+from util.intentdb import addIntent
+from util.chatdb import addChat
 
 
 
@@ -22,7 +24,7 @@ print("###### application.py ######")
 
 
 
-def run(pdata, state, type):
+def run(pdata, state, type, uid):
     
     if type == "nlp":
         print('\n\nInput Questuon', end='\n')
@@ -31,15 +33,18 @@ def run(pdata, state, type):
         
         intent = get_intent(speech)
         print("Intent >> " + intent, sep="", end="\n\n")
+        if intent != 'fallback' : addIntent(intent)
         
         entity = get_entity.predict(speech.split(' '))
         print("Entity >> " + str(entity), sep="", end="\n\n")
 
-        answer = scenario(intent, entity, state, speech)
+        answer = scenario(intent, entity, state, speech, uid)
+        
+        # 유저ID, Question, Answer DB에 저장
+        addChat(uid, speech, answer[0])
             
     else:
         answer = get_image(pdata)
-
 
     return answer
 
@@ -54,21 +59,21 @@ def preprocess(speech):
 
 
 
-def scenario(intent, entity, state, speech):
+def scenario(intent, entity, state, speech, uid):
     if intent == "먼지":
-        return dust(entity, state, None)
+        return dust(entity, state, None, uid)
     
     elif intent == "날씨":
-        return weather(entity, state, None)
+        return weather(entity, state, None, uid)
 
     elif intent == "맛집":
-        return restaurant(entity, state, None)
+        return restaurant(entity, state, None, uid)
     
     elif intent == "여행지":
-        return travel(entity, state, None)
+        return travel(entity, state, None, uid)
     
     elif intent == "관광지":
-        return attraction(entity, state, None)
+        return attraction(entity, state, None, uid)
     
     else:
         return get_seq2seq.seq2seq_run(speech)
