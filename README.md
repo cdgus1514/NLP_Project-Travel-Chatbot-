@@ -6,6 +6,22 @@
 - VSC
 - python 3.7.3
 <br>
+
+- Flask		1.1.1
+- gensim		3.4.0
+- konlpy		0.5.1
+- JPype1		0.6.3
+- nltk		3.4.4
+- Keras		2.2.4
+- keras-contrib	2.0.8
+- redis		3.3.11
+- uuid		1.30
+- PyMySQL		0.9.3
+- beautifulsoup4	4.8.0 
+<br>
+
+##### pip install git+https://www.github.com/keras-team/keras-contrib.git
+<br>
 <br>
 
 ### intent_classification.py
