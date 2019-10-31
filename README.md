@@ -83,7 +83,7 @@
 6. 클라이언트에서 질문입력, 결과출력
 
 
-### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 필요
+##### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 필요
 
 <br>
 <br>
