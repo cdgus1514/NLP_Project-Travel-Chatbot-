@@ -155,7 +155,7 @@ def chatbot_request():
             if state == "restaurant":
                 message, state, slot_data, imgurl, locations = restaurant(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
+                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
                 result = dict(result)
                 pdata = None
 
@@ -166,7 +166,7 @@ def chatbot_request():
             elif state == "weather":
                 message, state, slot_data, imgurl, locations = weather(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
+                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
                 result = dict(result)
                 pdata = None
 
@@ -177,7 +177,7 @@ def chatbot_request():
             elif state == "dust":
                 message, state, slot_data, imgurl, locations = dust(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
+                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
                 result = dict(result)
                 pdata = None
 
@@ -188,7 +188,7 @@ def chatbot_request():
             elif state == "travel":
                 message, state, slot_data, imgurl, locations = travel(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
+                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
                 result = dict(result)
                 pdata = None
 
@@ -199,7 +199,7 @@ def chatbot_request():
             elif state == "attraction":
                 message, state, slot_data, imgurl, locations = attraction(slot_data, state, pdata, uid)
 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[0]], ['longitude', locations[1]]]
+                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
                 result = dict(result)
                 pdata = None
 

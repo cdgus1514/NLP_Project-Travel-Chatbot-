@@ -187,11 +187,11 @@ def after_tomorrow_dust(location):
 
     try:
         if len(location.split()) == 1 and location in metropolitans:
-            dust = metropolitan('내일', location)
+            dust = metropolitan('모레', location)
         elif len(location.split()) == 1 and location in governments:
-            dust = metropolitan('내일', location)
+            dust = metropolitan('모레', location)
         else:
-            enc_location = urllib.parse.quote(location + ' 내일 미세먼지')
+            enc_location = urllib.parse.quote(location + ' 모레 미세먼지')
             url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
             print("[DEBUG1-1]after_tomorrow_dust (url) >>\n", url, end="\n\n")
 

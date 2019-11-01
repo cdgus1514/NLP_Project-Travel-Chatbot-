@@ -153,7 +153,7 @@ def recommend_restaurant(location):
         for i in range(3,7):
             try:
                 mapurl = map_url[i]
-                print("\n\n[DEBUG2-2]recommand_restaurant (map url5)\n", mapurl, end="\n\n")
+                print("\n\n[DEBUG2-2]recommand_restaurant (map url)\n", mapurl, end="\n\n")
                 position = mapurl.split('&')
                 print("[DEBUG2-2]recommand_restaurant (position) >>", position, end="\n")
                 print("[DEBUG2-2]recommand_restaurant (position lenghth) >>", len(position), end="\n")
@@ -282,9 +282,12 @@ def recommend_restaurant(location):
     except:
         print("############################")
         print("# RESTAURANT CRAWLER ERROR #")
+        print("#### 플레이스 정보 없음  ####")
         print("############################")
 
         msg = "죄송해요, " + location + "에 대한 맛집 정보는 아직 준비중이에요  😥" + "\n" + "더 많은 정보들을 제공할 수 있도록 노력할게요."
+        imgurl = None
+        locations = (None, None, None)
     
 
     return msg, state, slot_data, imgurl, locations

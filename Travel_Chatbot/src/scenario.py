@@ -45,7 +45,8 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
     if len(location) == 0:
         # if you receive a slot
         if slot is not None:
-            location.append(slot)
+            lo = slot
+            location.append(lo)
             slot = None
 
             # without restaurant info
@@ -56,7 +57,7 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
                     print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n\n")
 
                     answer = recommend_restaurant(' '.join(result))
-                    addChat(uid, slot, answer[0])
+                    addChat(uid, lo, answer[0])
                     return answer
                 
                 else:
@@ -79,8 +80,10 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
             else:
                 result = location + restaurants
                 print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
-                
-                return recommend_restaurant(' '.join(result))
+                answer = recommend_restaurant(' '.join(result))
+                addChat(uid, lo, answer[0])
+                # return recommend_restaurant(' '.join(result))
+                return answer
         
         # without slot
         else:
@@ -231,19 +234,20 @@ def dust(named_entity, state, slot, uid):
             
             if '오늘' in date:
                 answer = today_dust(' '.join(location))
-                addChat(uid, tmp, answer[0])
+                addChat(uid, slot, answer[0])
                 return answer
             elif date[0] == '내일':
+                print("####### dust (tmp) #######\n", tmp, end="\n\n\n")
                 answer = tomorrow_dust(' '.join(location))
-                addChat(uid, tmp, answer[0])
+                addChat(uid, slot, answer[0])
                 return answer
             elif '모레' in date or '내일모레' in date:
                 answer = after_tomorrow_dust(' '.join(location))
-                addChat(uid, tmp, answer[0])
+                addChat(uid, slot, answer[0])
                 return answer
             else:
                 msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
-                addChat(uid, tmp, msg)
+                addChat(uid, slot, msg)
                 
                 return msg, None, None, None, positions
             
