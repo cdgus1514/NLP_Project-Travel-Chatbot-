@@ -121,7 +121,7 @@ app.session_interface = RedisSessionInterface()
 
 
 @app.route('/chatbot', methods=['GET', 'POST'])
-def chatbot_request():
+def Trigobot_request():
     global state, slot_data, pdata, imgurl, img, locations
     print("\n[DEBUG1-0]flaskrestful (state) >>", state, end="\n\n")
 
@@ -139,10 +139,6 @@ def chatbot_request():
         else:
             print("####### Invalid Authentication #######\n\n\n")
             ## 요청 거절
-            # result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
-            # result = dict(result)
-            
-            # return result
 
             
         # If you requested a slot
@@ -154,8 +150,11 @@ def chatbot_request():
 
             if state == "restaurant":
                 message, state, slot_data, imgurl, locations = restaurant(slot_data, state, pdata, uid)
+
+                print("\n[DEBUG1-3]flask result (slot locations) >>", locations, end="\n\n\n")
+
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
                 result = dict(result)
                 pdata = None
 
@@ -166,7 +165,7 @@ def chatbot_request():
             elif state == "weather":
                 message, state, slot_data, imgurl, locations = weather(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
                 result = dict(result)
                 pdata = None
 
@@ -177,7 +176,7 @@ def chatbot_request():
             elif state == "dust":
                 message, state, slot_data, imgurl, locations = dust(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
                 result = dict(result)
                 pdata = None
 
@@ -188,7 +187,7 @@ def chatbot_request():
             elif state == "travel":
                 message, state, slot_data, imgurl, locations = travel(slot_data, state, pdata, uid)
                 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
                 result = dict(result)
                 pdata = None
 
@@ -199,7 +198,7 @@ def chatbot_request():
             elif state == "attraction":
                 message, state, slot_data, imgurl, locations = attraction(slot_data, state, pdata, uid)
 
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
                 result = dict(result)
                 pdata = None
 
@@ -214,7 +213,7 @@ def chatbot_request():
             print("\n[DEBUG1-2]Flaskrestful (req_data) >>", data)
             pdata = data["msg"]
 
-            # Chatbot output
+            # Trigobot output
             message, state, slot_data, imgurl, locations = application.run(pdata, state, nlp, uid)
             print("\n[DEBUG1-3]flask result (message) >>", message, end="\n")
             print("\n[DEBUG1-3]flask result (state) >>", state, end="\n")
@@ -224,7 +223,7 @@ def chatbot_request():
 
             # request slot
             if state is not None:
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
                 result = dict(result)
                 pdata = None
                 
@@ -232,7 +231,7 @@ def chatbot_request():
 
             # When normal
             else:
-                result = [['message', message], ['sender', 'chatbot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
 
                 result = dict(result)
                 pdata = None
@@ -254,7 +253,7 @@ def welcome_request():
         if pdata == "welcom":
             # Welcom msg after first connection
             message = configs.welcome_msg
-            result = [['message', message], ['sender', 'chatbot'], ['receiver', 'User'], ['imageurl', None]]
+            result = [['message', message], ['sender', 'Trigobot'], ['receiver', 'User'], ['imageurl', None]]
             result = dict(result)
             init = None
 
@@ -289,7 +288,7 @@ def img_request():
             print("\n[DEBUG1-3]flask result (imgurl) >>", imgurl, end="\n\n\n")
             print("\n[DEBUG1-3]flask result (locations) >>", locations, end="\n\n\n")
 
-            result = [['message', message], ['sender', 'chatbot'], ['receiver', 'User'], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+            result = [['message', message], ['sender', 'Trigobot'], ['receiver', 'User'], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
             result = dict(result)
             filename = None
             

@@ -97,33 +97,26 @@ def recommend_restaurant(location):
         
         ############################################ 이미지 ############################################
         try:
-            ## image1
+            img_url = []
+            img = soup.findAll('a')
+            for link in img:
+                if 'href' in link.attrs:
+                    img_url.append(link.attrs)
+            
+            for i in range(len(img_url)):
+                try:
+                    img = img_url[i]
+                    imgurl = img['data-kakaotalk-image-url']
+                    print("\n\n[DEBUG2-0]recommand_restaurant (imgurl1) >>\n", imgurl, end="\n\n")
+                except:
+                    pass
+        except:
             img = soup.find("img")
-            print("\n\n[DEBUG2-0]recommand_restaurant (img1) >>\n", img, end="\n")
+            print("\n\n[DEBUG2-0]recommand_restaurant (img2) >>\n", img, end="\n")
             
             imgurl = img.get('src')
-            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl1) >>\n", imgurl, end="\n\n")
+            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl2) >>\n", imgurl, end="\n\n")
 
-            ## image2
-            img2 = []
-            for meta in soup.find_all('meta'):
-                # print(meta)
-                # img2.append(meta)
-                img2.append(meta.get('content'))
-            
-            img2 = img2[-1]
-            print("\n\n[DEBUG2-0]recommand_restaurant (img2) >>\n", img, end="\n")
-            imgurl2 = img2
-            print("\n\n[DEBUG2-0]recommand_restaurant (imgurl2) >>\n", imgurl2, end="\n\n")
-
-            ## 이미지 url 체크
-            check_url = imgurl.split('//')
-            if check_url[1].split('.')[0] == 'ssl':
-                check_url = imgurl2.split('//')
-                if check_url[1].split('.')[0]== 'ssl':
-                    raise Exception
-        
-        except:
             if img is None or len(img) == 0:
                 img = []
                 for meta in soup.find_all('meta'):
@@ -150,7 +143,7 @@ def recommend_restaurant(location):
 
         # print("[DEBUG2-2]recommand_restaurant (check url)\n", map_url)
         
-        for i in range(3,7):
+        for i in range(3,10):
             try:
                 mapurl = map_url[i]
                 print("\n\n[DEBUG2-2]recommand_restaurant (map url)\n", mapurl, end="\n\n")
@@ -258,7 +251,7 @@ def recommend_restaurant(location):
         else:
             description = ''
 
-        # print("\n[DEBUG1-2-2]recommand_restaurant (description) >>\n", description)
+        print("\n[DEBUG1-2-2]recommand_restaurant (description) >>\n", description)
 
         msg = info + '!  ' + name + '에 가보는 건 어떨까요?  🤗\n\n'
 
@@ -300,4 +293,4 @@ def recommend_restaurant(location):
 #     recommend_restaurant(input())
 
 # recommend_restaurant("서초구 마카롱")
-# recommend_restaurant("해운대 카페")
+print(recommend_restaurant("강남역 카페"))

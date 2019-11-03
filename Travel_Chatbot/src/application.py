@@ -17,7 +17,7 @@ from util.chatdb import addChat
 
 
 #CONFIG
-get_entity = get_entity()
+# get_entity = get_entity()
 get_seq2seq = get_seq2seq()
 
 print("###### application.py ######")
@@ -35,7 +35,8 @@ def run(pdata, state, type, uid):
         print("Intent >> " + intent, sep="", end="\n\n")
         if intent != 'fallback' : addIntent(intent)
         
-        entity = get_entity.predict(speech.split(' '))
+        # entity = get_entity.predict(speech.split(' '))
+        entity = get_entity(speech.split(' '))
         print("Entity >> " + str(entity), sep="", end="\n\n")
 
         answer = scenario(intent, entity, state, speech, uid)

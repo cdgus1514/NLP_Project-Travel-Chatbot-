@@ -282,14 +282,17 @@ def this_week_weather(location):
         for i in days:
             loc = urllib.parse.quote(location + ' ' + i + '요일' + ' 날씨')
             url = 'https://www.google.com/search?q=' + loc
+            print("\n\n[DEBUG2-3]this_week_weather (url) >>\n", url, end="\n\n")
+
             req = Request(url, headers=headers)
             page = urlopen(req)
             html = page.read()
             soup = bs4.BeautifulSoup(html, 'html.parser')
             weather = soup.find('span', {'id': 'wob_dc'}).text
             temp = soup.find('span', class_='wob_t').text
+            
             if weather == '비': weather = '비가 오고'
-            weather = i + '요일의 날씨는 ' + weather + ' 온도는 ' + temp + '도 입니다. '
+            weather = i + '요일의 날씨는 ' + weather + ' 온도는 ' + temp + '도 입니다.\n'
             response.append(weather)
     except:
         print("############################")

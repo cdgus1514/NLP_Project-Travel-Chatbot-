@@ -7,17 +7,19 @@
 - python 3.7.3
 <br>
 
-- Flask		1.1.1
-- gensim		3.4.0
-- konlpy		0.5.1
-- JPype1		0.6.3
-- nltk		3.4.4
-- Keras		2.2.4
-- keras-contrib	2.0.8
-- redis		3.3.11
-- uuid		1.30
-- PyMySQL		0.9.3
-- beautifulsoup4	4.8.0 
+- Flask		        1.1.1
+- ~~gensim		    3.4.0~~
+- gensim            3.8.1
+- numpy             1.17.3
+- konlpy		    0.5.1
+- JPype1		    0.6.3
+- nltk		        3.4.4
+- Keras		        2.2.4
+- keras-contrib	    2.0.8
+- redis		        3.3.11
+- uuid		        1.30
+- PyMySQL		    0.9.3
+- beautifulsoup4	4.8.0
 <br>
 
 ##### pip install git+https://www.github.com/keras-team/keras-contrib.git
@@ -27,10 +29,10 @@
 ### intent_classification.py
 - 워드임베딩, 의도파악 모델에 넣어 결과 예측 >> 의도 분류
 
-1. word2vec_model >> fasttext 학습 모델
-2. model >> 의도파악 데이터셋 학습 된 모델
-3. interface_embed >> 입력받은 데이터 토큰화 후 워드임베딩 모델에 적용
-4. model.predict >> 워드임베딩 된 데이터를 학습된 모델에 predic 후 결과 출력
+1. word2vec_model >> fasttext 훈련 모델
+2. model >> Convolution 의도파악 훈련 모델
+3. interface_embed 함수 >> 입력받은 데이터(문자열) 워드임베딩
+4. get_intent 함수 >> 워드임베딩 된 데이터 predict 후 결과 리턴
 
 <br>
 <br>
@@ -38,13 +40,16 @@
 ### entity_classification.py
 - 워드임베딩, 개체명인식 모델에 넣어 결과 예측 >> 개체명 분류
 
+1. >> fasttext 훈련 모델
+2. BiLSTM 개체명인식 훈련 모델
+
 <br>
 <br>
 
 ### seq2seq_translation.py
 - 워드임베딩, seq2seq 모델에 넣어 결과 예측 >> seq2seq 대화
 
-1. fallback 처리 된 문자열을 seq2seq 모델에 넣어 예측 후 결과 리턴
+1. fallback 처리 된 문자열을 encoder 데이터로 사용
 
 <br>
 <br>
