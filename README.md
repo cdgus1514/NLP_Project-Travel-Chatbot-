@@ -100,11 +100,14 @@
 2. configs 파일 >> img_path 디렉토리 생성**
 3. /src/models/* 파일  >> root_path 수정
 4. /src/util/spell_checker 파일 >> my_dict 수정
+5. model/entity/fasttext 모델 다운
 5. Flask_restfulAPI.py 실행 (ip수정)
 6. 클라이언트에서 질문입력, 결과출력
 
 
 ##### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 필요
+##### fasttext 모델, vector numpy 다운로드 필요
+##### https://drive.google.com/drive/folders/1qgFUf2lj2ZJAQWP6qK8OyBvkNZGqVPR7
 
 <br>
 <br>
