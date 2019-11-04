@@ -19,7 +19,7 @@ def tokenize(sentence):
     for word, tag in pos:
         if word in stop_word:
             continue
-        elif (tag == 'Josa' and word in josa) or tag == 'Punctuation':
+        elif (tag == 'Josa' and word in josa) or tag == 'Punctuation' or (tag == 'Adjective' and word in josa):
             continue
         else:
             if word == "바다로":
