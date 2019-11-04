@@ -29,7 +29,7 @@ class Configs:
 
     # Entity config
     entity_input_size = 20
-    entity_vector_size = 100
+    entity_vector_size = 300
         
 
 

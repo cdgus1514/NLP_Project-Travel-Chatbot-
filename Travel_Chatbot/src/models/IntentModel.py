@@ -11,7 +11,6 @@ class Load_Intent:
 
     def __init__(self):
         # 의도파악 모델
-        # self.word2vec_model = Word2Vec.load(self.fasttext_path+"model")
         self.word2vec_model = FastText.load(self.fasttext_path+"model")
         self.intent_model = load_model(self.intent_model_path+'intent_model-'+str(5400)+'.h5')
         

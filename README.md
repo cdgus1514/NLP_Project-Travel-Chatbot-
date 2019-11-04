@@ -40,8 +40,10 @@
 ### entity_classification.py
 - 워드임베딩, 개체명인식 모델에 넣어 결과 예측 >> 개체명 분류
 
-1. >> fasttext 훈련 모델
-2. BiLSTM 개체명인식 훈련 모델
+1. word_index >> fasttext 훈련 모델
+2. model >> BiLSTM+crf 개체명인식 훈련 모델
+3. word_pred 함수 >> 입력받은 데이터(문자열) 워드임베딩
+3. get_entity 함수 >> 워드임베딩 된 데이터 predict 후 결과 리턴
 
 <br>
 <br>

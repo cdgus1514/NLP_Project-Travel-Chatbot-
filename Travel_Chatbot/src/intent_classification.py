@@ -26,10 +26,15 @@ def interface_embed(text):
 
     okt = Okt()
     q_raw = okt.morphs(text)
-    q_raw = list(map(lambda x: q_raw[x] if x < len(q_raw) else '#', range(config.encode_length)))
+    # q_raw = list(map(lambda x: q_raw[x] if x < len(q_raw) else '#', range(config.encode_length)))
+    # print("[DEBUG5-2]pred (q_raw) >>", q_raw)
+    # q_raw = np.array(list(map(lambda x: word2vec_model[x] if x in w2c_index else np.zeros(config.intent_vector_size, dtype=float), q_raw)))
+    # q_raw = q_raw.reshape(1, 15, 300, 1)
+
+    pre = list(map(lambda word : word2vec_model[word], q_raw))
     print("[DEBUG5-2]pred (q_raw) >>", q_raw)
-    q_raw = np.array(list(map(lambda x: word2vec_model[x] if x in w2c_index else np.zeros(config.intent_vector_size, dtype=float), q_raw)))
-    q_raw = q_raw.reshape(1, 15, 300, 1)
+    pre = list(map(lambda idx : pre[idx] if idx < len(pre) else np.zeros(config.intent_vector_size, dtype=float), range(config.encode_length)))
+    pre = np.array(pre)
 
     return q_raw
     
