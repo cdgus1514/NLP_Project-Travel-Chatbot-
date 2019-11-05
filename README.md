@@ -111,9 +111,8 @@
 
 
 ##### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 생성 필요
-##### fasttext 모델, vector npy file 다운로드 ↓
+##### intent/entity 모델, 워드임베딩 file, redis install file 다운로드 ↓
 ##### https://drive.google.com/drive/folders/1tRVnFlMX1B0W4AqWZznMEa_RQk9QVwaF
-##### Redis windows 설치
 
 
 <br>
