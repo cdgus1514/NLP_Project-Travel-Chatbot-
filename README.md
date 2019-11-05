@@ -2,9 +2,12 @@
 <br>
 
 ## 개발환경
-- Windows 10
-- VSC
-- python 3.7.3
+
+- __Windows 10__
+- __Visual Studio Code__
+- __python 3.7.3__
+- __Intel i7-8700 CPU @ 3.20GHz__
+- __NVIDIA GeForce RTX2080__
 <br>
 
 - Flask		        1.1.1

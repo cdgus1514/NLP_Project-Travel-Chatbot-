@@ -14,23 +14,16 @@ class Configs:
     img_path_category = root_path+"img_upload/"
     intent_model_path = root_path+"model/intent/"
     entity_model_path = root_path+"model/entity/"
-    fasttext_path = root_path+"model/fasttext/"
     seq2seq_path = root_path+"model/seq2seq/"
 
 
 
     # Intent config
-    encode_length = 15
-    intent_vector_size = 300
+    encode_length = 20
+    vector_size = 300
     fallback_msg = "죄송해요, 그 기능은 아직 준비중이에요.  :("
     intent_mapping = {'날씨': 0, '맛집': 1, '먼지': 2, '여행지': 3, '관광지': 4}
 
-
-
-    # Entity config
-    entity_input_size = 20
-    entity_vector_size = 300
-        
 
 
     # Image config
@@ -43,4 +36,5 @@ class Configs:
 
 
     def __init__(self):
-        self.df = pd.read_csv(self.root_path+"src/data/train_intent6.csv")
+        # self.df = pd.read_csv(self.root_path+"src/data/train_intent6.csv")
+        self.df = pd.read_csv(self.root_path+"src/data/intent_dataset1.csv")
