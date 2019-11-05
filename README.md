@@ -110,9 +110,11 @@
 6. 클라이언트에서 질문입력, 결과출력
 
 
-##### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 필요
-##### fasttext 모델, vector numpy 다운로드 필요
-##### https://drive.google.com/drive/folders/1qgFUf2lj2ZJAQWP6qK8OyBvkNZGqVPR7
+##### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 생성 필요
+##### fasttext 모델, vector npy file 다운로드 ↓
+##### https://drive.google.com/drive/folders/1tRVnFlMX1B0W4AqWZznMEa_RQk9QVwaF
+##### Redis windows 설치
+
 
 <br>
 <br>

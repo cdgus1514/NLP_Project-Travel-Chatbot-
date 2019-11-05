@@ -19,7 +19,8 @@ class Configs:
 
 
     # Intent config
-    encode_length = 20
+    encode_length = 15
+    # encode_length = 20
     vector_size = 300
     fallback_msg = "죄송해요, 그 기능은 아직 준비중이에요.  :("
     intent_mapping = {'날씨': 0, '맛집': 1, '먼지': 2, '여행지': 3, '관광지': 4}
