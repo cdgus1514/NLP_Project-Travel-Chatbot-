@@ -270,9 +270,5 @@ def recommand_travelCity(entity):
 
         msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
-    # print("\n\n[DEBUG1-2]recommand_travelCity (msg) >>\n", msg)
+    print("\n\n[DEBUG1-2]recommand_travelCity (msg) >>\n", msg)
     return msg, state, slot_data, imgurl, positions
-
-
-
-# recommand_travelCity('경기장')

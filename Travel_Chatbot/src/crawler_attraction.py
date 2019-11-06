@@ -18,7 +18,6 @@ def search_cr(str_):
     # https://developers.naver.com/docs/search/blog/ 참고
 
     for func in crawler:
-        # print("[DEBUG11-0]search_cr (crawler) >>", func, end="\n\n")
         func, imgurl, info = func(str_)
         
         if not func == None:
@@ -42,52 +41,30 @@ def recommand_attraction(local, travel):
             print('네이버 검색어 :', query, end="\n\n")
             msg, imgurl, info = search_cr(query)
             if not msg == None:
-                # positions.append(info)
-                # print("\n[DEBUG1-0]recommand_attraction (Add positions)", positions, end="\n")
-                # infourl = positions
-                # print("\n[DEBUG1-0]recommand_attraction (infourl)", infourl, end="\n\n")
-                # position = [None, None, None]
-                # del positions[positions.index(info)]
-                # print("\n[DEBUG1-0]recommand_attraction (Del positions)", positions, end="\n\n\n")
-
-
                 print("\n[DEBUG1-1]recommand_attraction (msg(naver-naver)) >>\n", msg)
                 print("\n[DEBUG1-1]recommand_attraction (imgurl(naver-naver)) >>\n", imgurl)
                 print("\n[DEBUG1-1]recommand_attraction (url(naver-naver)) >>\n", info)
+                
                 return msg, state, slot_data, imgurl, (None, None, info)
 
             # 하나 투어
             print('@하나투어', end="\n")
             msg, imgurl, info = travel_search(travel, city_idx)
             if not msg == None:
-                # positions.append(info)
-                # print("\n[DEBUG1-0]recommand_attraction (Add positions)", positions, end="\n")
-                # infourl = positions
-                # print("\n[DEBUG1-0]recommand_attraction (infourl)", infourl, end="\n\n")
-                # # position = [None, None, None]
-                # del positions[positions.index(info)]
-                # print("\n[DEBUG1-0]recommand_attraction (Del positions)", positions, end="\n\n\n")
-
                 print("\n[DEBUG1-2]recommand_attraction (msg(hana)) >>\n", msg)
                 print("\n[DEBUG1-2]recommand_attraction (imgurl(hana)) >>\n", imgurl)
                 print("\n[DEBUG1-2]recommand_attraction (url(hana)) >>\n", info)
+                
                 return msg, state, slot_data, imgurl, (None, None, info)
         else:
             # 하나 투어
             print('@하나투어 (in 하나투어)', end="\n")
             msg, imgurl, info = travel_search(travel, city_idx)
             if not msg == None:
-                # positions.append(info)
-                # print("\n[DEBUG1-0]recommand_attraction (Add positions)", positions, end="\n")
-                # infourl = positions
-                # print("\n[DEBUG1-0]recommand_attraction (infourl)", infourl, end="\n\n")            
-                # # position = [None, None, None]
-                # del positions[positions.index(info)]
-                # print("\n[DEBUG1-0]recommand_attraction (Del positions)", positions, end="\n\n\n")
-
                 print("\n[DEBUG1-1] recommand_attraction (msg(hana)) >>\n", msg)
                 print("\n[DEBUG1-1] recommand_attraction (imgurl(hana)) >>\n", imgurl)
                 print("\n[DEBUG1-1] recommand_attraction (url(hana-naver)) >>\n", info)
+                
                 return msg, state, slot_data, imgurl, (None, None, info)
 
 
@@ -97,17 +74,10 @@ def recommand_attraction(local, travel):
             print('네이버 검색어 :', query, end="\n\n")
             msg, imgurl, info = search_cr(query)
             if not msg == None:
-                # positions.append(info)
-                # print("\n[DEBUG1-0]recommand_attraction (Add positions)", positions, end="\n")
-                # infourl = positions
-                # print("\n[DEBUG1-0]recommand_attraction (infourl)", infourl, end="\n\n")
-                # # position = [None, None, None]
-                # del positions[positions.index(info)]
-                # print("\n[DEBUG1-0]recommand_attraction (Del positions)", positions, end="\n\n\n")
-
                 print("\n[DEBUG1-2] recommand_attraction (msg(hana-naver)) >>\n", msg)
                 print("\n[DEBUG1-2] recommand_attraction (imgurl(hana-naver)) >>\n", imgurl)
                 print("\n[DEBUG1-2] recommand_attraction (url(hana-naver)) >>\n", info)
+                
                 return msg, state, slot_data, imgurl, (None, None, info)
     
     except:

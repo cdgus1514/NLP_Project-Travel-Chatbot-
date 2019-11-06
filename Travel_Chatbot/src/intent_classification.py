@@ -28,12 +28,9 @@ def interface_embed(text):
     q_raw = okt.morphs(text)
 
     q_raw = list(map(lambda word : word2vec_model[word], q_raw))
-    # print("[DEBUG5-2]pred (q_raw) >>\n", q_raw)   # 입력 문자열 백터값 확인
     q_raw = list(map(lambda idx : q_raw[idx] if idx < len(q_raw) else np.zeros(config.vector_size, dtype=float), range(config.encode_length)))
     q_raw = np.array(q_raw)
     q_raw = q_raw.reshape(1, 15, 300, 1)
-    # print(q_raw)
-    # print(q_raw.shape)
 
     return q_raw
     
@@ -47,10 +44,7 @@ def get_intent(speech):
 
     # 입력 문자열 Embedding & Predict
     speech = interface_embed(speech)
-
     model = mconfig.intent_model
-    # print("\n[DEBUG6-1]get_intent(speech) >>\n", speech, end="\n")
-    # print("\n[DEBUG6-2]get_intent(speech shape) >> ", speech.shape, end="\n") # (1, 15, 300, 1)
     
     
     with keras.backend.get_session().graph.as_default():
@@ -58,12 +52,10 @@ def get_intent(speech):
         intent = model.predict(speech)
         print("\n[DEBUG6-1]get_intent (predict) >>\n", intent, end="\n\n")  # 각 카테고리 백터값 (numpy.ndarray)
         intent_chk = len(intent[0]) # 5
-        # print("\n[DEBUG6-2]get_intent (intent_chk) >>", intent_chk, end="\n\n")
 
         index = np.argmax(intent)
         print("\n[DEBUG6-3]get_intent (index) >>", index, end="\n\n")
         print("\n[DEBUG6-3]get_intent (predict check) >>", intent[0][index], end="\n\n")
-        # print("\n[DEBUG6-4]get_intent (before cnt) >>", cnt, end="\n")
 
         
         # fallback check

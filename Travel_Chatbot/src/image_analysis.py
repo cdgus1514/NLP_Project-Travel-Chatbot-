@@ -68,7 +68,7 @@ def idx_filter(output):
     cursor.execute("SELECT * FROM Image_guide;")
     
     out_max = np.argmax(output) # (1, input_size)의 output에서 최고값의 인덱스 추출
-    print('인덱스는: ', out_max, end="\n\n")
+    print('Index >> ', out_max, end="\n\n")
 
     output_reshape = output.reshape(config.INPUT_SIZE, )
 
