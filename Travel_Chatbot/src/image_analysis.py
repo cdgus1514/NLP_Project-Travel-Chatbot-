@@ -23,7 +23,7 @@ positions = (None, None, None)
 def get_image(filename):
     global mconfig, positions
 
-    print("\n\n[DEBUG1-1]get_image (filename) >>", filename, end="\n\n\n")
+    print("\n\n[DEBUG1-0]get_image (filename) >>", filename, end="\n\n\n")
     
     size = (256, 256)
     im = Image.open(filename)
@@ -43,15 +43,16 @@ def get_image(filename):
 
             output = mconfig.image_model.predict_generator(test_generator, steps=1)
             np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
-            print('Predict output:\n', output)
+            # print('Predict output:\n', output)
 
             msg, imgurl = idx_filter(output)
 
-            # 가져온 파일을 삭제합니다.
+            # 파일을 삭제합니다.
             if os.path.isfile(filename):
                 os.remove(filename)
 
-            # return msg, None, None, None
+            # return msg, None, None, imgurl, positions
+
     except:
         msg = "죄송해요, 아직 해당 이미지에 대해 배우지 못했어요  😥"
 
@@ -67,7 +68,7 @@ def idx_filter(output):
     cursor.execute("SELECT * FROM Image_guide;")
     
     out_max = np.argmax(output) # (1, input_size)의 output에서 최고값의 인덱스 추출
-    print('인덱스는: ', out_max)
+    print('인덱스는: ', out_max, end="\n\n")
 
     output_reshape = output.reshape(config.INPUT_SIZE, )
 

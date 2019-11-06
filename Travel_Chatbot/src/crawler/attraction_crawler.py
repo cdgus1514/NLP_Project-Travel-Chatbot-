@@ -146,7 +146,7 @@ def place_list(str_):
         msg, imgurl, info = place_cr(url)
 
         print('\n\n[DEBUG1-3]place_list (url)\n', info)
-        return msg, url, info
+        return msg, imgurl, info
 
     else:
         return None, None, None

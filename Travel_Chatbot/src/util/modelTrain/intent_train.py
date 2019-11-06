@@ -52,7 +52,7 @@ def main():
     word2vec_model.train(morphs, total_examples= word2vec_model.corpus_count, epochs= word2vec_model.epochs, compute_loss=True, verbose=1)
     print('\n### Fasttext train complete ###', end="\n")
 
-    word2vec_model.save(config.intent_model_path+"intent_fasttextmodel")
+    word2vec_model.save(config.fasttext_model_path+"intent_fasttextmodel")
     print('\n### Fasttext model save ###', end="\n")
     
     w2c_index = word2vec_model.wv.index2word # fasttext가 적용된 단어 목록들
@@ -61,7 +61,7 @@ def main():
     print('\n\n[DEBUG1-1]word_index 단어 개수 >> ', len(w2c_index)) # <class 'list'>
 
     ### intentIndex 저장
-    with open(config.intent_model_path+'/intentIndex.pickle', 'wb') as f:
+    with open(config.fasttext_model_path+'/intentIndex.pickle', 'wb') as f:
         pickle.dump(w2c_index, f, pickle.HIGHEST_PROTOCOL)
 
     print("_________________________________________________________________________________________________________________\n")
@@ -84,7 +84,7 @@ def main():
         q_raw = np.array(q_raw)
         x_data.append(q_raw)
         
-    x_data = np.array(x_data)   # (None, 20, 300)
+    x_data = np.array(x_data)   # (None, 15, 300)
     x_data = x_data.reshape(len(config.df), config.encode_length, config.vector_size, 1)
     print(x_data.shape)
 
@@ -178,6 +178,7 @@ if __name__ == "__main__":
 
 
 '''
+encode_length =  20
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #
 =================================================================
@@ -227,5 +228,59 @@ dense_2 (Dense)              (None, 5)                 645
 =================================================================
 Total params: 4,032,149
 Trainable params: 3,971,237
+Non-trainable params: 60,912
+
+
+
+encode_length = 15
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+conv2d_1 (Conv2D)            (None, 14, 299, 12)       60
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 14, 299, 12)       0
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 12, 297, 12)       1308
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 12, 297, 12)       0
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 9, 294, 12)        2316
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 9, 294, 12)        0
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 8, 293, 12)        588
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 8, 293, 12)        0
+_________________________________________________________________
+conv2d_5 (Conv2D)            (None, 6, 291, 12)        1308
+_________________________________________________________________
+max_pooling2d_5 (MaxPooling2 (None, 6, 291, 12)        0
+_________________________________________________________________
+conv2d_6 (Conv2D)            (None, 3, 288, 12)        2316
+_________________________________________________________________
+max_pooling2d_6 (MaxPooling2 (None, 3, 288, 12)        0
+_________________________________________________________________
+conv2d_7 (Conv2D)            (None, 2, 287, 12)        588
+_________________________________________________________________
+max_pooling2d_7 (MaxPooling2 (None, 2, 287, 12)        0
+_________________________________________________________________
+conv2d_8 (Conv2D)            (None, 12, 285, 10)       228
+_________________________________________________________________
+max_pooling2d_8 (MaxPooling2 (None, 12, 285, 10)       0
+_________________________________________________________________
+conv2d_9 (Conv2D)            (None, 9, 282, 12)        1932
+_________________________________________________________________
+max_pooling2d_9 (MaxPooling2 (None, 9, 282, 12)        0
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 30456)             0
+_________________________________________________________________
+batch_normalization_1 (Batch (None, 30456)             121824
+_________________________________________________________________
+dense_1 (Dense)              (None, 128)               3898496
+_________________________________________________________________
+dense_2 (Dense)              (None, 5)                 645
+=================================================================
+Total params: 4,031,609
+Trainable params: 3,970,697
 Non-trainable params: 60,912
 '''

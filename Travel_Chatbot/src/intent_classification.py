@@ -28,7 +28,7 @@ def interface_embed(text):
     q_raw = okt.morphs(text)
 
     q_raw = list(map(lambda word : word2vec_model[word], q_raw))
-    print("[DEBUG5-2]pred (q_raw) >>", q_raw)
+    # print("[DEBUG5-2]pred (q_raw) >>\n", q_raw)   # 입력 문자열 백터값 확인
     q_raw = list(map(lambda idx : q_raw[idx] if idx < len(q_raw) else np.zeros(config.vector_size, dtype=float), range(config.encode_length)))
     q_raw = np.array(q_raw)
     q_raw = q_raw.reshape(1, 15, 300, 1)

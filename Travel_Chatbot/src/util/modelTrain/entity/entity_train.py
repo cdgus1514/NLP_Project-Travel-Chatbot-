@@ -135,7 +135,6 @@ network.add(Conv2D(120, kernel_size=(3,3), strides=(1,1), padding="valid", activ
 network.add(MaxPooling2D(pool_size=(1,1), strides=(1,1)))
 
 network.add(TimeDistributed(Dense(100, activation="relu")))
-network.summary()
 
 # Dropout Layer
 network.add(BatchNormalization())

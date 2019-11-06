@@ -454,3 +454,36 @@
 ##### scenario 파일 수정 (통계 및 사용자 채팅로그 수집 로직 추가)
 ##### util/* 파일 추가 (로그인, 통계, 채팅로그 저장)
 <br>
+
+<br>
+<br>
+<br>
+
+# 수정 -- 11/06
+- application [get_intent(○), get_entity(○), scenario(○), get_seq2seq(○), get_image(○)]
+- tokenizer
+- preprocess
+- intent_classification
+- entity_classification
+- configs
+- ~~model_configs~~
+- models(EntityModel, IntentModel, ImageModel, Seq2SeqModel)
+- crawler_configs
+- Flask_restfulAPI (main)
+- scenario
+- crawler_restaurant
+- crawler_weather
+- crawler_dust
+- crawler_travel
+- crawler_attraction
+- crawler(seoul, busan, incheon, parsing_test, hwaseong, suwon, ganghwa, gyeongju, gangwon, jeju, jeonju, attraction, hanatour, festival)
+- seq2seq_translation
+- util(constants, response, spell_checker, speel_dict.csv, logindb, chatdb, intentdb)
+- image_analysis
+- model (entity, fasttext, image, seq2seq)
+<br>
+<br>
+
+##### Flask_restfulAPI 파일 수정 (사용자 요청 개별처리)
+##### Users 파일 추가 (사용자 변수 클래스)
+<br>

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, session, request
+from flask import Flask, session, request, g
 
 import application
 
@@ -14,7 +14,7 @@ import json, werkzeug, time
 
 from util.logindb import checkUser
 # from util.signupdb import addUser
-
+from Users import User_data
 
 ###
 from datetime import datetime, timedelta
@@ -28,16 +28,15 @@ from uuid import uuid4
 
 
 ## CONFIG
-state = None
-slot_data = None
-pdata = None
-filename = None
-imgurl = None
-locations = (None, None, None)
+check_state_data = dict()
+check_slot_data = dict()
+check_pdata = dict()
+check_locations_data = dict()
+configs = Configs()
 nlp = "nlp"
 img = "img"
 
-configs = Configs()
+
 
 
 
@@ -122,87 +121,98 @@ app.session_interface = RedisSessionInterface()
 
 @app.route('/chatbot', methods=['GET', 'POST'])
 def Trigobot_request():
-    global state, slot_data, pdata, imgurl, img, locations
-    print("\n[DEBUG1-0]flaskrestful (state) >>", state, end="\n\n")
+    global check_slot_data, check_state_data, check_locations_data, check_pdata
+    
+    # 사용자 데이터 클래스 객체 생성 및 초기화
+    _users = session['Userid']
+    _users = User_data()
+    if session['Userid'] not in list(check_slot_data.keys()):
+        check_slot_data[session['Userid']] = _users.slot_data
+    if session['Userid'] not in list(check_state_data.keys()):
+        check_state_data[session['Userid']] = _users.state
+    if session['Userid'] not in list(check_locations_data.keys()):
+        check_locations_data[session['Userid']] = _users.locations
+    if session['Userid'] not in list(check_pdata.keys()):
+        check_pdata[session['Userid']] = _users.pdata
 
+    
     if request.method == 'POST':
-        ## Check Cookie & session.sid
+
+        ## 유저세션 체크
         c_cookie = request.headers.get('Cookie')
         print("########## session(chatbot) ##########\n", session, end="\n\n")
-        # print("[DEBUG1-0] flaskrestful (session.sid) >> ", session.sid, end="\n")
-        # print("[DEBUG1-0] flaskrestful (cookie) >> ", c_cookie, end="\n\n\n")
         uid = session['Userid']
 
         if c_cookie in session.sid:
             print("####### Complete Authentication !!! #######\n\n\n")
-            pass
         else:
             print("####### Invalid Authentication #######\n\n\n")
-            ## 요청 거절
-
-            
+            ## 요청 거절 로직
+        
+        _users.slot_data = check_slot_data[uid]
+        _users.state = check_state_data[uid]
+        _users.locations = check_locations_data[uid]
+        _users.pdata = check_pdata[uid]
+        
         # If you requested a slot
-        if state is not None and pdata == None:
-            print("\n[DEBUG1-2]flaskrestful (slot_data) >>", slot_data, end="\n\n")
+        if _users.state is not None and _users.pdata == None:
 
             data = request.get_json(force=True)
-            pdata = data["msg"]
+            _users.pdata = data["msg"]
 
-            if state == "restaurant":
-                message, state, slot_data, imgurl, locations = restaurant(slot_data, state, pdata, uid)
+            if _users.state == "restaurant":
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = restaurant(_users.slot_data, _users.state, _users.pdata, uid)
 
-                print("\n[DEBUG1-3]flask result (slot locations) >>", locations, end="\n\n\n")
-
-                
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
-                pdata = None
-
-                print("\n[DEBUG1-4]flaskrestful (state) >>", state, end="\n\n")
+                check_pdata[uid] = None
+                check_slot_data[uid] = None
+                check_state_data[uid] = None
 
                 return result
             
-            elif state == "weather":
-                message, state, slot_data, imgurl, locations = weather(slot_data, state, pdata, uid)
-                
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
-                result = dict(result)
-                pdata = None
+            elif _users.state == "weather":
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = weather(_users.slot_data, _users.state, _users.pdata, uid)
 
-                print("\n[DEBUG1-4]flaskrestful (state) >>", state, end="\n\n")
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
+                result = dict(result)
+                check_pdata[uid] = None
+                check_slot_data[uid] = None
+                check_state_data[uid] = None
 
                 return result
 
-            elif state == "dust":
-                message, state, slot_data, imgurl, locations = dust(slot_data, state, pdata, uid)
+            elif _users.state == "dust":
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = dust(_users.slot_data, _users.state, _users.pdata, uid)
                 
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
+                
                 result = dict(result)
-                pdata = None
-
-                print("\n[DEBUG1-4]flaskrestful (state) >>", state, end="\n\n")
+                check_pdata[uid] = None
+                check_slot_data[uid] = None
+                check_state_data[uid] = None
 
                 return result
 
-            elif state == "travel":
-                message, state, slot_data, imgurl, locations = travel(slot_data, state, pdata, uid)
-                
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]]]
-                result = dict(result)
-                pdata = None
+            elif _users.state == "travel":
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = travel(_users.slot_data, _users.state, _users.pdata, uid)
 
-                print("\n[DEBUG1-4]flaskrestful (state) >>", state, end="\n\n")
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
+                result = dict(result)
+                check_pdata[uid] = None
+                check_slot_data[uid] = None
+                check_state_data[uid] = None
 
                 return result
 
-            elif state == "attraction":
-                message, state, slot_data, imgurl, locations = attraction(slot_data, state, pdata, uid)
+            elif _users.state == "attraction":
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = attraction(_users.slot_data, _users.state, _users.pdata, uid)
 
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
-                pdata = None
-
-                print("\n[DEBUG1-4]flaskrestful (state) >>", state, end="\n\n")
+                check_pdata[uid] = None
+                check_slot_data[uid] = None
+                check_state_data[uid] = None
 
                 return result
             
@@ -210,32 +220,29 @@ def Trigobot_request():
         else:
             # Received json data parsing
             data = request.get_json(force=True)
-            print("\n[DEBUG1-2]Flaskrestful (req_data) >>", data)
-            pdata = data["msg"]
+            _users.pdata = data["msg"]
 
             # Trigobot output
-            message, state, slot_data, imgurl, locations = application.run(pdata, state, nlp, uid)
-            print("\n[DEBUG1-3]flask result (message) >>", message, end="\n")
-            print("\n[DEBUG1-3]flask result (state) >>", state, end="\n")
-            print("\n[DEBUG1-3]flask result (slot_data) >>", slot_data, end="\n\n\n")
-            print("\n[DEBUG1-3]flask result (imgurl) >>", imgurl, end="\n\n\n")
-            print("\n[DEBUG1-3]flask result (locations) >>", locations, end="\n\n\n")
+            message, _users.state, _users.slot_data, _users.imgurl, _users.locations = application.run(_users.pdata, _users.state, nlp, uid)
 
             # request slot
-            if state is not None:
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+            if _users.state is not None:
+                check_slot_data[uid] = _users.slot_data
+                check_state_data[uid] = _users.state
+
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
-                pdata = None
+                check_pdata[uid] = None
                 
                 return result
 
             # When normal
             else:
-                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
-
+                result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
-                pdata = None
-                print("\n[DEBUG 1-4] flaskrestful - end (state) >>", state, end="\n\n")
+                check_pdata[uid] = None
+                check_slot_data[uid] = None
+                check_state_data[uid] = None
 
                 return result
 
@@ -246,7 +253,6 @@ def welcome_request():
     if request.method == 'POST':
         # received json data parsing
         data = request.get_json(force=True)
-        print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data)
         pdata = data["msg"]
 
         print("########## session(welcom) ##########\n", session, end="\n\n")
@@ -263,32 +269,28 @@ def welcome_request():
 
 @app.route('/img', methods=['GET', 'POST'])
 def img_request():
-    global img, state, slot_data, imgurl, filename
+    global img
 
     if request.method == 'POST':
-        img_file = list(request.files)
-        print("\n[DEBUG1-0]ImageAnalysis (img_file) >>", img_file)
 
+        # 사용자 데이터 클래스 객체 생성 및 초기화        
+        _users = session['Userid']
+        _users = User_data()
+
+        img_file = list(request.files)
+        
         for file_id in img_file:
             imagefile = request.files[file_id]
             filename = werkzeug.utils.secure_filename(imagefile.filename)
-            print("Image Filename : ", imagefile.filename)
             timestr = time.strftime("%Y%m%d-%H%M%S")
 
             directory = configs.img_path
             filename = directory+timestr+'_'+filename
             imagefile.save(filename)
 
-            print("\n[DEBUG1-1]ImageAnalysis (filename) >>", filename, end="\n\n")
+            message, _users.state, _users.slot_data, _users.imgurl, _users.locations = application.run(filename, _users.state, img, None)
 
-            message, state, slot_data, imgurl, locations = application.run(filename, state, img, None)
-            print("\n[DEBUG1-3]flask result (message) >>", message, end="\n")
-            print("\n[DEBUG1-3]flask result (state) >>", state, end="\n")
-            print("\n[DEBUG1-3]flask result (slot_data) >>", slot_data, end="\n\n\n")
-            print("\n[DEBUG1-3]flask result (imgurl) >>", imgurl, end="\n\n\n")
-            print("\n[DEBUG1-3]flask result (locations) >>", locations, end="\n\n\n")
-
-            result = [['message', message], ['sender', 'Trigobot'], ['receiver', 'User'], ['imageurl', imgurl], ['latitude', locations[1]], ['longitude', locations[0]], ['link', locations[2]]]
+            result = [['message', message], ['sender', 'Trigobot'], ['receiver', 'User'], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
             result = dict(result)
             filename = None
             
@@ -299,15 +301,14 @@ def img_request():
 @app.route('/login', methods=['GET', 'POST'])
 def login_request():
     if request.method == 'POST':
-        data = request.get_json(force=True)
-        print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data, end="\n\n\n")
 
+        data = request.get_json(force=True)
         Userid = data["id"]
         Userpw = data["password"]
 
         result, check =  checkUser(Userid, Userpw)
 
-        # Create Cookie & Session
+        # 세션생성
         if check == True:
             session['Userid'] = Userid
             result.insert(0, ['cookie', session.sid])
@@ -318,8 +319,5 @@ def login_request():
         return dict(result)
 
 
-
 if __name__ == "__main__":
-    # app.run(host="192.168.0.147", port=30001, threaded=False)
-    # app.run(host="192.168.0.147", port=30001)
     app.run(host="192.168.0.147", port=30001, threaded=True)
