@@ -10,11 +10,12 @@ import bs4
 # 전역변수
 state = None
 slot_data = None
+end_flag = True
 
 
 
 def recommend_restaurant(location):
-    global state, slot_data
+    global state, slot_data, end_flag
     
     enc_location = urllib.parse.quote(location + ' 맛집')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
@@ -239,4 +240,4 @@ def recommend_restaurant(location):
         locations = (None, None, None)
     
 
-    return msg, state, slot_data, imgurl, locations
+    return msg, state, slot_data, imgurl, locations, end_flag

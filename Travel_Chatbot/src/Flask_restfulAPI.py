@@ -13,17 +13,17 @@ from configs import Configs
 import json, werkzeug, time
 
 from util.logindb import checkUser
-# from util.signupdb import addUser
+from util.signupdb import addUser
 from Users import User_data
 
-###
+################################################################
 from datetime import datetime, timedelta
 import redis
 import _pickle as cPickle
 from flask.sessions import SessionInterface, SessionMixin
 from werkzeug.datastructures import CallbackDict
 from uuid import uuid4
-###
+################################################################
 
 
 
@@ -32,11 +32,11 @@ check_state_data = dict()
 check_slot_data = dict()
 check_pdata = dict()
 check_locations_data = dict()
+check_end = dict()
+
 configs = Configs()
 nlp = "nlp"
 img = "img"
-
-
 
 
 
@@ -121,7 +121,8 @@ app.session_interface = RedisSessionInterface()
 
 @app.route('/chatbot', methods=['GET', 'POST'])
 def Trigobot_request():
-    global check_slot_data, check_state_data, check_locations_data, check_pdata
+    global check_slot_data, check_state_data, check_locations_data, check_pdata, check_end
+
     
     # 사용자 데이터 클래스 객체 생성 및 초기화
     _users = session['Userid']
@@ -161,58 +162,63 @@ def Trigobot_request():
             _users.pdata = data["msg"]
 
             if _users.state == "restaurant":
-                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = restaurant(_users.slot_data, _users.state, _users.pdata, uid)
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = restaurant(_users.slot_data, _users.state, _users.pdata, uid)
 
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
                 check_pdata[uid] = None
-                check_slot_data[uid] = None
-                check_state_data[uid] = None
+                if _users.end_flag == True:
+                    check_slot_data[uid] = None
+                    check_state_data[uid] = None
 
                 return result
             
             elif _users.state == "weather":
-                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = weather(_users.slot_data, _users.state, _users.pdata, uid)
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = weather(_users.slot_data, _users.state, _users.pdata, uid)
 
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
                 result = dict(result)
                 check_pdata[uid] = None
-                check_slot_data[uid] = None
-                check_state_data[uid] = None
+                if _users.end_flag == True:
+                    check_slot_data[uid] = None
+                    check_state_data[uid] = None
 
                 return result
 
             elif _users.state == "dust":
-                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = dust(_users.slot_data, _users.state, _users.pdata, uid)
-                
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = dust(_users.slot_data, _users.state, _users.pdata, uid)
+
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
                 
                 result = dict(result)
                 check_pdata[uid] = None
-                check_slot_data[uid] = None
-                check_state_data[uid] = None
+                if _users.end_flag == True:
+                    check_slot_data[uid] = None
+                    check_state_data[uid] = None
 
                 return result
 
             elif _users.state == "travel":
-                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = travel(_users.slot_data, _users.state, _users.pdata, uid)
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = travel(_users.slot_data, _users.state, _users.pdata, uid)
 
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
                 result = dict(result)
                 check_pdata[uid] = None
-                check_slot_data[uid] = None
-                check_state_data[uid] = None
+                if _users.end_flag == True:
+                    check_slot_data[uid] = None
+                    check_state_data[uid] = None
 
                 return result
 
             elif _users.state == "attraction":
-                message, _users.state, _users.slot_data, _users.imgurl, _users.locations = attraction(_users.slot_data, _users.state, _users.pdata, uid)
+                message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = attraction(_users.slot_data, _users.state, _users.pdata, uid)
 
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
                 check_pdata[uid] = None
-                check_slot_data[uid] = None
-                check_state_data[uid] = None
+                if _users.end_flag == True:
+                    check_slot_data[uid] = None
+                    check_state_data[uid] = None
 
                 return result
             
@@ -223,7 +229,7 @@ def Trigobot_request():
             _users.pdata = data["msg"]
 
             # Trigobot output
-            message, _users.state, _users.slot_data, _users.imgurl, _users.locations = application.run(_users.pdata, _users.state, nlp, uid)
+            message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = application.run(_users.pdata, _users.state, nlp, uid)
 
             # request slot
             if _users.state is not None:
@@ -241,8 +247,9 @@ def Trigobot_request():
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
                 check_pdata[uid] = None
-                check_slot_data[uid] = None
-                check_state_data[uid] = None
+                if _users.end_flag == True:
+                    check_slot_data[uid] = None
+                    check_state_data[uid] = None
 
                 return result
 
@@ -317,6 +324,24 @@ def login_request():
             result.insert(0, ['cookie', None])
         
         return dict(result)
+
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup_request():
+    if request.method == 'POST':
+
+        data = request.get_json(force=True)
+        print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data, end="\n\n\n")
+
+        Userid = data['id']
+        Userpw = data['password']
+
+        # if Userpw == Userpw_check:
+        result = addUser(Userid, Userpw)
+        
+        return result
+
 
 
 if __name__ == "__main__":

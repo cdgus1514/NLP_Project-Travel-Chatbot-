@@ -52,8 +52,9 @@ RE_FILTER = re.compile("[.,!?\"':;~()]")
 
 
 # Load Model
-# mconfig = ModelConfigs()
 mconfig = Load_Seq2Seq()
+
+end_flag = True
 
 
 
@@ -275,4 +276,4 @@ class get_seq2seq:
             sentence = self.space_join(sentence, mark='^')
             print("predicted sentence :", sentence)
 
-            return sentence, None, None, None, (None, None, None)
+            return sentence, None, None, None, (None, None, None), end_flag

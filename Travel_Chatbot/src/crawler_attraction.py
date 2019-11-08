@@ -11,6 +11,7 @@ state = None
 slot_data = None
 imgurl = None
 positions = [None, None]
+end_flag = True
 
 
 
@@ -28,7 +29,7 @@ def search_cr(str_):
 
 
 def recommand_attraction(local, travel):
-    global state, slot_data, imgurl, positions
+    global state, slot_data, imgurl, positions, end_flag
     
     try:
         city_idx = city_search(local)
@@ -45,7 +46,7 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-1]recommand_attraction (imgurl(naver-naver)) >>\n", imgurl)
                 print("\n[DEBUG1-1]recommand_attraction (url(naver-naver)) >>\n", info)
                 
-                return msg, state, slot_data, imgurl, (None, None, info)
+                return msg, state, slot_data, imgurl, (None, None, info), end_flag
 
             # 하나 투어
             print('@하나투어', end="\n")
@@ -55,7 +56,7 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-2]recommand_attraction (imgurl(hana)) >>\n", imgurl)
                 print("\n[DEBUG1-2]recommand_attraction (url(hana)) >>\n", info)
                 
-                return msg, state, slot_data, imgurl, (None, None, info)
+                return msg, state, slot_data, imgurl, (None, None, info), end_flag
         else:
             # 하나 투어
             print('@하나투어 (in 하나투어)', end="\n")
@@ -65,7 +66,7 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-1] recommand_attraction (imgurl(hana)) >>\n", imgurl)
                 print("\n[DEBUG1-1] recommand_attraction (url(hana-naver)) >>\n", info)
                 
-                return msg, state, slot_data, imgurl, (None, None, info)
+                return msg, state, slot_data, imgurl, (None, None, info), end_flag
 
 
             # 네이버
@@ -78,7 +79,7 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-2] recommand_attraction (imgurl(hana-naver)) >>\n", imgurl)
                 print("\n[DEBUG1-2] recommand_attraction (url(hana-naver)) >>\n", info)
                 
-                return msg, state, slot_data, imgurl, (None, None, info)
+                return msg, state, slot_data, imgurl, (None, None, info), end_flag
     
     except:
         print("############################")
@@ -88,7 +89,7 @@ def recommand_attraction(local, travel):
         msg = "죄송해요, " + local + travel +" 관광지에 대한 정보는 아직 준비중이에요  :(" + "\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
 
-    return msg, state, slot_data, imgurl, (None, None, None)
+    return msg, state, slot_data, imgurl, (None, None, None), end_flag
 
 
 # TEST

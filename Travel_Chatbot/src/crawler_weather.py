@@ -4,9 +4,14 @@ from urllib.request import urlopen, Request
 
 import bs4
 
+
+
 state = None
 slot_data = None
 positions = (None, None, None)
+end_flag = True
+
+
 
 def __tone_maker(weather_morning, weather_noon):
     if weather_morning[0] == "흐림":
@@ -51,7 +56,8 @@ def __tone_maker(weather_morning, weather_noon):
 
 
 def today_weather(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
+
     print("[DEBUG1-1]today_weather (location) >>", location)
     enc_location = urllib.parse.quote(location + '오늘 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
@@ -111,12 +117,13 @@ def today_weather(location):
         template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😭" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     print("\n\n[DEBUG2-1]today_weather (msg) >>\n", template_msg, end="\n\n")
-    return template_msg, state, slot_data, None, positions
+    return template_msg, state, slot_data, None, positions, end_flag
 
 
 
 def tomorrow_weather(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
+
     enc_location = urllib.parse.quote(location + ' 내일 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -173,12 +180,13 @@ def tomorrow_weather(location):
         template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     print("\n\n[DEBUG2-2]tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
-    return template_msg, state, slot_data, None, positions
+    return template_msg, state, slot_data, None, positions, end_flag
 
 
 
 def after_tomorrow_weather(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
+
     enc_location = urllib.parse.quote(location + ' 모레 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -237,12 +245,13 @@ def after_tomorrow_weather(location):
         template_msg = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😭" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     print("\n\n[DEBUG2-2]after_tomorrow_weather (msg) >>\n", template_msg, end="\n\n")
-    return template_msg, state, slot_data, None, positions
+    return template_msg, state, slot_data, None, positions, end_flag
 
 
 
 def specific_weather(location, date):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
+
     try:
         enc_location = urllib.parse.quote(location + date + ' 날씨')
         url = 'https://www.google.com/search?q=' + enc_location
@@ -262,12 +271,14 @@ def specific_weather(location, date):
         response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😭" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     print("\n\n[DEBUG2-3]specific_weather (msg) >>\n", response, end="\n\n")
-    return response, state, slot_data, None, positions
+    return response, state, slot_data, None, positions, end_flag
 
 
 
+# 구글 날씨정보 월-금 각각 크롤링(느림 → 수정필요)
 def this_week_weather(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
+
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
@@ -301,4 +312,4 @@ def this_week_weather(location):
         response = "죄송해요, 지금은 " + location + "의 날씨는 알 수 없어요.  😭" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     print("\n\n[DEBUG2-3]this_week_weather (msg) >>\n", response, end="\n\n")
-    return ' '.join(response), state, slot_data, None, positions
+    return ' '.join(response), state, slot_data, None, positions, end_flag

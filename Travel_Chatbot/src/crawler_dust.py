@@ -15,10 +15,12 @@ governments = config.Governments        # 행정구역 정보
 state = None
 slot_data = None
 positions = (None, None, None)
+end_flag = True
+
 
 
 def today_dust(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
 
     try:
         enc_location = urllib.parse.quote(location + ' 오늘 날씨')
@@ -51,7 +53,7 @@ def today_dust(location):
 
         dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요. 😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    return dust, state, slot_data, None, positions
+    return dust, state, slot_data, None, positions, end_flag
 
 
 
@@ -111,7 +113,7 @@ def metropolitan(day, location):
 
 
 def tomorrow_dust(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
 
     try:
         if len(location.split()) == 1 and location in metropolitans:
@@ -156,12 +158,12 @@ def tomorrow_dust(location):
         tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요. 😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
     print("\n\n[DEBUG3-3]tomorrow_dust (msg) >>\n", tdust)
-    return tdust, state, slot_data, None, positions
+    return tdust, state, slot_data, None, positions, end_flag
 
 
 
 def after_tomorrow_dust(location):
-    global state, slot_data, positions
+    global state, slot_data, positions, end_flag
 
     try:
         if len(location.split()) == 1 and location in metropolitans:
@@ -203,4 +205,4 @@ def after_tomorrow_dust(location):
 
         tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요.  😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
-    return dust.replace('-', '아직 알수 없음'), state, slot_data, None, positions
+    return dust.replace('-', '아직 알수 없음'), state, slot_data, None, positions, end_flag

@@ -20,6 +20,7 @@ from util.chatdb import addChat
 config = Crawlerconfigs()
 positions = (None, None, None)
 tmp = None
+end_flag = False
 
 
 
@@ -75,14 +76,14 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
                     entity_group.insert(0, "LOCATION")
                     print("[DEBUG1-4]scenario restaurant (entity_group) >>", entity_group, end="\n")
 
-                    return msg, state, named_entity, None, positions
+                    return msg, state, named_entity, None, positions, end_flag
 
             else:
                 result = location + restaurants
                 print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
                 answer = recommend_restaurant(' '.join(result))
                 addChat(uid, lo, answer[0])
-                # return recommend_restaurant(' '.join(result))
+
                 return answer
         
         # without slot
@@ -94,7 +95,7 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
             print(msg, end="\n\n")
 
             print('Input Question \n', end='', sep='')
-            return msg, state, named_entity, None, positions
+            return msg, state, named_entity, None, positions, end_flag
     
 
     # if you have location info but no restaurant info
@@ -118,7 +119,7 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
             print(msg, end="\n\n")
 
             print('Input Question \n', end='', sep='')
-            return msg, state, named_entity, None, positions
+            return msg, state, named_entity, None, positions, end_flag
 
     else:
         result = location + restaurants
@@ -188,7 +189,7 @@ def weather(named_entity, state, slot, uid):
 
             print('Input Question \n', end='', sep='')
             
-            return msg, state, named_entity, None, positions
+            return msg, state, named_entity, None, positions, end_flag
 
 
     if '오늘' in date:
@@ -249,7 +250,7 @@ def dust(named_entity, state, slot, uid):
                 msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
                 addChat(uid, slot, msg)
                 
-                return msg, None, None, None, positions
+                return msg, None, None, None, positions, end_flag
             
         else:
             state = "dust"
@@ -262,7 +263,7 @@ def dust(named_entity, state, slot, uid):
 
             print('Input Question \n', end='', sep='')
 
-            return msg, state, named_entity, None, positions
+            return msg, state, named_entity, None, positions, end_flag
 
     if len(date) != 0:
         if '오늘' in date:
@@ -274,7 +275,7 @@ def dust(named_entity, state, slot, uid):
         else:
             msg = '오늘, 내일, 모레의 미세먼지 상태만 알 수 있어요'
             
-            return msg, None, None, None, positions
+            return msg, None, None, None, positions, end_flag
 
 
 
@@ -318,7 +319,7 @@ def travel(named_entity, state, slot, uid):
 
             print('Input Question \n', end='', sep='')
             
-            return msg, state, named_entity, None, positions
+            return msg, state, named_entity, None, positions, end_flag
 
 
     print("[DEBUG1-3]scenario travel (purpose) >>", purpose)
@@ -365,7 +366,7 @@ def attraction(named_entity, state, slot, uid):
 
             print('Input Question \n', end='', sep='')
             
-            return msg, state, named_entity, None, positions
+            return msg, state, named_entity, None, positions, end_flag
 
 
     print("[DEBUG1-3]scenario attraction (attraction) >>", attraction, end="\n")
