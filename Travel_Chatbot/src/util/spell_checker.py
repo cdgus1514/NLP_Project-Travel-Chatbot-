@@ -16,6 +16,10 @@ from .constants import CheckResult
 from .constants import base_url
 from .response import Checked
 
+## <훈련용> ##
+# from constants import CheckResult
+# from constants import base_url
+# from response import Checked
 
 
 _agent = requests.Session()
