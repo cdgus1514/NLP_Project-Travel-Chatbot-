@@ -37,8 +37,10 @@ def today_dust(location):
         del dust_figure[0]
         del dust_figure[2]
         del dust_figure[4]
+        print("\n[DEBUG1-2]today_dust (dust_figure[5]) >>", dust_figure[5])
+        print("\n[DEBUG1-2]today_dust (dust_figure[5]) >>", dust_figure[4], end="\n\n")
 
-        dust = '오늘 ' + location + '지역 미세먼지 정보를 알려드릴게요!  🧐\n\n' + '오늘 ' + location + '지역의 미세먼지 상태는 ' + dust_figure[
+        dust = '오늘 ' + location + ' 미세먼지 정보 알려드릴게요!  😃\n\n' + location + '지역의 미세먼지 상태는 ' + dust_figure[
             1] + ' 이고, 농도는 ' + dust_figure[0] + '\n\n초미세먼지 상태는 ' + dust_figure[3] + ' 이고, 농도는' + dust_figure[
                 2] + '\n\n오존 상태는 ' + dust_figure[5] + ' 이고, 농도는 ' + dust_figure[4] + '입니다!'
 
@@ -53,13 +55,14 @@ def today_dust(location):
 
         dust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요. 😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
+    print("\n\n[DEBUG3-1]today_dust (msg) >>\n", dust)
     return dust, state, slot_data, None, positions, end_flag
 
 
 
 def metropolitan(day, location):
     try:
-        dust = day + ' ' + location + '의 미세먼지 정보를 알려드릴게요!  🧐'
+        dust = day + ' ' + location + '의 미세먼지 정보 알려드릴게요!  😃'
         enc_location = urllib.parse.quote(location + ' ' + day + ' 미세먼지')
         url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -70,7 +73,9 @@ def metropolitan(day, location):
 
         dust_soup = soup.find_all('dl')
         dust_morn = dust_soup[6].text.split()[1]
+        print("[DEBUG1-2]metropolitan (parsing_dust_morn) >>", dust_morn, end="\n")
         dust_noon = dust_soup[7].text.split()[1]
+        print("[DEBUG1-2]metropolitan (parsing_dust_noon) >>", dust_noon, end="\n")
 
         dust += '\n\n' + day + ' 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon
         
@@ -136,9 +141,11 @@ def tomorrow_dust(location):
             dust_figure.remove('자외선')
             dust_figure.remove('황사')
 
-            tdust = '내일 ' + location + '의 미세먼지 정보를 알려드릴게요!  🧐\n\n'
+            tdust = '내일 ' + location + ' 미세먼지 정보 알려드릴게요!  😃\n\n'
             dust_morn = dust_figure[0]
+            print("[DEBUG1-2]tomorrow_dust (dust_morn) >>", dust_morn, end="\n")
             dust_noon = dust_figure[1]
+            print("[DEBUG1-2]tomorrow_dust (dust_norn) >>", dust_noon, end="\n")
 
             tdust += '내일 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon + '\n\n'
             supdust_morn = dust_figure[4]
@@ -185,7 +192,7 @@ def after_tomorrow_dust(location):
             dust_figure.remove('자외선')
             dust_figure.remove('황사')
 
-            dust = '모레 ' + location + '의 미세먼지 정보를 알려드릴게요!  😊\n\n'
+            dust = '모레 ' + location + '의 미세먼지 정보를 알려드릴게요!  😃\n\n'
             dust_morn = dust_figure[2]
             dust_noon = dust_figure[3]
             dust += '모레 오전 미세먼지 상태는 ' + dust_morn + ', 오후 상태는 ' + dust_noon + '\n\n'
@@ -205,4 +212,9 @@ def after_tomorrow_dust(location):
 
         tdust = "죄송해요, 지금은 " + location + " 미세먼지 정보를 확인 할 수 없어요.  😥" + "\n\n" + "지역의 이름을 알려주시면 다시 알려드릴게요."
 
+
+    print("\n\n[DEBUG3-4]after_tomorrow_dust (msg) >>\n", dust)
     return dust.replace('-', '아직 알수 없음'), state, slot_data, None, positions, end_flag
+
+
+# tomorrow_dust("강원도")

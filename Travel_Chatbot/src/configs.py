@@ -37,5 +37,5 @@ class Configs:
 
 
     def __init__(self):
-        self.df = pd.read_csv(self.root_path+"src/data/train_intent6.csv")
-        # self.df = pd.read_csv(self.root_path+"src/data/intent_dataset1.csv")
+        # self.df = pd.read_csv(self.root_path+"src/data/train_intent6.csv")
+        self.df = pd.read_csv(self.root_path+"src/data/intent_dataset1.csv")

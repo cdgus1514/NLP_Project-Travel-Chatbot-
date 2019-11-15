@@ -83,7 +83,7 @@ def restaurant(named_entity, state, slot, uid):    # keyword_group, entity_group
                 print("\n[DEBUG1-5]restaurant (slot added result) >>", result, end="\n\n")
                 answer = recommend_restaurant(' '.join(result))
                 addChat(uid, lo, answer[0])
-
+                # return recommend_restaurant(' '.join(result))
                 return answer
         
         # without slot
@@ -312,7 +312,7 @@ def travel(named_entity, state, slot, uid):
         else:
             state = "travel"
 
-            msg += "아니면 어떤 여행을 하고싶으세요?  🧐 " +"\n\n" + "키워드 >> [해수욕, 계곡, 관광, 온천, 레져, 계절]"
+            msg += "아니면 어떤 여행을 하고싶으세요?  🔍 " +"\n\n" + "키워드 >> [해수욕, 계곡, 관광, 온천, 레져, 계절]"
             print("[DEBUG1-3]scenario travel (state) >>", state, end="\n\n")
             print("[DEBUG1-3]scenario travel (purpose) >>", purpose, end="\n\n\n")
             print(msg, end="\n\n")

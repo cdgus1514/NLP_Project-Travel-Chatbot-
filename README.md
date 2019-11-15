@@ -1,5 +1,12 @@
-﻿# __Choi DongHyeon__
+﻿# 자연어처리 여행 정보제공 챗봇
 <br>
+<br>
+
+##### [시연 동영상]
+https://www.youtube.com/watch?v=57X_V0tTm7w&t=140s
+<br>
+<br>
+
 
 ## 개발환경
 
@@ -28,6 +35,8 @@
 ##### pip install git+https://www.github.com/keras-team/keras-contrib.git
 <br>
 <br>
+
+
 
 ### intent_classification.py
 - 워드임베딩, 의도파악 모델에 넣어 결과 예측 >> 의도 분류

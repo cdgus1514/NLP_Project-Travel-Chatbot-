@@ -4,14 +4,10 @@ from urllib.request import urlopen, Request
 
 import bs4
 
-
-
 state = None
 slot_data = None
 positions = (None, None, None)
 end_flag = True
-
-
 
 def __tone_maker(weather_morning, weather_noon):
     if weather_morning[0] == "흐림":
@@ -57,7 +53,6 @@ def __tone_maker(weather_morning, weather_noon):
 
 def today_weather(location):
     global state, slot_data, positions, end_flag
-
     print("[DEBUG1-1]today_weather (location) >>", location)
     enc_location = urllib.parse.quote(location + '오늘 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
@@ -107,7 +102,8 @@ def today_weather(location):
             weather = '오늘은 우산을 챙겨야 할지도 몰라요. ☂ 오늘 ' + location + '에는 ' + '비가 올 수 있고 흐린 날씨에요. 🌧\n\n' + \
                       '현재 온도는 ' + temperature + '로' + weather[1].replace('˚', '도')
 
-        template_msg = '오늘 ' + location + ' 날씨를 알려드릴게요. 🧐\n\n' + weather
+        template_msg = '오늘 ' + location + ' 날씨 알려드릴게요. 😃\n\n' + weather
+        # 😎 😊 😃
 
     except:
         print("############################")
@@ -122,8 +118,7 @@ def today_weather(location):
 
 
 def tomorrow_weather(location):
-    global state, slot_data, positions, end_flag
-
+    global state, slot_data, positions
     enc_location = urllib.parse.quote(location + ' 내일 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -159,7 +154,7 @@ def tomorrow_weather(location):
             glue = '에도'
 
         weather_morning, weather_noon = __tone_maker(weather_morning, weather_noon)
-        template_msg = '내일 ' + location + ' 날씨를 알려드릴게요. 🧐\n\n' + '내일 오전엔 ' + weather_morning[
+        template_msg = '내일 ' + location + ' 날씨 알려드릴게요. 😃\n\n' + '내일 오전엔 ' + weather_morning[
             0] + ' , 기온은 ' + temperature_morning + '에요.\n\n' + '오후' + glue + ' ' + weather_noon[
                            0] + ' , 기온은 ' + temperature_noon + '입니다.'
 
@@ -185,8 +180,7 @@ def tomorrow_weather(location):
 
 
 def after_tomorrow_weather(location):
-    global state, slot_data, positions, end_flag
-
+    global state, slot_data, positions
     enc_location = urllib.parse.quote(location + ' 모레 날씨')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
 
@@ -226,7 +220,7 @@ def after_tomorrow_weather(location):
             glue = '에도'
 
         weather_morning, weather_noon = __tone_maker(weather_morning, weather_noon)
-        template_msg = '모레 ' + location + ' 날씨를 알려드릴게요. 🧐\n\n' + '모레 오전엔 ' + weather_morning[
+        template_msg = '모레 ' + location + ' 날씨 알려드릴게요. 😃\n\n' + '모레 오전엔 ' + weather_morning[
             0] + ' , 기온은 ' + temperature_morning + '\n\n' + '오후' + glue + ' ' + weather_noon[
                            0] + ' , 기온은 ' + temperature_noon + '입니다.'
 
@@ -250,8 +244,7 @@ def after_tomorrow_weather(location):
 
 
 def specific_weather(location, date):
-    global state, slot_data, positions, end_flag
-
+    global state, slot_data, positions
     try:
         enc_location = urllib.parse.quote(location + date + ' 날씨')
         url = 'https://www.google.com/search?q=' + enc_location
@@ -275,17 +268,15 @@ def specific_weather(location, date):
 
 
 
-# 구글 날씨정보 월-금 각각 크롤링(느림 → 수정필요)
 def this_week_weather(location):
-    global state, slot_data, positions, end_flag
-
+    global state, slot_data, positions
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
             'referer': 'http://google.com'}
 
         days = ['월', '화', '수', '목', '금', '토', '일']
-        templete_msg = location + '의 이번주 날씨를 알려드릴게요. 🧐\n\n'
+        templete_msg = location + '의 이번주 날씨 알려드릴게요. 😃\n\n'
         response = []
         response.append(templete_msg)
 

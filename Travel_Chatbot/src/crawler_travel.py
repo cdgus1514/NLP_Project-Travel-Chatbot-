@@ -6,22 +6,12 @@ from urllib.request import urlopen, Request
 import bs4
 
 from crawler_configs import Crawlerconfigs
-import crawler.seoul_crawler as se
-import crawler.busan_crawler as bs
-import crawler.jeonju_crawler as jj
-import crawler.jeju_crawler as jji
-import crawler.incheon_crawler as inc
-import crawler.gangwon_crawler as gw
-import crawler.gyeongju_crawler as gj
-import crawler.hwaseong_crawler as hs
-import crawler.suwon_crawler as sw
-import crawler.ganghwa_crawler as gh
+from util.traveldb import load_travelinfo
 
 import crawler.parsing_test
 
 
 
-# 전역변수
 state = None
 slot_data = None
 imgurl = None
@@ -220,49 +210,19 @@ def recommand_travelCity(entity):
 
 
         # 도시정보 크롤링
-        if purpose[0][1] == 99 and purpose[0][1] == None:
-            # 하나투어 리스트에 없는 도시들
-            msg = "죄송해요, " + entity + "에 대한 " +purpose[0][0] + " 여행지 정보는 아직 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
-
-        else:
-            city = purpose[0][1]    # 도시 인덱스
+        if purpose[0][1] != None and purpose[0][1] != None:
+            # city = purpose[0][1]    # 도시 인덱스
+            city = purpose[0][0]    # 도시 이름
             info = purpose[1]       # 도시 정보 인덱스
 
-            msg = entity +"(으)로 유명한~!  " + purpose[0][0] +"에 가보는 건 어떠세요?  " +"\n" + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  😊\n\n\n"
+            msg = entity +"(으)로 유명한~!  " + purpose[0][0] +"에 가보는 건 어떠세요?  " +"\n" + "제가 " + purpose[0][0]+ "에 대해 알려드릴게요!!  😃\n\n\n"
 
-            
-            if purpose[0][0] == "서울":
-                msg += se.seoul_cr(str(city), info)
-            
-            elif purpose[0][0] == "제주":
-                msg += jji.jeju_cr(str(city), info)
+            info, imgurl = load_travelinfo(city)
 
-            elif purpose[0][0] == "전주":
-                msg += jj.jeonju_cr(str(city), info)
+            msg += info
 
-            elif purpose[0][0] == "경주":
-                msg += gj.gyeongju_cr(str(city), info)
-
-            elif purpose[0][0] == "화성":
-                msg += hs.hwaseong_cr(str(city), info)
-
-            elif purpose[0][0] == "부산":
-                msg += bs.busan_cr(str(city), info)
-
-            elif purpose[0][0] == "수원":
-                msg += sw.suwon_cr(str(city), info)
-
-            elif purpose[0][0] == "강원":
-                msg += gw.gangwon_cr(str(city), info)
-
-            elif purpose[0][0] == "인천":
-                msg += inc.incheon_cr(str(city), info)
-
-            elif purpose[0][0] == "강화":
-                msg += gh.ganghwa_cr(str(city), info)
-
-            else:
-                msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
+        else:
+            msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
             
     
     except:
@@ -270,7 +230,11 @@ def recommand_travelCity(entity):
         print("#  TRAVEL CRAWLER ERROR    #")
         print("############################")
 
-        msg = "죄송해요, " + entity + "에 대한 여행지" +purpose[0][0] + "정보는 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
+        msg = "죄송해요, " + entity + "에 대한 여행지 " +purpose[0][0] + "에 대한 정보는 아직 준비중이에요.  😥 " + "\n\n" + "더 많은 정보를 제공할 수 있도록 노력할게요."
 
     print("\n\n[DEBUG1-2]recommand_travelCity (msg) >>\n", msg)
     return msg, state, slot_data, imgurl, positions, end_flag
+
+
+
+# recommand_travelCity('스파')

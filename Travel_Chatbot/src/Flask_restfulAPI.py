@@ -14,7 +14,7 @@ import json, werkzeug, time
 
 from util.logindb import checkUser
 from util.signupdb import addUser
-from Users import User_data
+from util.Users import User_data
 
 ###
 from datetime import datetime, timedelta
@@ -28,7 +28,7 @@ from uuid import uuid4
 
 
 ## CONFIG
-check_user = dict()
+check_user = dict() # 로그아웃 >> 해당 uid 제거
 
 configs = Configs()
 nlp = "nlp"
@@ -121,7 +121,6 @@ def Trigobot_request():
     
     # 사용자 데이터 클래스 객체 생성 및 초기화
     _users = session['Userid']
-    print('[DEBUG0] check (_users) >> ', _users, end="\n\n")
     _users = User_data()
 
     if session['Userid'] not in list(check_user.keys()):
@@ -132,6 +131,7 @@ def Trigobot_request():
 
         ## 유저세션 체크
         c_cookie = request.headers.get('Cookie')
+        print("########## session(chatbot) ##########\n", session, end="\n\n")
         uid = session['Userid']
 
         if c_cookie in session.sid:
@@ -150,7 +150,7 @@ def Trigobot_request():
 
             if _users.state == "restaurant":
                 message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = restaurant(_users.slot_data, _users.state, _users.pdata, uid)
-                
+
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
                 if _users.end_flag == True:
@@ -184,6 +184,7 @@ def Trigobot_request():
                 message, _users.state, _users.slot_data, _users.imgurl, _users.locations, _users.end_flag = dust(_users.slot_data, _users.state, _users.pdata, uid)
                 
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]]]
+                
                 result = dict(result)
                 if _users.end_flag == True:
                     _users.slot_data = None
@@ -254,6 +255,7 @@ def Trigobot_request():
             else:
                 result = [['message', message], ['sender', 'Trigobot'], ['receiver', data['name']], ['imageurl', _users.imgurl], ['latitude', _users.locations[1]], ['longitude', _users.locations[0]], ['link', _users.locations[2]]]
                 result = dict(result)
+
                 if _users.end_flag == True:
                     _users.pdata = None
                     _users.slot_data = None
@@ -294,6 +296,7 @@ def img_request():
         _users = User_data()
 
         img_file = list(request.files)
+        print("\n[DEBUG1-0]img_request (img_file) >>", img_file)
 
         for file_id in img_file:
             imagefile = request.files[file_id]
@@ -322,6 +325,8 @@ def login_request():
     if request.method == 'POST':
 
         data = request.get_json(force=True)
+        print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data, end="\n\n\n")
+
         Userid = data["id"]
         Userpw = data["password"]
 
@@ -344,9 +349,12 @@ def signup_request():
     if request.method == 'POST':
 
         data = request.get_json(force=True)
+        print("\n[DEBUG1-0]Flaskrestful (req_data) >>", data, end="\n\n\n")
+
         Userid = data['id']
         Userpw = data['password']
 
+        # if Userpw == Userpw_check:
         result = addUser(Userid, Userpw)
         
         return result

@@ -5,20 +5,18 @@ from urllib.request import urlopen, Request
 
 import bs4
 
-
-
-# 전역변수
 state = None
 slot_data = None
 end_flag = True
 
-
-
 def recommend_restaurant(location):
     global state, slot_data, end_flag
+    print("\n[DEBUG1-0]recommand_restaurant (location) >>", location)
     
     enc_location = urllib.parse.quote(location + ' 맛집')
     url = 'https://search.naver.com/search.naver?ie=utf8&query=' + enc_location
+    print("\n[DEBUG1-1]recommand_restaurant (url) >>", url, end="\n")
+
     rand = 20
 
     try:
@@ -28,17 +26,17 @@ def recommend_restaurant(location):
         html = page.read()
         soup = bs4.BeautifulSoup(html, 'html.parser')
         list_name = soup.find_all('a', class_='name')
-    
         
         ## 검색 결과가 없을경우
         if len(list_name) == 0:
             # seq2seq or 사과멘트
             msg = '죄송해요, 이 질문에 대한 정보는 아직 준비중이에요  😥'
-            return msg, state, slot_data, None, (None, None, None)
+            return msg, state, slot_data, imgurl, locations
 
-        list_info = soup.find_all('div', class_='txt ellp')       
+        list_info = soup.find_all('div', class_='txt ellp')
+        
 
-        cnt_name = len(list_name)    
+        cnt_name = len(list_name)        
         cnt_info = len(list_info)
         frand = random.randint(0, cnt_name-1)
         name = list_name[frand].text.split()
@@ -56,11 +54,14 @@ def recommend_restaurant(location):
                 new_name.append(c)
 
         name = ' '.join(new_name)
+        print("\n[DEBUG1-8]recommand_restaurant (result) >>", name, end="\n")
 
         if frand > cnt_info-1:
             info = location
         else:
             info = list_info[frand].text
+
+
         specific_url = list_name[frand].get('href')
 
         
@@ -96,8 +97,8 @@ def recommend_restaurant(location):
                 
                 img = img[-1]
                 imgurl = img
-            
             else:
+                print("################## Failed search img ##################")
                 imgurl = None
         ###############################################################################################
 
@@ -108,6 +109,7 @@ def recommend_restaurant(location):
         for link in soup.findAll('a'):
             if 'href' in link.attrs:
                 map_url.append(link.attrs['href'])
+
         
         for i in range(3,10):
             try:
@@ -169,7 +171,6 @@ def recommend_restaurant(location):
                     menu_dict[menu[i + 1]] = menu[i]
 
         link_path = soup.find('ul', {'class': 'list_relation_link'})
-        print("\n[DEBUG2-3]recommand_restaurant (link_path) >>", link_path, end="\n\n")
         if link_path is not None:
 
             link = link_path.find_all('li', {'class': 'list_item'})
@@ -211,8 +212,7 @@ def recommend_restaurant(location):
         else:
             description = ''
 
-
-        msg = info + '!  ' + name + '에 가보는 건 어떨까요?  🤗\n\n'
+        msg = info + '!  ' + name + '에 가보는 건 어떨까요?  😃\n\n'
 
         if description != ' ':
             msg += description
@@ -227,8 +227,6 @@ def recommend_restaurant(location):
             msg += '\n\n📞 전화번호\n' + tel
         ###############################################################################################
     
-
-    
     except:
         print("############################")
         print("# RESTAURANT CRAWLER ERROR #")
@@ -239,5 +237,15 @@ def recommend_restaurant(location):
         imgurl = None
         locations = (None, None, None)
     
-
+    print("\n\n\n[DEBUG3-1]recommand_restaurant (msg) >>\n", msg, end="\n\n\n")
     return msg, state, slot_data, imgurl, locations, end_flag
+
+
+
+# while True:
+#     print("키워드 입력 >> ", end=" ")
+    
+#     recommend_restaurant(input())
+
+# recommend_restaurant("서초구 마카롱")
+# print(recommend_restaurant("강남역 카페"))

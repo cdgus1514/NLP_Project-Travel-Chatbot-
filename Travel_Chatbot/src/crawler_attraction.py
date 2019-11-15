@@ -19,6 +19,7 @@ def search_cr(str_):
     # https://developers.naver.com/docs/search/blog/ 참고
 
     for func in crawler:
+        # print("[DEBUG11-0]search_cr (crawler) >>", func, end="\n\n")
         func, imgurl, info = func(str_)
         
         if not func == None:
@@ -29,7 +30,7 @@ def search_cr(str_):
 
 
 def recommand_attraction(local, travel):
-    global state, slot_data, imgurl, positions, end_flag
+    global state, slot_data, imgurl, positions
     
     try:
         city_idx = city_search(local)
@@ -45,7 +46,6 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-1]recommand_attraction (msg(naver-naver)) >>\n", msg)
                 print("\n[DEBUG1-1]recommand_attraction (imgurl(naver-naver)) >>\n", imgurl)
                 print("\n[DEBUG1-1]recommand_attraction (url(naver-naver)) >>\n", info)
-                
                 return msg, state, slot_data, imgurl, (None, None, info), end_flag
 
             # 하나 투어
@@ -55,7 +55,6 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-2]recommand_attraction (msg(hana)) >>\n", msg)
                 print("\n[DEBUG1-2]recommand_attraction (imgurl(hana)) >>\n", imgurl)
                 print("\n[DEBUG1-2]recommand_attraction (url(hana)) >>\n", info)
-                
                 return msg, state, slot_data, imgurl, (None, None, info), end_flag
         else:
             # 하나 투어
@@ -65,7 +64,6 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-1] recommand_attraction (msg(hana)) >>\n", msg)
                 print("\n[DEBUG1-1] recommand_attraction (imgurl(hana)) >>\n", imgurl)
                 print("\n[DEBUG1-1] recommand_attraction (url(hana-naver)) >>\n", info)
-                
                 return msg, state, slot_data, imgurl, (None, None, info), end_flag
 
 
@@ -78,7 +76,6 @@ def recommand_attraction(local, travel):
                 print("\n[DEBUG1-2] recommand_attraction (msg(hana-naver)) >>\n", msg)
                 print("\n[DEBUG1-2] recommand_attraction (imgurl(hana-naver)) >>\n", imgurl)
                 print("\n[DEBUG1-2] recommand_attraction (url(hana-naver)) >>\n", info)
-                
                 return msg, state, slot_data, imgurl, (None, None, info), end_flag
     
     except:
