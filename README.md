@@ -16,7 +16,7 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 - NVIDIA GeForce RTX2080
 - Visual Studio Code
 
-- python            3.7.3
+- python                3.7.3
 - Flask		        1.1.1
 - gensim                3.8.1
 - numpy                 1.17.3
