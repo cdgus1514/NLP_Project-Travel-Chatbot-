@@ -10,12 +10,13 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 
 ## 개발환경
 ```
-- Windows 10
-- Visual Studio Code
-- python 3.7.3
+- Windows10 x64
 - Intel i7-8700 CPU @ 3.20GHz
+- RAM 32.0GB
 - NVIDIA GeForce RTX2080
+- Visual Studio Code
 
+- python            3.7.3
 - Flask		        1.1.1
 - gensim                3.8.1
 - numpy                 1.17.3
