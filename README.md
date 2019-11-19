@@ -3,7 +3,7 @@
 <br>
 
 ##### [시연 동영상]
-https://www.youtube.com/watch?v=57X_V0tTm7w&t=140s
+https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 <br>
 <br>
 
