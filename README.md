@@ -9,16 +9,14 @@ https://www.youtube.com/watch?v=57X_V0tTm7w&t=140s
 
 
 ## 개발환경
-
-- __Windows 10__
-- __Visual Studio Code__
-- __python 3.7.3__
-- __Intel i7-8700 CPU @ 3.20GHz__
-- __NVIDIA GeForce RTX2080__
-<br>
+```
+- Windows 10
+- Visual Studio Code
+- python 3.7.3
+- Intel i7-8700 CPU @ 3.20GHz
+- NVIDIA GeForce RTX2080
 
 - Flask		        1.1.1
-- ~~gensim		    3.4.0~~
 - gensim            3.8.1
 - numpy             1.17.3
 - konlpy		    0.5.1
@@ -30,52 +28,58 @@ https://www.youtube.com/watch?v=57X_V0tTm7w&t=140s
 - uuid		        1.30
 - PyMySQL		    0.9.3
 - beautifulsoup4	4.8.0
+```
 <br>
 
 ##### pip install git+https://www.github.com/keras-team/keras-contrib.git
 <br>
 <br>
 
-
-
-### intent_classification.py
+### Intent Classification
+```
 - 워드임베딩, 의도파악 모델에 넣어 결과 예측 >> 의도 분류
 
 1. word2vec_model >> fasttext 훈련 모델
 2. model >> Convolution 의도파악 훈련 모델
 3. interface_embed 함수 >> 입력받은 데이터(문자열) 워드임베딩
 4. get_intent 함수 >> 워드임베딩 된 데이터 predict 후 결과 리턴
-
+```
 <br>
 <br>
 
-### entity_classification.py
+### Entity Classification
+```
 - 워드임베딩, 개체명인식 모델에 넣어 결과 예측 >> 개체명 분류
 
 1. word_index >> fasttext 훈련 모델
 2. model >> BiLSTM+crf 개체명인식 훈련 모델
 3. word_pred 함수 >> 입력받은 데이터(문자열) 워드임베딩
 3. get_entity 함수 >> 워드임베딩 된 데이터 predict 후 결과 리턴
-
+```
 <br>
 <br>
 
-### seq2seq_translation.py
+### Sequence to Sequence
+```
 - 워드임베딩, seq2seq 모델에 넣어 결과 예측 >> seq2seq 대화
 
-1. fallback 처리 된 문자열을 encoder 데이터로 사용
-
+1. lstm 2개를 연결해서 사용 (Encoder, Decoder)
+2. Encoder(질문) → Decoder(답변) 학습
+3. fallback 처리 된 문자열을 encoder 데이터로 사용
+```
 <br>
 <br>
 
 
-### image_analysis.py
+### Image Analysis
+```
 - 이미지 모델에 넣어 결과 예측 >> 이미지 분류
-
+```
 <br>
 <br>
 
-### application.py
+### application
+```
 - 챗봇 로직(의도파악, 개체명인식, fallback, seq2seq, 이미지분석, 시나리오(웹 크롤링))
 
 1. input
@@ -85,31 +89,23 @@ https://www.youtube.com/watch?v=57X_V0tTm7w&t=140s
 5. get_seq2seq (seq2seq 대화)
 6. get_image  (이미지분석)
 7. scenario   (의도, 개체명 >> 크롤링 >> 결과출력)
-
+```
 <br>
 <br>
 
-### scenario.py
+### scenario
+```
 - 각 의도 웹 크롤링 실행
 
 1. intent 확인 후 맞는 카테고리 메소드 실행
 2. 테그 분리 후 크롤링 실행
-
-<br>
-<br>
-
-### Flask_restfulAPI.py
-- flask_restful api 사용
-- POST방식으로 온 json 데이터를 파싱 후 훈련된 모델에 넣어 결과값 예측 후 클라이언트에게 결과값 리턴
-
-<br>
+```
 <br>
 <br>
 <br>
 
 # 실행방법
-<br>
-
+```
 1. configs 파일 >> root_path 수정
 2. configs 파일 >> img_path 디렉토리 생성**
 3. /src/models/* 파일  >> root_path 수정
@@ -117,7 +113,7 @@ https://www.youtube.com/watch?v=57X_V0tTm7w&t=140s
 5. model/entity/fasttext 모델 다운
 5. Flask_restfulAPI.py 실행 (ip수정)
 6. 클라이언트에서 질문입력, 결과출력
-
+```
 
 ##### Travel_Chatbot/ 경로에 img_upload/input 디렉토리 27개 생성 필요
 ##### intent/entity 모델, 워드임베딩 file, redis install file 다운로드 ↓
