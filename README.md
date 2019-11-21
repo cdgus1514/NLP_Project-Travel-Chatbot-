@@ -105,6 +105,7 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 <br>
 <br>
 
+<!--
 # 실행방법
 ```
 1. configs 파일 >> root_path 수정
@@ -121,6 +122,7 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 <br>
 <br>
 <br>
+-->
 
 # 수정 -- 10/02
 ```
