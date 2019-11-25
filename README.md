@@ -1,7 +1,7 @@
 ﻿# 자연어처리 여행 정보제공 챗봇 👓
 
-<center><img style='float: left', src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img></center>
-<center><img style='flat: left', src='Travel_Chatbot/src/img/main2.PNG', width='300', height='300'></img></center>
+<center><img style='float: left' src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img></center>
+<center><img style='flat: left' src='Travel_Chatbot/src/img/main2.PNG', width='300', height='300'></img></center>
 <!-- <center><img src='Travel_Chatbot/src/img/main3.PNG', width='300', height='300'></img></center> -->
 
 딥러닝과 자연어처리를 사용해서 대화의 의도파악과 개체명인식, Seq2Seq를 이용한 잡담처리, 이미지 분석을 통한 여행정보제공 챗봇입니다.
