@@ -50,7 +50,9 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 <br><br><br>
 
 ### 1. Intent Classification
-- 사용자 대화의 의도를 파악하기 위한 단계
+사용자 대화의 의도를 파악하기 위한 단계.
+<br>
+<br>
 Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Convolution 네트워크를 사용하여 문장을 분류
 의도파악 카테고리 (날씨, 맛집, 미세먼지, 여행지, 관광지)
 <center>
