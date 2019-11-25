@@ -1,7 +1,7 @@
 ﻿# 자연어처리 여행 정보제공 챗봇 👓
 
 <center>
-<img style='float: left' src='Travel_Chatbot/src/img/main5.PNG'>
+<img style='float: left' src='Travel_Chatbot/src/img/main.PNG'>
 </center>
 
 딥러닝과 자연어처리를 사용해서 대화의 의도파악과 개체명인식, Seq2Seq를 이용한 잡담처리, 이미지 분석을 통한 여행정보제공 챗봇입니다.
@@ -51,33 +51,34 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 
 ### 1. Intent Classification
 ```
-- 사용자의 대화의 의도를 파악하기 위한 의도 분류
+- 사용자 대화의 의도를 파악하기 위한 단계
 
-워드임베딩 후 intent_classification 모델에 넣어 결과 예측
-
-1. word2vec_model >> fasttext 훈련 모델
-2. model >> Convolution 의도파악 훈련 모델
-3. interface_embed 함수 >> 입력받은 데이터(문자열) 워드임베딩
-4. get_intent 함수 >> 워드임베딩 된 데이터 predict 후 결과 리턴
+Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Convolution 네트워크를 사용하여 문장을 분류
+의도파악 카테고리 (날씨, 맛집, 미세먼지, 여행지, 관광지)
 ```
+<center>
+<img src='Travel_Chatbot/src/img/intent_word_bag.PNG', width='600', height='600'>
+</center>
 <br><br>
 
 
 ### 2. Entity Classification
 ```
-- 워드임베딩, 개체명인식 모델에 넣어 결과 예측 >> 개체명 분류
+- 사용자 대화의 의도를 분류 후 대화의 핵심 단어들을 파악하기 위한 단계
 
-1. word_index >> fasttext 훈련 모델
-2. model >> BiLSTM+crf 개체명인식 훈련 모델
-3. word_pred 함수 >> 입력받은 데이터(문자열) 워드임베딩
-3. get_entity 함수 >> 워드임베딩 된 데이터 predict 후 결과 리턴
+Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, BiLSTM-CRF를 사용하여 개체명 분류
+개체명인식 태그(LOCATION, DATE, RESTAURANT, TRAVEL, PURPOSE, O)
 ```
 <br><br>
 
 
+
+
 ### 3. Sequence to Sequence
 ```
-- 워드임베딩, seq2seq 모델에 넣어 결과 예측 >> seq2seq 대화
+- 의도파악 카테고리에 해당하지 않는 문장을 처리해주는 단계
+
+워드임베딩, seq2seq 모델에 넣어 결과 예측 >> seq2seq 대화
 
 1. lstm 2개를 연결해서 사용 (Encoder, Decoder)
 2. Encoder(질문) → Decoder(답변) 학습
@@ -88,7 +89,9 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 
 ### 4. Image Analysis
 ```
-- 이미지 모델에 넣어 결과 예측 >> 이미지 분류
+- 사용자가 이미지 입력 시 처리하는 단계
+
+이미지 모델에 넣어 결과 예측 >> 이미지 분류
 ```
 <br><br>
 
@@ -110,7 +113,7 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 
 ### 6. scenario
 ```
-- 각 의도 웹 크롤링 실행
+- 각 의도에 해당하는 웹 크롤링 실행
 
 1. intent 확인 후 맞는 카테고리 메소드 실행
 2. 테그 분리 후 크롤링 실행
