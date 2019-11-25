@@ -84,10 +84,9 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 <br>
 <br>
 Konly를 사용한 문장 토큰화, keras embedding을 사용한 워드 임베딩, LSTM(Encoder)-LSTM(Decoder)를 연결하여 구현한 Seq2Seq 모델
-<center>
-<img src='Travel_Chatbot/src/img/Seq2Seq.PNG', width='500', height='500'>
-<img src='Travel_Chatbot/src/img/Seq2Seq2.PNG', width='300', height='300'>
-</center>
+<center><img src='Travel_Chatbot/src/img/Seq2Seq.PNG', width='500', height='500'></center>
+<br>
+<center><img src='Travel_Chatbot/src/img/Seq2Seq2.PNG', width='300', height='300'></center>
 <br><br>
 
 
