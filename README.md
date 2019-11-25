@@ -68,7 +68,7 @@ Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Con
 Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, BiLSTM-CRF를 사용하여 개체명 분류<br>
 개체명인식 태그(LOCATION, DATE, RESTAURANT, TRAVEL, PURPOSE, O)
 <center>
-<img src='Travel_Chatbot/src/img/entity_word_bag.jpg', width='700', height='700'>
+<img src='Travel_Chatbot/src/img/entity_word_bag.PNG', width='700', height='700'>
 </center>
 <br><br>
 
