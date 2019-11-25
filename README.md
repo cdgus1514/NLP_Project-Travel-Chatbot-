@@ -49,7 +49,7 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 ##### pip install git+https://www.github.com/keras-team/keras-contrib.git
 <br><br><br>
 
-### 1. Intent Classification
+## 1. Intent Classification
 사용자 대화의 의도를 파악하기 위한 단계.
 <br>
 <br>
@@ -61,7 +61,7 @@ Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Con
 <br><br>
 
 
-### 2. Entity Classification
+## 2. Entity Classification
 사용자 대화의 의도를 분류 후 대화의 핵심 단어들을 파악하기 위한 단계
 <br>
 <br>
@@ -72,10 +72,14 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 </center>
 <br><br>
 
+#### 의도파악 & 개체명 분류
+<center>
+<img src='Travel_Chatbot/src/img/NLP.PNG', width='700', height='700'>
+</center>
+<br><br>
 
 
-
-### 3. Sequence to Sequence
+## 3. Sequence to Sequence
 ```
 - 의도파악 카테고리에 해당하지 않는 문장을 처리해주는 단계
 
@@ -88,7 +92,7 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 <br><br>
 
 
-### 4. Image Analysis
+## 4. Image Analysis
 ```
 - 사용자가 이미지 입력 시 처리하는 단계
 
@@ -97,7 +101,7 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 <br><br>
 
 
-### 5. application
+## 5. application
 ```
 - 챗봇 로직(의도파악, 개체명인식, fallback, seq2seq, 이미지분석, 시나리오(웹 크롤링))
 
@@ -112,7 +116,7 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 <br><br>
 
 
-### 6. scenario
+## 6. scenario
 ```
 - 각 의도에 해당하는 웹 크롤링 실행
 
