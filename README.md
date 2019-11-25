@@ -53,7 +53,7 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 사용자 대화의 의도를 파악하기 위한 단계.
 <br>
 <br>
-Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Convolution 네트워크를 사용하여 문장을 분류
+Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Convolution 네트워크를 사용하여 문장을 분류<br>
 의도파악 카테고리 (날씨, 맛집, 미세먼지, 여행지, 관광지)
 <center>
 <img src='Travel_Chatbot/src/img/intent_word_bag.PNG', width='600', height='600'>
@@ -62,12 +62,14 @@ Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Con
 
 
 ### 2. Entity Classification
-```
-- 사용자 대화의 의도를 분류 후 대화의 핵심 단어들을 파악하기 위한 단계
-
-Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, BiLSTM-CRF를 사용하여 개체명 분류
+사용자 대화의 의도를 분류 후 대화의 핵심 단어들을 파악하기 위한 단계
+<br>
+<br>
+Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, BiLSTM-CRF를 사용하여 개체명 분류<br>
 개체명인식 태그(LOCATION, DATE, RESTAURANT, TRAVEL, PURPOSE, O)
-```
+<center>
+<img src='Travel_Chatbot/src/img/entity_word_bag.jpg', width='700', height='700'>
+</center>
 <br><br>
 
 
