@@ -1,7 +1,14 @@
 ﻿# 자연어처리 여행 정보제공 챗봇 👓
 
-<center><img src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img></center>
+<img src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img>
+딥러닝과 자연어처리를 사용해서 대화의 의도파악과 개체명인식, Seq2Seq를 이용한 잡담처리, 이미지 분석을 통한 여행정보제공 챗봇입니다.</br>
+자연어처리를 위한 워드임베딩으로 FastText를 사용하였고, 의도파악과 이미지분석에는 Convolutional neural network, 개체명인식과 Seq2Seq에는 Recurrent Neural Network을 사용하여 구현하였습니다.
 <br><br>
+
+##### 단어 벡터 시각화
+<img src='Travel_Chatbot/src/img/PCA1.PNG', width='300', height='300'></img>
+<img src='Travel_Chatbot/src/img/PCA2.PNG', width='300', height='300'></img>
+
 
 ##### [시연 동영상]
 https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
@@ -38,7 +45,9 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 
 ### 1. Intent Classification
 ```
-- 워드임베딩, 의도파악 모델에 넣어 결과 예측 >> 의도 분류
+- 사용자의 대화의 의도를 파악하기 위한 의도 분류
+
+워드임베딩 후 intent_classification 모델에 넣어 결과 예측
 
 1. word2vec_model >> fasttext 훈련 모델
 2. model >> Convolution 의도파악 훈련 모델
