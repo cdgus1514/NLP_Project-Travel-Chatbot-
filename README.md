@@ -1,8 +1,8 @@
 ﻿# 자연어처리 여행 정보제공 챗봇 👓
 
-<center><img src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img></center>
-<center><img src='Travel_Chatbot/src/img/main2.PNG', width='300', height='300'></img></center>
-<center><img src='Travel_Chatbot/src/img/main3.PNG', width='300', height='300'></img></center>
+<left><img src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img></left>
+<left><img src='Travel_Chatbot/src/img/main2.PNG', width='300', height='300'></img></left>
+<!-- <center><img src='Travel_Chatbot/src/img/main3.PNG', width='300', height='300'></img></center> -->
 
 딥러닝과 자연어처리를 사용해서 대화의 의도파악과 개체명인식, Seq2Seq를 이용한 잡담처리, 이미지 분석을 통한 여행정보제공 챗봇입니다.
 자연어처리를 위한 워드임베딩으로 FastText를 사용하였고, 의도파악과 이미지분석에는 Convolutional neural network, 개체명인식과 Seq2Seq에는 Recurrent Neural Network을 사용하여 구현하였습니다.
