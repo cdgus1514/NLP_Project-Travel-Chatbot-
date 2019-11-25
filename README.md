@@ -4,12 +4,11 @@
 <img style='float: left' src='Travel_Chatbot/src/img/main.PNG'>
 </center>
 
-딥러닝과 자연어처리를 사용해서 대화의 의도파악과 개체명인식, Seq2Seq를 이용한 잡담처리, 이미지 분석을 통한 여행정보제공 챗봇입니다.
+딥러닝(케라스)과 자연어처리를 사용해서 대화의 의도파악과 개체명인식, Seq2Seq를 이용한 잡담처리, 이미지 분석을 통한 여행정보를 제공하는 챗봇입니다.
 자연어처리를 위한 워드임베딩으로 FastText를 사용하였고, 의도파악과 이미지분석에는 Convolutional neural network, 개체명인식과 Seq2Seq에는 Recurrent Neural Network을 사용하여 구현하였습니다.
 <br><br>
 
 ##### 단어 벡터 시각화
-
 <center>
 <img style='float: left;' src='Travel_Chatbot/src/img/PCA1.PNG', width='500', height='500'>
 <img style='float: left;' src='Travel_Chatbot/src/img/PCA2.PNG', width='500', height='500'>
@@ -53,11 +52,9 @@ https://www.youtube.com/watch?v=aikZXcpKetg&feature=youtu.be
 사용자 대화의 의도를 파악하기 위한 단계
 <br>
 <br>
-Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Convolution 네트워크를 사용하여 문장을 분류<br>
+konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드임베딩과 Convolution 네트워크를 사용하여 문장을 분류하였습니다.<br>
 의도파악 카테고리 (날씨, 맛집, 미세먼지, 여행지, 관광지)
-<center>
-<img src='Travel_Chatbot/src/img/intent_word_bag.PNG', width='600', height='600'>
-</center>
+<center><img src='Travel_Chatbot/src/img/intent_word_bag.PNG', width='600', height='600'></center>
 <br><br>
 
 
@@ -65,17 +62,13 @@ Konlpy를 사용한 문장 토큰화, FatsText를 사용한 워드임베딩, Con
 사용자 대화의 의도를 분류 후 대화의 핵심 단어들을 파악하기 위한 단계
 <br>
 <br>
-Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, BiLSTM-CRF를 사용하여 개체명 분류<br>
+konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드임베딩과 BiLSTM-CRF를 사용하여 개체명을 분류하였습니다.<br>
 개체명인식 태그(LOCATION, DATE, RESTAURANT, TRAVEL, PURPOSE, O)
-<center>
-<img src='Travel_Chatbot/src/img/entity_word_bag.PNG', width='700', height='700'>
-</center>
+<center><img src='Travel_Chatbot/src/img/entity_word_bag.PNG', width='700', height='700'></center>
 <br><br>
 
 #### 의도파악 & 개체명 분류
-<center>
-<img src='Travel_Chatbot/src/img/NLP.PNG', width='700', height='700'>
-</center>
+<center><img src='Travel_Chatbot/src/img/NLP.PNG', width='700', height='700'></center>
 <br><br>
 
 
@@ -83,9 +76,9 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 의도파악 카테고리에 해당하지 않는 문장을 처리해주는 단계
 <br>
 <br>
-Konly를 사용한 문장 토큰화, keras embedding을 사용한 워드 임베딩, LSTM(Encoder)-LSTM(Decoder)를 연결하여 구현한 Seq2Seq 모델
+konlpy를 사용한 문장 토큰화, keras embedding을 사용한 워드임베딩, LSTM(Encoder)-LSTM(Decoder)를 연결하여 Seq2Seq 모델을 구현하였습니다.
 <center><img src='Travel_Chatbot/src/img/Seq2Seq.PNG', width='500', height='500'></center>
-<br>
+<br><br>
 <center><img src='Travel_Chatbot/src/img/Seq2Seq2.PNG', width='300', height='300'></center>
 <br><br>
 
@@ -94,10 +87,8 @@ Konly를 사용한 문장 토큰화, keras embedding을 사용한 워드 임베�
 사용자가 이미지 입력 시 처리하는 단계
 <br>
 <br>
-이미지 256x256 사이즈로 리사이징, Convolution 네트워크를 사용하여 이미지 분석&분류
-<center>
-<img src='Travel_Chatbot/src/img/Img_Analysis.PNG', width='700', height='700'>
-</center>
+이미지 256x256 사이즈로 리사이징, Convolution 네트워크를 사용하여 이미지 분석&분류 하였습니다.
+<center><img src='Travel_Chatbot/src/img/Img_Analysis.PNG', width='700', height='700'></center>
 <br><br>
 
 
@@ -107,11 +98,11 @@ Konly를 사용한 문장 토큰화, keras embedding을 사용한 워드 임베�
 
 1. input
 2. preprocess (tokenize >> 형태소분석, 불용어 제거)
-3. get_intent (의도파악)
-4. get_entity (개체명 인식)
-5. get_seq2seq (seq2seq 대화)
-6. get_image  (이미지분석)
-7. scenario   (의도, 개체명 >> 크롤링 >> 결과출력)
+3-1. get_intent (의도파악)
+3-2. get_image  (이미지분석)
+4-1. get_entity (개체명 인식)
+4-2. get_seq2seq (seq2seq 대화)
+5. scenario   (의도, 개체명 >> 크롤링 >> 결과출력)
 ```
 <br><br>
 
