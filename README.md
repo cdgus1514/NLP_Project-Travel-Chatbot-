@@ -80,24 +80,22 @@ Konlpy를 사용한 문장 토큰화, Fasttext를 사용한 워드 임베딩, Bi
 
 
 ## 3. Sequence to Sequence
-```
-- 의도파악 카테고리에 해당하지 않는 문장을 처리해주는 단계
-
-워드임베딩, seq2seq 모델에 넣어 결과 예측 >> seq2seq 대화
-
-1. lstm 2개를 연결해서 사용 (Encoder, Decoder)
-2. Encoder(질문) → Decoder(답변) 학습
-3. fallback 처리 된 문자열을 encoder 데이터로 사용
-```
+의도파악 카테고리에 해당하지 않는 문장을 처리해주는 단계
+<br>
+<br>
+Konly를 사용한 문장 토큰화, keras embedding을 사용한 워드 임베딩, LSTM(Encoder)-LSTM(Decoder)를 연결하여 구현한 Seq2Seq 모델
+<center>
+<img src='Travel_Chatbot/src/img/Seq2Seq.PNG', width='500', height='500'>
+<img src='Travel_Chatbot/src/img/Seq2Seq2.PNG', width='300', height='300'>
+</center>
 <br><br>
 
 
 ## 4. Image Analysis
-```
-- 사용자가 이미지 입력 시 처리하는 단계
-
-이미지 모델에 넣어 결과 예측 >> 이미지 분류
-```
+사용자가 이미지 입력 시 처리하는 단계
+<br>
+<br>
+이미지 256x256 사이즈로 리사이징, Convolution 네트워크를 사용하여 이미지 분석&분류
 <br><br>
 
 
