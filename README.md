@@ -95,6 +95,9 @@ Konly를 사용한 문장 토큰화, keras embedding을 사용한 워드 임베�
 <br>
 <br>
 이미지 256x256 사이즈로 리사이징, Convolution 네트워크를 사용하여 이미지 분석&분류
+<center>
+<img src='Travel_Chatbot/src/img/img_Analysis.PNG', width='700', height='700'>
+</center>
 <br><br>
 
 
