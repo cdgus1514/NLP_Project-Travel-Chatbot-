@@ -8,8 +8,10 @@
 
 ##### 단어 벡터 시각화
 
-<center><img src='Travel_Chatbot/src/img/PCA1.PNG', width='300', height='300'></img>
-<img src='Travel_Chatbot/src/img/PCA2.PNG', width='300', height='300'></img></center>
+<center>
+<img src='Travel_Chatbot/src/img/PCA1.PNG', width='300', height='300'>
+<img src='Travel_Chatbot/src/img/PCA2.PNG', width='300', height='300'>
+</center>
 
 
 ##### [시연 동영상]
