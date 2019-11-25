@@ -1,6 +1,6 @@
 ﻿# 자연어처리 여행 정보제공 챗봇 👓
 
-<img src=Travel_Chatbot/src/img/main.PNG></img>
+<center><img src='Travel_Chatbot/src/img/main.PNG', width='300', height='300'></img></center>
 <br><br>
 
 ##### [시연 동영상]
